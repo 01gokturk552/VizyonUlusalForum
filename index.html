@@ -270,11 +270,101 @@
       <div class="footer-links">
         <a href="#">Gizlilik Politikası</a>
         <a href="#">Kullanım Koşulları</a>
-        <a href="ik-login.html" style="opacity:.25;font-size:.72rem">İK Panel</a>
+        <button onclick="document.getElementById('personnelModal').classList.remove('hidden')" class="personel-btn">
+          <i class="fas fa-lock"></i> Personel Girişi
+        </button>
       </div>
     </div>
   </div>
 </footer>
+
+<!-- ══════════════════════════════════════════
+     PERSONEL GİRİŞİ MODAL
+══════════════════════════════════════════ -->
+<div id="personnelModal" class="hidden" style="
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(6,15,30,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;padding:1.5rem;
+">
+  <div style="
+    background:#fff;border-radius:24px;padding:2.5rem 2rem;
+    max-width:480px;width:100%;
+    box-shadow:0 24px 64px rgba(11,31,58,.28);
+    animation:pmIn .3s cubic-bezier(.34,1.56,.64,1) both;
+    position:relative;
+  ">
+    <!-- Kapat -->
+    <button onclick="document.getElementById('personnelModal').classList.add('hidden')" style="
+      position:absolute;top:1.1rem;right:1.1rem;
+      background:rgba(11,31,58,.06);border:none;border-radius:50%;
+      width:34px;height:34px;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      color:#6b7a99;font-size:.9rem;transition:background .2s;
+    " onmouseover="this.style.background='rgba(11,31,58,.12)'" onmouseout="this.style.background='rgba(11,31,58,.06)'">
+      <i class="fas fa-xmark"></i>
+    </button>
+
+    <!-- Başlık -->
+    <div style="text-align:center;margin-bottom:2rem;">
+      <div style="
+        width:52px;height:52px;background:linear-gradient(135deg,#0B1F3A,#1e4080);
+        border-radius:14px;display:flex;align-items:center;justify-content:center;
+        margin:0 auto .9rem;
+      "><i class="fas fa-shield-halved" style="color:#60a5fa;font-size:1.3rem;"></i></div>
+      <h3 style="font-size:1.3rem;font-weight:800;color:#0B1F3A;letter-spacing:-.02em;margin-bottom:.3rem;">Personel Girişi</h3>
+      <p style="font-size:.85rem;color:#6b7a99;">Hangi panele giriş yapmak istiyorsunuz?</p>
+    </div>
+
+    <!-- İki seçenek -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+
+      <!-- İK Paneli -->
+      <a href="ik-login.html" style="
+        display:flex;flex-direction:column;align-items:center;gap:.75rem;
+        padding:1.75rem 1rem;border-radius:16px;text-decoration:none;
+        border:2px solid #e0e9f8;background:#f8fafc;
+        transition:all .22s;
+      "
+      onmouseover="this.style.borderColor='#2563EB';this.style.background='#eff6ff';this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(37,99,235,.15)'"
+      onmouseout="this.style.borderColor='#e0e9f8';this.style.background='#f8fafc';this.style.transform='none';this.style.boxShadow='none'">
+        <div style="
+          width:48px;height:48px;background:linear-gradient(135deg,#0B1F3A,#1e4080);
+          border-radius:12px;display:flex;align-items:center;justify-content:center;
+        "><i class="fas fa-user-tie" style="color:#60a5fa;font-size:1.1rem;"></i></div>
+        <div style="text-align:center;">
+          <div style="font-size:.95rem;font-weight:700;color:#0B1F3A;margin-bottom:.2rem;">İK Paneli</div>
+          <div style="font-size:.75rem;color:#6b7a99;line-height:1.4;">Başvuru yönetimi &amp; delege takibi</div>
+        </div>
+        <div style="font-size:.72rem;font-weight:700;color:#2563EB;display:flex;align-items:center;gap:.3rem;">
+          Giriş Yap <i class="fas fa-arrow-right" style="font-size:.65rem;"></i>
+        </div>
+      </a>
+
+      <!-- Admin Paneli -->
+      <a href="admin-login.html" style="
+        display:flex;flex-direction:column;align-items:center;gap:.75rem;
+        padding:1.75rem 1rem;border-radius:16px;text-decoration:none;
+        border:2px solid #e0e9f8;background:#f8fafc;
+        transition:all .22s;
+      "
+      onmouseover="this.style.borderColor='#2563EB';this.style.background='#eff6ff';this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(37,99,235,.15)'"
+      onmouseout="this.style.borderColor='#e0e9f8';this.style.background='#f8fafc';this.style.transform='none';this.style.boxShadow='none'">
+        <div style="
+          width:48px;height:48px;background:linear-gradient(135deg,#0B1F3A,#1e4080);
+          border-radius:12px;display:flex;align-items:center;justify-content:center;
+        "><i class="fas fa-crown" style="color:#60a5fa;font-size:1.1rem;"></i></div>
+        <div style="text-align:center;">
+          <div style="font-size:.95rem;font-weight:700;color:#0B1F3A;margin-bottom:.2rem;">Admin Paneli</div>
+          <div style="font-size:.75rem;color:#6b7a99;line-height:1.4;">Site içerik yönetimi &amp; ayarlar</div>
+        </div>
+        <div style="font-size:.72rem;font-weight:700;color:#2563EB;display:flex;align-items:center;gap:.3rem;">
+          Giriş Yap <i class="fas fa-arrow-right" style="font-size:.65rem;"></i>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════════
      SCRIPTS
@@ -299,6 +389,15 @@ const hamburger = document.getElementById('hamburger');
 const navMenu   = document.getElementById('navMenu');
 hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); navMenu.classList.toggle('open'); });
 navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { hamburger.classList.remove('open'); navMenu.classList.remove('open'); }));
+
+/* Personel modal — dışına tıklayınca kapat */
+document.getElementById('personnelModal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.add('hidden');
+});
+/* ESC ile kapat */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('personnelModal').classList.add('hidden');
+});
 
 /* ════════════════════════════════════════════
    PROGRAM DAY TABS

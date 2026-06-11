@@ -547,9 +547,22 @@ button { font-family: inherit; }
   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem;
 }
 .footer-bottom p { font-size: .8rem; }
-.footer-links { display: flex; gap: 1.5rem; }
+.footer-links { display: flex; gap: 1.5rem; align-items: center; }
 .footer-links a { font-size: .8rem; color: rgba(255,255,255,.35); transition: color var(--dur) var(--ease); }
 .footer-links a:hover { color: rgba(255,255,255,.75); }
+
+/* Personel Girişi butonu */
+.personel-btn {
+  background: none; border: none; cursor: pointer; font-family: inherit;
+  font-size: .8rem; color: rgba(255,255,255,.28);
+  display: inline-flex; align-items: center; gap: .35rem;
+  transition: color var(--dur) var(--ease); padding: 0;
+}
+.personel-btn:hover { color: rgba(255,255,255,.65); }
+.personel-btn i { font-size: .72rem; }
+
+/* Personel modal animasyon */
+@keyframes pmIn { from { opacity:0; transform: scale(.88) translateY(12px); } to { opacity:1; transform: scale(1) translateY(0); } }
 
 /* ============================================================
    UTILITIES & ANIMATIONS
