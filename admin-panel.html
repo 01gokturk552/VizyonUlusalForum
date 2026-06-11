@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>Admin Panel – VUF 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F0F3F9;color:#1A2540;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+
+/* ── TOPBAR ── */
+.topbar{height:56px;background:#0B1F3A;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:200;box-shadow:0 1px 0 rgba(255,255,255,.06),0 4px 16px rgba(0,0,0,.25)}
+.tb-left{display:flex;align-items:center;gap:1rem}
+.tb-logo img{height:32px;width:auto;object-fit:contain;display:block}
+.tb-divider{width:1px;height:22px;background:rgba(255,255,255,.15)}
+.tb-title{font-size:.88rem;font-weight:600;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:.4rem}
+.tb-title i{color:#a78bfa}
+.tb-right{display:flex;align-items:center;gap:.75rem}
+.tb-user{font-size:.8rem;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:.35rem}
+.tb-ik-btn{display:flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);padding:.35rem .9rem;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s}
+.tb-ik-btn:hover{background:rgba(255,255,255,.15)}
+.logout-btn{display:flex;align-items:center;gap:.4rem;background:#e63946;color:#fff;border:none;padding:.38rem 1rem;border-radius:6px;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;transition:background .2s}
+.logout-btn:hover{background:#c1121f}
+
+/* ── LAYOUT ── */
+.layout{display:flex;flex:1;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{width:220px;background:#fff;border-right:1px solid #DDE3F0;display:flex;flex-direction:column;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;flex-shrink:0}
+.sidebar-section{padding:.5rem .75rem;margin-top:.5rem}
+.sidebar-label{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#B8C4D8;padding:.4rem .75rem;margin-bottom:.2rem}
+.nav-item{display:flex;align-items:center;gap:.7rem;padding:.62rem .75rem;border-radius:10px;cursor:pointer;font-size:.875rem;font-weight:500;color:#5A6A8A;transition:all .2s;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.nav-item i{width:18px;text-align:center;font-size:.9rem;color:#B8C4D8;transition:color .2s}
+.nav-item:hover{background:#F0F3F9;color:#1A2540}
+.nav-item:hover i{color:#7c3aed}
+.nav-item.active{background:rgba(124,58,237,.08);color:#7c3aed;font-weight:700}
+.nav-item.active i{color:#7c3aed}
+.nav-item .badge{margin-left:auto;background:#e63946;color:#fff;font-size:.65rem;font-weight:800;padding:.1rem .45rem;border-radius:100px}
+.sidebar-divider{height:1px;background:#F0F3F9;margin:.5rem .75rem}
+.nav-item.ext-link{color:#888}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;padding:1.75rem}
+.section-view{display:none}
+.section-view.active{display:block}
+
+/* Section header */
+.sec-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+.sec-top h2{font-size:1.3rem;font-weight:800;color:#0B1F3A;display:flex;align-items:center;gap:.5rem}
+.sec-top h2 i{color:#7c3aed;font-size:1.1rem}
+.add-btn{display:flex;align-items:center;gap:.45rem;background:#7c3aed;color:#fff;border:none;padding:.6rem 1.25rem;border-radius:8px;font-family:inherit;font-size:.875rem;font-weight:700;cursor:pointer;transition:background .2s,transform .2s}
+.add-btn:hover{background:#6d28d9;transform:translateY(-1px)}
+
+/* ── DASHBOARD ── */
+.dash-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;margin-bottom:2rem}
+.dash-stat{background:#fff;border-radius:14px;padding:1.25rem;border:1px solid #DDE3F0;text-align:center;position:relative;overflow:hidden;cursor:default}
+.dash-stat::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#0B1F3A,#1e4080);opacity:0;transition:opacity .25s}
+.dash-stat:hover::before{opacity:1}
+.dash-stat-num{font-size:2rem;font-weight:900;color:#0B1F3A;line-height:1;position:relative;transition:color .25s}
+.dash-stat:hover .dash-stat-num{color:#60a5fa}
+.dash-stat-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B8C4D8;margin-top:.3rem;position:relative;transition:color .25s}
+.dash-stat:hover .dash-stat-label{color:rgba(255,255,255,.6)}
+.dash-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.dash-card{background:#fff;border-radius:14px;padding:1.5rem;border:1px solid #DDE3F0;transition:box-shadow .2s,transform .2s}
+.dash-card:hover{box-shadow:0 8px 28px rgba(11,31,58,.1);transform:translateY(-2px)}
+.dc-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+.dc-icon{width:42px;height:42px;border-radius:10px;background:rgba(124,58,237,.1);display:flex;align-items:center;justify-content:center}
+.dc-icon i{color:#7c3aed;font-size:1.1rem}
+.dc-header h3{font-size:.95rem;font-weight:700;color:#1A2540}
+.dc-desc{font-size:.82rem;color:#6B7A99;line-height:1.55;margin-bottom:1rem}
+.dc-btn{display:inline-flex;align-items:center;gap:.4rem;background:#0B1F3A;color:#fff;padding:.5rem 1.1rem;border-radius:7px;font-size:.8rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:background .2s}
+.dc-btn:hover{background:#1e4080}
+.dc-badge{display:inline-flex;align-items:center;gap:.3rem;background:#fee2e2;color:#dc2626;font-size:.72rem;font-weight:800;padding:.2rem .6rem;border-radius:100px;margin-left:.5rem}
+.quick-actions{background:#fff;border-radius:14px;padding:1.5rem;border:1px solid #DDE3F0;margin-top:1rem}
+.quick-actions h3{font-size:.9rem;font-weight:700;color:#1A2540;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.qa-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.qa-btn{display:flex;align-items:center;gap:.4rem;padding:.55rem 1.1rem;border-radius:7px;font-size:.82rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .2s;text-decoration:none}
+.qa-btn.green{background:#dcfce7;color:#16a34a}.qa-btn.green:hover{background:#bbf7d0}
+.qa-btn.blue{background:#dbeafe;color:#1d4ed8}.qa-btn.blue:hover{background:#bfdbfe}
+
+/* ── TABLE ── */
+.table-card{background:#fff;border-radius:14px;border:1px solid #DDE3F0;overflow:hidden}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+thead{background:#F8F9FC}
+thead th{padding:.85rem 1rem;text-align:left;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#B8C4D8;border-bottom:1px solid #DDE3F0;white-space:nowrap}
+tbody tr{border-bottom:1px solid #F0F3F9;transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#F8F9FC}
+tbody td{padding:.85rem 1rem;vertical-align:middle}
+.td-icon{font-size:1.1rem;color:#7c3aed}
+.td-num{font-size:.75rem;font-weight:800;color:#B8C4D8}
+.td-name{font-weight:600;color:#1A2540}
+.td-sub{font-size:.78rem;color:#6B7A99}
+.tier-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;border-radius:100px;font-size:.72rem;font-weight:700}
+.tier-gold{background:#fef5d6;color:#9a6f00}.tier-silver{background:#f0f3f8;color:#5a6a80}.tier-bronze{background:#fdf0e6;color:#7a4f2e}
+.tbl-actions{display:flex;gap:.4rem;flex-wrap:nowrap}
+.btn-edit,.btn-del{padding:.3rem .7rem;border-radius:6px;border:none;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:.3rem;transition:all .15s}
+.btn-edit{background:#EDE9FE;color:#7c3aed}.btn-edit:hover{background:#7c3aed;color:#fff}
+.btn-del{background:#FEE2E2;color:#dc2626}.btn-del:hover{background:#dc2626;color:#fff}
+.empty-row td{text-align:center;padding:3rem;color:#B8C4D8;font-size:.9rem}
+
+/* ── PROGRAM ── */
+.prog-day-tabs{display:flex;gap:.4rem;margin-bottom:1.25rem;flex-wrap:wrap}
+.prog-tab{padding:.5rem 1.2rem;border-radius:8px;border:1.5px solid #DDE3F0;background:#fff;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;color:#6B7A99;transition:all .2s}
+.prog-tab.active{background:#0B1F3A;color:#fff;border-color:#0B1F3A}
+.prog-day-content{display:none}
+.prog-day-content.active{display:block}
+
+/* ── İSTATİSTİK ── */
+.stat-form{background:#fff;border-radius:14px;border:1px solid #DDE3F0;padding:2rem;max-width:480px}
+.stat-field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.25rem}
+.stat-field label{font-size:.8rem;font-weight:700;color:#3D4F6E}
+.stat-field input{padding:.7rem 1rem;border:1.5px solid #DDE3F0;border-radius:8px;font-family:inherit;font-size:.95rem;color:#1A2540;outline:none;transition:border-color .2s}
+.stat-field input:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.08)}
+.stat-field small{font-size:.75rem;color:#B8C4D8}
+.save-stat-btn{display:flex;align-items:center;gap:.45rem;background:#7c3aed;color:#fff;border:none;padding:.75rem 1.75rem;border-radius:8px;font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s}
+.save-stat-btn:hover{background:#6d28d9}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(7,13,24,.6);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1.5rem;backdrop-filter:blur(4px)}
+.modal-overlay.hidden{display:none}
+.modal-box{background:#fff;border-radius:18px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(11,31,58,.25);animation:mIn .28s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes mIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:1px solid #F0F3F9;position:sticky;top:0;background:#fff;border-radius:18px 18px 0 0}
+.modal-head h3{font-size:1rem;font-weight:800;color:#0B1F3A}
+.modal-close{width:30px;height:30px;border:none;background:#F0F3F9;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#6B7A99;transition:all .2s}
+.modal-close:hover{background:#e63946;color:#fff}
+.modal-body{padding:1.5rem}
+.mf-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.1rem}
+.mf-group label{font-size:.78rem;font-weight:700;color:#3D4F6E}
+.mf-group input,.mf-group select,.mf-group textarea{padding:.68rem 1rem;border:1.5px solid #DDE3F0;border-radius:8px;font-family:inherit;font-size:.88rem;color:#1A2540;outline:none;transition:border-color .2s}
+.mf-group input:focus,.mf-group select:focus,.mf-group textarea:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.08)}
+.mf-group textarea{resize:vertical;min-height:80px}
+.mf-group select{cursor:pointer}
+.mf-hint{font-size:.72rem;color:#B8C4D8;margin-top:.2rem}
+.mf-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid #F0F3F9;display:flex;justify-content:flex-end;gap:.6rem}
+.btn-cancel{padding:.65rem 1.4rem;border-radius:8px;border:1.5px solid #DDE3F0;background:#fff;font-family:inherit;font-size:.875rem;font-weight:600;cursor:pointer;color:#6B7A99;transition:all .2s}
+.btn-cancel:hover{background:#F0F3F9}
+.btn-save{padding:.65rem 1.6rem;border-radius:8px;border:none;background:#7c3aed;color:#fff;font-family:inherit;font-size:.875rem;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-save:hover{background:#6d28d9}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1.75rem;right:1.75rem;padding:.8rem 1.4rem;border-radius:10px;font-size:.875rem;font-weight:600;z-index:99999;transform:translateY(80px);opacity:0;transition:all .3s;display:flex;align-items:center;gap:.5rem;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:#16a34a;color:#fff}
+.toast.error{background:#dc2626;color:#fff}
+.toast.info{background:#0B1F3A;color:#fff}
+
+/* ── ICONS PREVIEW ── */
+.icon-preview{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(124,58,237,.1);border-radius:8px}
+.icon-preview i{color:#7c3aed}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .main{padding:1rem}
+  .dash-stats{grid-template-columns:repeat(2,1fr)}
+  .mf-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tb-left">
+    <div class="tb-logo"><img src="vizyonulusalforum.png" alt="VUF"></div>
+    <div class="tb-divider"></div>
+    <div class="tb-title"><i class="fas fa-crown"></i> Admin Panel</div>
+  </div>
+  <div class="tb-right">
+    <div class="tb-user"><i class="fas fa-user-shield"></i> <span id="topUser">—</span></div>
+    <a href="ik-panel.html" class="tb-ik-btn" target="_blank"><i class="fas fa-users"></i> İK Panel</a>
+    <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış</button>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Genel</div>
+      <button class="nav-item active" onclick="go('dashboard')"><i class="fas fa-home"></i> Dashboard</button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Site Yönetimi</div>
+      <button class="nav-item" onclick="go('komisyonlar')"><i class="fas fa-layer-group"></i> Komisyonlar</button>
+      <button class="nav-item" onclick="go('ekip')"><i class="fas fa-users"></i> Ekip</button>
+      <button class="nav-item" onclick="go('sponsorlar')"><i class="fas fa-handshake"></i> Sponsorlar</button>
+      <button class="nav-item" onclick="go('program')"><i class="fas fa-calendar-week"></i> Program Akışı</button>
+      <button class="nav-item" onclick="go('istatistik')"><i class="fas fa-chart-bar"></i> İstatistikler</button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-divider"></div>
+      <button class="nav-item" onclick="go('basvurular')"><i class="fas fa-file-alt"></i> Başvurular <span class="badge" id="sidebarBadge">0</span></button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ══ DASHBOARD ══ -->
+    <div class="section-view active" id="sec-dashboard">
+      <div class="sec-top"><h2><i class="fas fa-home"></i> Dashboard</h2></div>
+      <div class="dash-stats" id="dashStats"></div>
+      <div class="dash-cards">
+        <div class="dash-card"><div class="dc-header"><div class="dc-icon"><i class="fas fa-layer-group"></i></div><h3>Komisyon Yönetimi</h3></div><p class="dc-desc">Komisyon adlarını, açıklamalarını ve başkanlarını düzenle.</p><button class="dc-btn" onclick="go('komisyonlar')"><i class="fas fa-edit"></i> Yönet</button></div>
+        <div class="dash-card"><div class="dc-header"><div class="dc-icon"><i class="fas fa-users"></i></div><h3>Ekip Yönetimi</h3></div><p class="dc-desc">Ekip üyelerini, rollerini ve Instagram hesaplarını yönet.</p><button class="dc-btn" onclick="go('ekip')"><i class="fas fa-edit"></i> Yönet</button></div>
+        <div class="dash-card"><div class="dc-header"><div class="dc-icon"><i class="fas fa-handshake"></i></div><h3>Sponsor Yönetimi</h3></div><p class="dc-desc">Sponsorları ekle, düzenle veya sil.</p><button class="dc-btn" onclick="go('sponsorlar')"><i class="fas fa-edit"></i> Yönet</button></div>
+        <div class="dash-card"><div class="dc-header"><div class="dc-icon"><i class="fas fa-calendar-week"></i></div><h3>Program Akışı</h3></div><p class="dc-desc">Etkinlik program maddelerini ekle ve düzenle.</p><button class="dc-btn" onclick="go('program')"><i class="fas fa-edit"></i> Yönet</button></div>
+        <div class="dash-card"><div class="dc-header"><div class="dc-icon"><i class="fas fa-chart-bar"></i></div><h3>İstatistik Yönetimi</h3></div><p class="dc-desc">Hakkımızda bölümündeki rakamsal bilgileri güncelle.</p><button class="dc-btn" onclick="go('istatistik')"><i class="fas fa-edit"></i> Yönet</button></div>
+        <div class="dash-card"><div class="dc-header"><div class="dc-icon"><i class="fas fa-file-alt"></i></div><h3>Başvuru Yönetimi</h3></div><p class="dc-desc">Delege ve delegasyon başvurularını incele ve durumlarını güncelle.</p><button class="dc-btn" onclick="go('basvurular')"><i class="fas fa-external-link-alt"></i> Yönet</button></div>
+      </div>
+      <div class="quick-actions">
+        <h3><i class="fas fa-bolt"></i> Hızlı İşlemler</h3>
+        <div class="qa-btns">
+          <a href="index.html" target="_blank" class="qa-btn green"><i class="fas fa-eye"></i> Siteyi Görüntüle</a>
+          <a href="basvuru.html" target="_blank" class="qa-btn blue"><i class="fas fa-file-alt"></i> Başvuru Formunu Gör</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ KOMİSYONLAR ══ -->
+    <div class="section-view" id="sec-komisyonlar">
+      <div class="sec-top">
+        <h2><i class="fas fa-layer-group"></i> Komisyonlar</h2>
+        <button class="add-btn" onclick="openModal('komisyon')"><i class="fas fa-plus"></i> Yeni Komisyon</button>
+      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table><thead><tr><th>#</th><th>İkon</th><th>Komisyon Adı</th><th>Başkan</th><th>Açıklama</th><th>İşlemler</th></tr></thead>
+          <tbody id="komisyonTable"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ EKİP ══ -->
+    <div class="section-view" id="sec-ekip">
+      <div class="sec-top">
+        <h2><i class="fas fa-users"></i> Ekip</h2>
+        <button class="add-btn" onclick="openModal('ekip')"><i class="fas fa-plus"></i> Yeni Üye</button>
+      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table><thead><tr><th>Kısaltma</th><th>Rol</th><th>Ad Soyad</th><th>Instagram</th><th>İşlemler</th></tr></thead>
+          <tbody id="ekipTable"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SPONSORLAR ══ -->
+    <div class="section-view" id="sec-sponsorlar">
+      <div class="sec-top">
+        <h2><i class="fas fa-handshake"></i> Sponsorlar</h2>
+        <button class="add-btn" onclick="openModal('sponsor')"><i class="fas fa-plus"></i> Yeni Sponsor</button>
+      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table><thead><tr><th>Sponsor Adı</th><th>Kategori</th><th>İşlemler</th></tr></thead>
+          <tbody id="sponsorTable"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PROGRAM ══ -->
+    <div class="section-view" id="sec-program">
+      <div class="sec-top">
+        <h2><i class="fas fa-calendar-week"></i> Program Akışı</h2>
+        <button class="add-btn" id="addProgBtn" onclick="openModal('program')"><i class="fas fa-plus"></i> Yeni Madde</button>
+      </div>
+      <div class="prog-day-tabs">
+        <button class="prog-tab active" onclick="switchProgDay(1,this)"><i class="fas fa-sun"></i> 1. Gün</button>
+        <button class="prog-tab" onclick="switchProgDay(2,this)"><i class="fas fa-sun"></i> 2. Gün</button>
+        <button class="prog-tab" onclick="switchProgDay(3,this)"><i class="fas fa-moon"></i> 3. Gün</button>
+      </div>
+      <div class="prog-day-content active" id="prog-day1">
+        <div class="table-card"><div class="table-scroll"><table><thead><tr><th>Saat</th><th>Başlık</th><th>Açıklama</th><th>İşlemler</th></tr></thead><tbody id="progTable1"></tbody></table></div></div>
+      </div>
+      <div class="prog-day-content" id="prog-day2">
+        <div class="table-card"><div class="table-scroll"><table><thead><tr><th>Saat</th><th>Başlık</th><th>Açıklama</th><th>İşlemler</th></tr></thead><tbody id="progTable2"></tbody></table></div></div>
+      </div>
+      <div class="prog-day-content" id="prog-day3">
+        <div class="table-card"><div class="table-scroll"><table><thead><tr><th>Saat</th><th>Başlık</th><th>Açıklama</th><th>İşlemler</th></tr></thead><tbody id="progTable3"></tbody></table></div></div>
+      </div>
+    </div>
+
+    <!-- ══ İSTATİSTİK ══ -->
+    <div class="section-view" id="sec-istatistik">
+      <div class="sec-top"><h2><i class="fas fa-chart-bar"></i> İstatistikler</h2></div>
+      <div class="stat-form">
+        <p style="font-size:.85rem;color:#6B7A99;margin-bottom:1.5rem">Hakkımızda bölümünde gösterilen rakamları buradan güncelleyebilirsiniz.</p>
+        <div class="stat-field"><label><i class="fas fa-layer-group"></i> Komisyon Sayısı</label><input type="number" id="st-komisyon" min="0"><small>Örn: 9</small></div>
+        <div class="stat-field"><label><i class="fas fa-users"></i> Katılımcı Sayısı</label><input type="number" id="st-katilimci" min="0"><small>Örn: 270 (sitede "270+" olarak gösterilir)</small></div>
+        <div class="stat-field"><label><i class="fas fa-handshake"></i> Sponsor Sayısı</label><input type="number" id="st-sponsor" min="0"><small>Örn: 10</small></div>
+        <div class="stat-field"><label><i class="fas fa-calendar-alt"></i> Etkinlik Gün Sayısı</label><input type="number" id="st-gun" min="0"><small>Örn: 3</small></div>
+        <button class="save-stat-btn" onclick="saveStats()"><i class="fas fa-save"></i> Kaydet</button>
+      </div>
+    </div>
+
+    <!-- ══ BAŞVURULAR ══ -->
+    <div class="section-view" id="sec-basvurular">
+      <div class="sec-top"><h2><i class="fas fa-file-alt"></i> Başvuru Yönetimi</h2></div>
+      <div style="background:#fff;border-radius:14px;border:1px solid #DDE3F0;padding:2.5rem;text-align:center;max-width:480px">
+        <div style="width:64px;height:64px;background:rgba(11,31,58,.07);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem"><i class="fas fa-users" style="font-size:1.6rem;color:#0B1F3A"></i></div>
+        <h3 style="font-size:1.1rem;font-weight:800;color:#0B1F3A;margin-bottom:.5rem">İK Paneli</h3>
+        <p style="font-size:.875rem;color:#6B7A99;line-height:1.6;margin-bottom:1.5rem">Delege ve delegasyon başvuruları İnsan Kaynakları Paneli üzerinden yönetilmektedir. Durumları güncellemek, detayları incelemek ve CSV indirmek için İK Paneline gidin.</p>
+        <a href="ik-panel.html" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:#0B1F3A;color:#fff;padding:.75rem 1.75rem;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;transition:background .2s" onmouseover="this.style.background='#1e4080'" onmouseout="this.style.background='#0B1F3A'"><i class="fas fa-external-link-alt"></i> İK Paneline Git</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay hidden" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTitle">Başlık</h3>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">İptal</button>
+      <button class="btn-save" id="modalSaveBtn" onclick="saveModal()"><i class="fas fa-save"></i> Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════════════════════════════════════
+   AUTH
+════════════════════════════════════ */
+const auth = JSON.parse(sessionStorage.getItem('vuf_admin_auth')||'null');
+if(!auth){window.location.href='admin-login.html';}
+else{document.getElementById('topUser').textContent=auth.username;}
+function logout(){sessionStorage.removeItem('vuf_admin_auth');window.location.href='admin-login.html';}
+
+/* ════════════════════════════════════
+   DEFAULT DATA
+════════════════════════════════════ */
+const DEF_KOMISYON=[
+  {id:1,num:'01',icon:'fas fa-chart-line',name:'Ekonomi',desc:'Ekonomik kalkınma ve sürdürülebilir büyüme politikaları',baskan:''},
+  {id:2,num:'02',icon:'fas fa-book-open',name:'Eğitim',desc:'Eğitim reformu, müfredat geliştirme ve gençlik politikaları',baskan:''},
+  {id:3,num:'03',icon:'fas fa-running',name:'Gençlik & Spor',desc:'Gençlik katılımı, istihdam ve spor politikaları',baskan:''},
+  {id:4,num:'04',icon:'fas fa-globe-europe',name:'Dış Politika',desc:'Uluslararası ilişkiler ve diplomatik stratejiler',baskan:''},
+  {id:5,num:'05',icon:'fas fa-balance-scale',name:'Hukuk & Anayasa',desc:'Hukuki reformlar ve anayasal düzenlemeler',baskan:''},
+  {id:6,num:'06',icon:'fas fa-palette',name:'Kültür & Sanat',desc:'Kültürel miras, sanat politikaları ve kimlik',baskan:''},
+  {id:7,num:'07',icon:'fas fa-brain',name:'Toplum & Psikoloji',desc:'Toplumsal sağlık, refah ve psikolojik destek politikaları',baskan:''},
+  {id:8,num:'08',icon:'fas fa-venus-mars',name:'Toplumsal Cinsiyet Eşitliği',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm',baskan:''},
+  {id:9,num:'09',icon:'fas fa-microchip',name:'Dijitalleşme & Teknoloji',desc:'Dijital dönüşüm, yapay zeka ve teknoloji politikaları',baskan:''},
+];
+const DEF_EKIP=[
+  {id:1,initials:'GS',role:'Genel Sekreter',name:'',desc:'Organizasyonun genel koordinasyon ve stratejisinden sorumlu',instagram:'',badge:'fas fa-star'},
+  {id:2,initials:'AD',role:'Akademik Direktör',name:'',desc:'Komisyon içerikleri ve akademik kalitenin yöneticisi',instagram:'',badge:'fas fa-graduation-cap'},
+  {id:3,initials:'İD',role:'İletişim Direktörü',name:'',desc:'Tanıtım, sosyal medya ve marka iletişimi yöneticisi',instagram:'',badge:'fas fa-bullhorn'},
+  {id:4,initials:'LD',role:'Lojistik Direktörü',name:'',desc:'Etkinlik lojistiği ve operasyon planlamasından sorumlu',instagram:'',badge:'fas fa-cogs'},
+  {id:5,initials:'FD',role:'Finans Direktörü',name:'',desc:'Bütçe yönetimi ve sponsor ilişkilerinden sorumlu',instagram:'',badge:'fas fa-coins'},
+  {id:6,initials:'İK',role:'İnsan Kaynakları',name:'',desc:'Başvuru süreçleri ve delege ilişkilerinin yöneticisi',instagram:'',badge:'fas fa-user-check'},
+];
+const DEF_SPONSOR=[
+  {id:1,name:'Sponsor Adı',tier:'gold'},{id:2,name:'Sponsor Adı',tier:'gold'},
+  {id:3,name:'Sponsor Adı',tier:'silver'},{id:4,name:'Sponsor Adı',tier:'silver'},{id:5,name:'Sponsor Adı',tier:'silver'},
+  {id:6,name:'Sponsor',tier:'bronze'},{id:7,name:'Sponsor',tier:'bronze'},{id:8,name:'Sponsor',tier:'bronze'},
+];
+const DEF_PROGRAM={
+  day1:[{id:1,time:'08:30',title:'Kayıt & Akreditasyon',desc:'Delegelerin kayıt işlemleri ve kimlik doğrulama'},{id:2,time:'10:00',title:'Açılış Töreni',desc:'Genel Kurul Salonu — açılış konuşmaları'},{id:3,time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{id:4,time:'13:30',title:'1. Komisyon Oturumu',desc:'Tüm komisyonlar eş zamanlı çalışmaya başlar'},{id:5,time:'16:00',title:'Akademik Konuşma',desc:'Davetli konuşmacı semineri'},{id:6,time:'17:30',title:'Sosyal Etkinlik',desc:'Icebreaker & Networking gecesi'}],
+  day2:[{id:1,time:'09:00',title:'2. Komisyon Oturumu',desc:'Yoğun müzakere ve araştırma çalışmaları'},{id:2,time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{id:3,time:'13:30',title:'3. Komisyon Oturumu',desc:'Karar taslaklarının hazırlanması'},{id:4,time:'16:00',title:'Genel Kurul',desc:'Komisyon raporlarının sunumu'},{id:5,time:'19:00',title:'Resmi Gala Yemeği',desc:'Gala yemeği ve sosyal etkinlik'}],
+  day3:[{id:1,time:'09:00',title:'4. Komisyon Oturumu',desc:'Son müzakereler ve karar bildirgeleri'},{id:2,time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{id:3,time:'13:30',title:'Kapanış Genel Kurulu',desc:'Tüm komisyonların ortak oturumu'},{id:4,time:'16:00',title:'Ödül Töreni & Kapanış',desc:'Sertifika dağıtımı ve kapanış konuşmaları'}],
+};
+const DEF_STATS={komisyon:9,katilimci:270,sponsor:10,gun:3};
+
+/* ════════════════════════════════════
+   DATA HELPERS
+════════════════════════════════════ */
+const get=(k,def)=>{const v=localStorage.getItem(k);return v?JSON.parse(v):def};
+const set=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+function initData(){
+  if(!localStorage.getItem('vuf_komisyonlar'))set('vuf_komisyonlar',DEF_KOMISYON);
+  if(!localStorage.getItem('vuf_ekip'))set('vuf_ekip',DEF_EKIP);
+  if(!localStorage.getItem('vuf_sponsorlar'))set('vuf_sponsorlar',DEF_SPONSOR);
+  if(!localStorage.getItem('vuf_program'))set('vuf_program',DEF_PROGRAM);
+  if(!localStorage.getItem('vuf_istatistikler'))set('vuf_istatistikler',DEF_STATS);
+}
+function nextId(arr){return arr.length?Math.max(...arr.map(x=>x.id))+1:1}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+/* ════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════ */
+let currentSection='dashboard';
+let currentProgDay=1;
+function go(sec){
+  document.querySelectorAll('.section-view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('sec-'+sec).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(btn=>{if(btn.getAttribute('onclick')===`go('${sec}')`)btn.classList.add('active')});
+  currentSection=sec;
+  renderSection(sec);
+}
+function renderSection(sec){
+  if(sec==='dashboard')renderDashboard();
+  else if(sec==='komisyonlar')renderKomisyonlar();
+  else if(sec==='ekip')renderEkip();
+  else if(sec==='sponsorlar')renderSponsorlar();
+  else if(sec==='program')renderProgram();
+  else if(sec==='istatistik')renderIstatistik();
+}
+
+/* ════════════════════════════════════
+   DASHBOARD
+════════════════════════════════════ */
+function renderDashboard(){
+  const del=get('vuf_delegeler',[]),dlg=get('vuf_delegasyonlar',[]);
+  const total=del.length+dlg.length;
+  const bek=[...del,...dlg].filter(x=>x.durum==='Başvuru Beklemede').length;
+  const onay=[...del,...dlg].filter(x=>x.durum==='Başvuru Onaylandı').length;
+  const kom=get('vuf_komisyonlar',DEF_KOMISYON).length;
+  const spon=get('vuf_sponsorlar',DEF_SPONSOR).length;
+  const ekp=get('vuf_ekip',DEF_EKIP).length;
+  document.getElementById('dashStats').innerHTML=`
+    <div class="dash-stat"><div class="dash-stat-num">${kom}</div><div class="dash-stat-label">Komisyon</div></div>
+    <div class="dash-stat"><div class="dash-stat-num">${ekp}</div><div class="dash-stat-label">Ekip Üyesi</div></div>
+    <div class="dash-stat"><div class="dash-stat-num">${spon}</div><div class="dash-stat-label">Sponsor</div></div>
+    <div class="dash-stat"><div class="dash-stat-num">${total}</div><div class="dash-stat-label">Toplam Başvuru</div></div>
+    <div class="dash-stat"><div class="dash-stat-num">${bek}</div><div class="dash-stat-label">Bekleyen</div></div>
+    <div class="dash-stat"><div class="dash-stat-num">${onay}</div><div class="dash-stat-label">Onaylanan</div></div>
+  `;
+  const pendingBadge=bek>0?bek:0;
+  document.getElementById('sidebarBadge').textContent=pendingBadge;
+  document.getElementById('sidebarBadge').style.display=pendingBadge?'inline':'none';
+}
+
+/* ════════════════════════════════════
+   KOMİSYONLAR
+════════════════════════════════════ */
+function renderKomisyonlar(){
+  const data=get('vuf_komisyonlar',DEF_KOMISYON);
+  const tbody=document.getElementById('komisyonTable');
+  if(!data.length){tbody.innerHTML='<tr><td colspan="6" class="empty-row"><i class="fas fa-inbox"></i> Henüz komisyon yok.</td></tr>';return}
+  tbody.innerHTML=data.map(k=>`<tr>
+    <td class="td-num">${esc(k.num)}</td>
+    <td><span class="icon-preview"><i class="${esc(k.icon)}"></i></span></td>
+    <td class="td-name">${esc(k.name)}</td>
+    <td class="td-sub">${k.baskan?esc(k.baskan):'<span style="color:#ddd">—</span>'}</td>
+    <td class="td-sub" style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(k.desc)}</td>
+    <td><div class="tbl-actions">
+      <button class="btn-edit" onclick="openModal('komisyon',${k.id})"><i class="fas fa-edit"></i> Düzenle</button>
+      <button class="btn-del" onclick="deleteItem('komisyon',${k.id})"><i class="fas fa-trash"></i></button>
+    </div></td>
+  </tr>`).join('');
+}
+
+/* ════════════════════════════════════
+   EKİP
+════════════════════════════════════ */
+function renderEkip(){
+  const data=get('vuf_ekip',DEF_EKIP);
+  const tbody=document.getElementById('ekipTable');
+  if(!data.length){tbody.innerHTML='<tr><td colspan="5" class="empty-row"><i class="fas fa-inbox"></i> Henüz ekip üyesi yok.</td></tr>';return}
+  tbody.innerHTML=data.map(e=>`<tr>
+    <td><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:linear-gradient(135deg,#0B1F3A,#1e4080);border-radius:8px;color:#60a5fa;font-weight:800;font-size:.85rem">${esc(e.initials)}</span></td>
+    <td class="td-name">${esc(e.role)}</td>
+    <td class="td-sub">${e.name?esc(e.name):'<span style="color:#ddd">—</span>'}</td>
+    <td class="td-sub">${e.instagram?`<a href="https://instagram.com/${e.instagram.replace('@','')}" target="_blank" style="color:#e1306c">@${esc(e.instagram.replace('@',''))}</a>`:'<span style="color:#ddd">—</span>'}</td>
+    <td><div class="tbl-actions">
+      <button class="btn-edit" onclick="openModal('ekip',${e.id})"><i class="fas fa-edit"></i> Düzenle</button>
+      <button class="btn-del" onclick="deleteItem('ekip',${e.id})"><i class="fas fa-trash"></i></button>
+    </div></td>
+  </tr>`).join('');
+}
+
+/* ════════════════════════════════════
+   SPONSORLAR
+════════════════════════════════════ */
+function renderSponsorlar(){
+  const data=get('vuf_sponsorlar',DEF_SPONSOR);
+  const tbody=document.getElementById('sponsorTable');
+  if(!data.length){tbody.innerHTML='<tr><td colspan="3" class="empty-row"><i class="fas fa-inbox"></i> Henüz sponsor yok.</td></tr>';return}
+  const tierLabel={gold:'Altın',silver:'Gümüş',bronze:'Bronz'};
+  tbody.innerHTML=data.map(s=>`<tr>
+    <td class="td-name">${esc(s.name)}</td>
+    <td><span class="tier-badge tier-${s.tier}"><i class="fas fa-${s.tier==='gold'?'trophy':s.tier==='silver'?'medal':'award'}"></i> ${tierLabel[s.tier]||s.tier}</span></td>
+    <td><div class="tbl-actions">
+      <button class="btn-edit" onclick="openModal('sponsor',${s.id})"><i class="fas fa-edit"></i> Düzenle</button>
+      <button class="btn-del" onclick="deleteItem('sponsor',${s.id})"><i class="fas fa-trash"></i></button>
+    </div></td>
+  </tr>`).join('');
+}
+
+/* ════════════════════════════════════
+   PROGRAM
+════════════════════════════════════ */
+function switchProgDay(d,btn){
+  currentProgDay=d;
+  document.querySelectorAll('.prog-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.prog-day-content').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('prog-day'+d).classList.add('active');
+  renderProgram();
+}
+function renderProgram(){
+  const prog=get('vuf_program',DEF_PROGRAM);
+  [1,2,3].forEach(d=>{
+    const items=prog['day'+d]||[];
+    const tbody=document.getElementById('progTable'+d);
+    if(!items.length){tbody.innerHTML='<tr><td colspan="4" class="empty-row"><i class="fas fa-inbox"></i> Bu gün için madde yok.</td></tr>';return}
+    tbody.innerHTML=items.map(p=>`<tr>
+      <td style="font-weight:700;color:#3b82f6;white-space:nowrap">${esc(p.time)}</td>
+      <td class="td-name">${esc(p.title)}</td>
+      <td class="td-sub">${esc(p.desc)}</td>
+      <td><div class="tbl-actions">
+        <button class="btn-edit" onclick="openModal('program',${p.id})"><i class="fas fa-edit"></i> Düzenle</button>
+        <button class="btn-del" onclick="deleteItem('program',${p.id})"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`).join('');
+  });
+}
+
+/* ════════════════════════════════════
+   İSTATİSTİK
+════════════════════════════════════ */
+function renderIstatistik(){
+  const s=get('vuf_istatistikler',DEF_STATS);
+  document.getElementById('st-komisyon').value=s.komisyon;
+  document.getElementById('st-katilimci').value=s.katilimci;
+  document.getElementById('st-sponsor').value=s.sponsor;
+  document.getElementById('st-gun').value=s.gun;
+}
+function saveStats(){
+  set('vuf_istatistikler',{
+    komisyon:parseInt(document.getElementById('st-komisyon').value)||0,
+    katilimci:parseInt(document.getElementById('st-katilimci').value)||0,
+    sponsor:parseInt(document.getElementById('st-sponsor').value)||0,
+    gun:parseInt(document.getElementById('st-gun').value)||0
+  });
+  toast('İstatistikler kaydedildi!','success');
+}
+
+/* ════════════════════════════════════
+   MODAL
+════════════════════════════════════ */
+let modalType='',modalId=null;
+function openModal(type,id=null){
+  modalType=type;modalId=id;
+  const overlay=document.getElementById('modalOverlay');
+  const body=document.getElementById('modalBody');
+  const title=document.getElementById('modalTitle');
+
+  if(type==='komisyon'){
+    const data=get('vuf_komisyonlar',DEF_KOMISYON);
+    const item=id?data.find(x=>x.id===id):{};
+    title.textContent=id?'Komisyon Düzenle':'Yeni Komisyon';
+    body.innerHTML=`
+      <div class="mf-row">
+        <div class="mf-group"><label>Numara</label><input id="mf-num" value="${esc(item.num||'')}"><div class="mf-hint">Örn: 01</div></div>
+        <div class="mf-group"><label>FontAwesome İkon</label><input id="mf-icon" value="${esc(item.icon||'fas fa-star')}"><div class="mf-hint">Örn: fas fa-chart-line</div></div>
+      </div>
+      <div class="mf-group"><label>Komisyon Adı</label><input id="mf-name" value="${esc(item.name||'')}"></div>
+      <div class="mf-group"><label>Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>
+      <div class="mf-group"><label>Başkan / Yönetici Adı</label><input id="mf-baskan" value="${esc(item.baskan||'')}" placeholder="İsim girmediyseniz boş bırakın"></div>`;
+  }
+  else if(type==='ekip'){
+    const data=get('vuf_ekip',DEF_EKIP);
+    const item=id?data.find(x=>x.id===id):{};
+    title.textContent=id?'Üye Düzenle':'Yeni Ekip Üyesi';
+    body.innerHTML=`
+      <div class="mf-row">
+        <div class="mf-group"><label>Kısaltma (Avatar)</label><input id="mf-initials" value="${esc(item.initials||'')}" maxlength="3" placeholder="Örn: GS"><div class="mf-hint">Max 3 karakter</div></div>
+        <div class="mf-group"><label>Rol / Pozisyon</label><input id="mf-role" value="${esc(item.role||'')}"></div>
+      </div>
+      <div class="mf-group"><label>Ad Soyad</label><input id="mf-name" value="${esc(item.name||'')}" placeholder="Boş bırakılabilir"></div>
+      <div class="mf-group"><label>Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>
+      <div class="mf-group"><label>Instagram Kullanıcı Adı</label><input id="mf-instagram" value="${esc(item.instagram||'')}" placeholder="@olmadan yazın"></div>
+      <div class="mf-group"><label>Rozet İkonu</label><input id="mf-badge" value="${esc(item.badge||'fas fa-star')}"><div class="mf-hint">FontAwesome sınıfı, örn: fas fa-star</div></div>`;
+  }
+  else if(type==='sponsor'){
+    const data=get('vuf_sponsorlar',DEF_SPONSOR);
+    const item=id?data.find(x=>x.id===id):{};
+    title.textContent=id?'Sponsor Düzenle':'Yeni Sponsor';
+    body.innerHTML=`
+      <div class="mf-group"><label>Sponsor Adı</label><input id="mf-name" value="${esc(item.name||'')}"></div>
+      <div class="mf-group"><label>Kategori</label>
+        <select id="mf-tier">
+          <option value="gold" ${(item.tier||'gold')==='gold'?'selected':''}>🏆 Altın Sponsor</option>
+          <option value="silver" ${item.tier==='silver'?'selected':''}>🥈 Gümüş Sponsor</option>
+          <option value="bronze" ${item.tier==='bronze'?'selected':''}>🥉 Bronz Sponsor</option>
+        </select>
+      </div>`;
+  }
+  else if(type==='program'){
+    const prog=get('vuf_program',DEF_PROGRAM);
+    const dayKey='day'+currentProgDay;
+    const item=id?prog[dayKey].find(x=>x.id===id):{};
+    title.textContent=id?'Program Maddesi Düzenle':'Yeni Program Maddesi';
+    body.innerHTML=`
+      <div class="mf-group"><label>Gün</label>
+        <select id="mf-day">
+          <option value="1" ${currentProgDay===1?'selected':''}>1. Gün</option>
+          <option value="2" ${currentProgDay===2?'selected':''}>2. Gün</option>
+          <option value="3" ${currentProgDay===3?'selected':''}>3. Gün</option>
+        </select>
+      </div>
+      <div class="mf-group"><label>Saat</label><input id="mf-time" value="${esc(item.time||'')}" placeholder="Örn: 09:00"></div>
+      <div class="mf-group"><label>Başlık</label><input id="mf-title" value="${esc(item.title||'')}"></div>
+      <div class="mf-group"><label>Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>`;
+  }
+
+  overlay.classList.remove('hidden');
+}
+
+function closeModal(){document.getElementById('modalOverlay').classList.add('hidden');}
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+function saveModal(){
+  if(modalType==='komisyon'){
+    const data=get('vuf_komisyonlar',DEF_KOMISYON);
+    const obj={
+      id:modalId||nextId(data),
+      num:document.getElementById('mf-num').value.trim(),
+      icon:document.getElementById('mf-icon').value.trim()||'fas fa-star',
+      name:document.getElementById('mf-name').value.trim(),
+      desc:document.getElementById('mf-desc').value.trim(),
+      baskan:document.getElementById('mf-baskan').value.trim(),
+    };
+    if(!obj.name){toast('Komisyon adı boş olamaz','error');return}
+    if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
+    set('vuf_komisyonlar',data);renderKomisyonlar();toast('Komisyon kaydedildi!','success');
+  }
+  else if(modalType==='ekip'){
+    const data=get('vuf_ekip',DEF_EKIP);
+    const obj={
+      id:modalId||nextId(data),
+      initials:document.getElementById('mf-initials').value.trim(),
+      role:document.getElementById('mf-role').value.trim(),
+      name:document.getElementById('mf-name').value.trim(),
+      desc:document.getElementById('mf-desc').value.trim(),
+      instagram:document.getElementById('mf-instagram').value.trim(),
+      badge:document.getElementById('mf-badge').value.trim()||'fas fa-star',
+    };
+    if(!obj.role){toast('Rol boş olamaz','error');return}
+    if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
+    set('vuf_ekip',data);renderEkip();toast('Ekip üyesi kaydedildi!','success');
+  }
+  else if(modalType==='sponsor'){
+    const data=get('vuf_sponsorlar',DEF_SPONSOR);
+    const obj={
+      id:modalId||nextId(data),
+      name:document.getElementById('mf-name').value.trim(),
+      tier:document.getElementById('mf-tier').value,
+    };
+    if(!obj.name){toast('Sponsor adı boş olamaz','error');return}
+    if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
+    set('vuf_sponsorlar',data);renderSponsorlar();toast('Sponsor kaydedildi!','success');
+  }
+  else if(modalType==='program'){
+    const prog=get('vuf_program',DEF_PROGRAM);
+    const newDay='day'+document.getElementById('mf-day').value;
+    const oldDay='day'+currentProgDay;
+    if(!prog[newDay])prog[newDay]=[];
+    const obj={
+      time:document.getElementById('mf-time').value.trim(),
+      title:document.getElementById('mf-title').value.trim(),
+      desc:document.getElementById('mf-desc').value.trim(),
+    };
+    if(!obj.title){toast('Başlık boş olamaz','error');return}
+    if(modalId){
+      if(newDay===oldDay){
+        // Aynı gün — yerinde güncelle
+        const i=prog[oldDay].findIndex(x=>x.id===modalId);
+        if(i>-1){prog[oldDay][i]={...obj,id:modalId};}
+        else{prog[oldDay].push({...obj,id:modalId});}
+      } else {
+        // Gün değişti — eskisinden sil, yenisine yeni ID ile ekle
+        prog[oldDay]=(prog[oldDay]||[]).filter(x=>x.id!==modalId);
+        prog[newDay].push({...obj,id:nextId(prog[newDay])});
+      }
+    } else {
+      prog[newDay].push({...obj,id:nextId(prog[newDay])});
+    }
+    set('vuf_program',prog);renderProgram();toast('Program maddesi kaydedildi!','success');
+  }
+  closeModal();
+}
+
+/* ════════════════════════════════════
+   DELETE
+════════════════════════════════════ */
+function deleteItem(type,id){
+  if(!confirm('Bu öğeyi silmek istediğinizden emin misiniz?'))return;
+  if(type==='komisyon'){const d=get('vuf_komisyonlar',DEF_KOMISYON).filter(x=>x.id!==id);set('vuf_komisyonlar',d);renderKomisyonlar();toast('Komisyon silindi','info');}
+  else if(type==='ekip'){const d=get('vuf_ekip',DEF_EKIP).filter(x=>x.id!==id);set('vuf_ekip',d);renderEkip();toast('Üye silindi','info');}
+  else if(type==='sponsor'){const d=get('vuf_sponsorlar',DEF_SPONSOR).filter(x=>x.id!==id);set('vuf_sponsorlar',d);renderSponsorlar();toast('Sponsor silindi','info');}
+  else if(type==='program'){
+    const prog=get('vuf_program',DEF_PROGRAM);
+    const day='day'+currentProgDay;
+    prog[day]=(prog[day]||[]).filter(x=>x.id!==id);
+    set('vuf_program',prog);renderProgram();toast('Program maddesi silindi','info');
+  }
+}
+
+/* ════════════════════════════════════
+   TOAST
+════════════════════════════════════ */
+function toast(msg,type='info'){
+  const t=document.getElementById('toast');
+  t.className='toast '+type;
+  t.innerHTML=`<i class="fas fa-${type==='success'?'check-circle':type==='error'?'exclamation-circle':'info-circle'}"></i> ${msg}`;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+/* ════════════════════════════════════
+   INIT
+════════════════════════════════════ */
+initData();
+renderDashboard();
+</script>
+</body>
+</html>

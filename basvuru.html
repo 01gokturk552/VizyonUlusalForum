@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>Başvuru – Vizyon Ulusal Forum 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="basvuru.css">
+</head>
+<body class="basvuru-body">
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" class="nav-logo-img">
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Ana Sayfa</a></li>
+      <li><a href="index.html#komisyonlar" class="nav-link">Komisyonlar</a></li>
+      <li><a href="index.html#akis" class="nav-link">Program</a></li>
+      <li><a href="ekibimiz.html" class="nav-link">Ekibimiz</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menüyü aç/kapat"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="basvuru-hero">
+  <div class="basvuru-hero-inner">
+    <div class="basvuru-eyebrow"><i class="fas fa-pen-nib"></i> Vizyon Ulusal Forum 2026</div>
+    <h1>Başvuru <span>Formu</span></h1>
+    <p>Geleceği şekillendirmek için ilk adımı at.</p>
+    <div class="basvuru-meta">
+      <span><i class="fas fa-users"></i> 270+ Katılımcı</span>
+      <span><i class="fas fa-layer-group"></i> 9 Komisyon</span>
+      <span><i class="fas fa-clock"></i> Tarih &amp; Mekan Yakında</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FORM CONTAINER ══ -->
+<div class="basvuru-container">
+
+  <!-- Tab Switcher -->
+  <div class="tab-switcher">
+    <button class="tab-btn active" id="tabDelege" onclick="switchTab('delege')">
+      <i class="fas fa-user"></i> Delege Başvurusu
+    </button>
+    <button class="tab-btn" id="tabDelegasyon" onclick="switchTab('delegasyon')">
+      <i class="fas fa-users"></i> Delegasyon Başvurusu
+    </button>
+  </div>
+
+  <!-- ── Delege Formu ── -->
+  <div class="form-panel" id="panelDelege">
+    <div class="form-info-box">
+      <i class="fas fa-info-circle"></i>
+      <div>
+        <strong>Bireysel Delege Başvurusu</strong>
+        <p>Bireysel olarak foruma katılmak isteyen lise öğrencileri için başvuru formu. Başvurunuz İK ekibimiz tarafından değerlendirilerek e-posta ile bilgilendirileceksiniz.</p>
+      </div>
+    </div>
+
+    <form id="formDelege" novalidate>
+      <div class="form-grid two-col">
+
+        <div class="form-group">
+          <label for="d_ad"><i class="fas fa-user"></i> Ad Soyad <span class="req">*</span></label>
+          <input type="text" id="d_ad" placeholder="Adınız Soyadınız" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label for="d_sinif"><i class="fas fa-graduation-cap"></i> Sınıf <span class="req">*</span></label>
+          <select id="d_sinif" required>
+            <option value="">Sınıfınızı seçin</option>
+            <option value="9">9. Sınıf</option>
+            <option value="10">10. Sınıf</option>
+            <option value="11">11. Sınıf</option>
+            <option value="12">12. Sınıf</option>
+            <option value="hazırlık">Hazırlık</option>
+            <option value="mezun">Mezun</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="d_eposta"><i class="fas fa-envelope"></i> E-posta <span class="req">*</span></label>
+          <input type="email" id="d_eposta" placeholder="ornek@email.com" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label for="d_tel"><i class="fas fa-phone"></i> Telefon <span class="req">*</span></label>
+          <input type="tel" id="d_tel" placeholder="05XX XXX XX XX" autocomplete="tel" required>
+        </div>
+
+        <div class="form-group">
+          <label for="d_okul"><i class="fas fa-school"></i> Okul Adı <span class="req">*</span></label>
+          <input type="text" id="d_okul" placeholder="Okulunuzun tam adı" required>
+        </div>
+        <div class="form-group">
+          <label for="d_sehir"><i class="fas fa-city"></i> Şehir <span class="req">*</span></label>
+          <select id="d_sehir" required>
+            <option value="">Şehir seçin</option>
+            <option>Adana</option><option>Adıyaman</option><option>Afyonkarahisar</option>
+            <option>Ağrı</option><option>Aksaray</option><option>Amasya</option>
+            <option>Ankara</option><option>Antalya</option><option>Ardahan</option>
+            <option>Artvin</option><option>Aydın</option><option>Balıkesir</option>
+            <option>Bilecik</option><option>Bingöl</option><option>Bitlis</option>
+            <option>Bolu</option><option>Burdur</option><option>Bursa</option>
+            <option>Çanakkale</option><option>Çankırı</option><option>Çorum</option>
+            <option>Denizli</option><option>Diyarbakır</option><option>Düzce</option>
+            <option>Edirne</option><option>Elazığ</option><option>Erzincan</option>
+            <option>Erzurum</option><option>Eskişehir</option><option>Gaziantep</option>
+            <option>Giresun</option><option>Gümüşhane</option><option>Hakkari</option>
+            <option>Hatay</option><option>Iğdır</option><option>Isparta</option>
+            <option>İstanbul</option><option>İzmir</option><option>Kahramanmaraş</option>
+            <option>Karabük</option><option>Karaman</option><option>Kars</option>
+            <option>Kastamonu</option><option>Kayseri</option><option>Kilis</option>
+            <option>Kırıkkale</option><option>Kırklareli</option><option>Kırşehir</option>
+            <option>Kocaeli</option><option>Konya</option><option>Kütahya</option>
+            <option>Malatya</option><option>Manisa</option><option>Mardin</option>
+            <option>Mersin</option><option>Muğla</option><option>Muş</option>
+            <option>Nevşehir</option><option>Niğde</option><option>Ordu</option>
+            <option>Osmaniye</option><option>Rize</option><option>Sakarya</option>
+            <option>Samsun</option><option>Şanlıurfa</option><option>Şırnak</option>
+            <option>Siirt</option><option>Sinop</option><option>Sivas</option>
+            <option>Tekirdağ</option><option>Tokat</option><option>Trabzon</option>
+            <option>Tunceli</option><option>Uşak</option><option>Van</option>
+            <option>Yalova</option><option>Yozgat</option><option>Zonguldak</option>
+          </select>
+        </div>
+
+        <div class="form-group full-col">
+          <label for="d_komisyon"><i class="fas fa-layer-group"></i> Komisyon Tercihi <span class="req">*</span></label>
+          <select id="d_komisyon" required>
+            <option value="">Katılmak istediğiniz komisyonu seçin</option>
+          </select>
+        </div>
+
+        <div class="form-group full-col">
+          <label for="d_motivasyon"><i class="fas fa-pen"></i> Motivasyon Mektubu <span class="req">*</span></label>
+          <textarea id="d_motivasyon" rows="5" maxlength="500" placeholder="Neden Vizyon Ulusal Forum'a katılmak istiyorsunuz? Hedeflerinizi ve kendinizi kısaca tanıtın..." required></textarea>
+          <span class="char-count" id="d_charCount">0 / 500</span>
+        </div>
+
+      </div>
+
+      <div class="form-check" id="d_kvkk_wrap">
+        <input type="checkbox" id="d_kvkk">
+        <label for="d_kvkk">6698 sayılı KVKK kapsamında kişisel verilerimin Vizyon Ulusal Forum organizasyonu tarafından işlenmesine açık rıza veriyorum.</label>
+      </div>
+      <div class="form-error-msg hidden" id="d_kvkkErr"><i class="fas fa-exclamation-circle"></i> Lütfen KVKK metnini onaylayın.</div>
+
+      <button type="submit" class="submit-btn" id="d_submitBtn">
+        <i class="fas fa-paper-plane"></i> Başvurumu Gönder
+      </button>
+    </form>
+  </div>
+
+  <!-- ── Delegasyon Formu ── -->
+  <div class="form-panel hidden" id="panelDelegasyon">
+    <div class="form-info-box">
+      <i class="fas fa-info-circle"></i>
+      <div>
+        <strong>Okul Delegasyonu Başvurusu</strong>
+        <p>Okulunuzdan birden fazla öğrenci getirmek isteyen öğretmen veya koordinatörler için başvuru formu. Başvurunuz onaylandıktan sonra ödeme ve katılım detayları e-posta ile iletilecektir.</p>
+      </div>
+    </div>
+
+    <form id="formDelegasyon" novalidate>
+      <div class="form-grid two-col">
+
+        <div class="form-group full-col">
+          <label for="dg_okul"><i class="fas fa-school"></i> Okul Adı <span class="req">*</span></label>
+          <input type="text" id="dg_okul" placeholder="Okulunuzun tam resmi adı" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dg_ogretmen"><i class="fas fa-chalkboard-teacher"></i> Koordinatör Adı Soyadı <span class="req">*</span></label>
+          <input type="text" id="dg_ogretmen" placeholder="Ad Soyad" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label for="dg_unvan"><i class="fas fa-id-badge"></i> Unvan / Branş</label>
+          <input type="text" id="dg_unvan" placeholder="Örn: Sosyal Bilgiler Öğretmeni">
+        </div>
+
+        <div class="form-group">
+          <label for="dg_eposta"><i class="fas fa-envelope"></i> E-posta <span class="req">*</span></label>
+          <input type="email" id="dg_eposta" placeholder="ornek@okul.edu.tr" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label for="dg_tel"><i class="fas fa-phone"></i> Telefon <span class="req">*</span></label>
+          <input type="tel" id="dg_tel" placeholder="05XX XXX XX XX" autocomplete="tel" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dg_sehir"><i class="fas fa-city"></i> Şehir <span class="req">*</span></label>
+          <select id="dg_sehir" required>
+            <option value="">Şehir seçin</option>
+            <option>Adana</option><option>Ankara</option><option>Antalya</option>
+            <option>Bursa</option><option>Diyarbakır</option><option>Eskişehir</option>
+            <option>Gaziantep</option><option>İstanbul</option><option>İzmir</option>
+            <option>Kayseri</option><option>Kocaeli</option><option>Konya</option>
+            <option>Malatya</option><option>Mersin</option><option>Samsun</option>
+            <option>Trabzon</option><option>Diğer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dg_sayi"><i class="fas fa-users"></i> Tahmini Katılımcı Sayısı <span class="req">*</span></label>
+          <input type="number" id="dg_sayi" min="2" max="100" placeholder="Örn: 12" required>
+        </div>
+
+        <div class="form-group full-col">
+          <label for="dg_not"><i class="fas fa-sticky-note"></i> Ek Notlar</label>
+          <textarea id="dg_not" rows="4" placeholder="Özel talebiniz veya belirtmek istediğiniz bir husus varsa yazabilirsiniz..."></textarea>
+        </div>
+
+      </div>
+
+      <div class="form-check" id="dg_kvkk_wrap">
+        <input type="checkbox" id="dg_kvkk">
+        <label for="dg_kvkk">6698 sayılı KVKK kapsamında kişisel verilerin Vizyon Ulusal Forum organizasyonu tarafından işlenmesine açık rıza veriyorum.</label>
+      </div>
+      <div class="form-error-msg hidden" id="dg_kvkkErr"><i class="fas fa-exclamation-circle"></i> Lütfen KVKK metnini onaylayın.</div>
+
+      <button type="submit" class="submit-btn" id="dg_submitBtn">
+        <i class="fas fa-paper-plane"></i> Başvurumu Gönder
+      </button>
+    </form>
+  </div>
+
+</div>
+
+<!-- ══ SUCCESS MODAL ══ -->
+<div class="modal-overlay hidden" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-check"><i class="fas fa-check"></i></div>
+    <h3>Başvurunuz Alındı!</h3>
+    <p id="modalMsg">Başvurunuz başarıyla iletildi.</p>
+    <div class="modal-actions">
+      <a href="index.html" class="btn-modal-primary"><i class="fas fa-home"></i> Ana Sayfaya Dön</a>
+      <button onclick="resetModal()" class="btn-modal-secondary"><i class="fas fa-plus"></i> Yeni Başvuru</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════ TAB SWITCHER ════ */
+function switchTab(tab) {
+  const isDel = tab === 'delege';
+  document.getElementById('tabDelege').classList.toggle('active', isDel);
+  document.getElementById('tabDelegasyon').classList.toggle('active', !isDel);
+  document.getElementById('panelDelege').classList.toggle('hidden', !isDel);
+  document.getElementById('panelDelegasyon').classList.toggle('hidden', isDel);
+  window.scrollTo({ top: document.querySelector('.basvuru-container').offsetTop - 80, behavior: 'smooth' });
+}
+if (window.location.hash === '#delegasyon') switchTab('delegasyon');
+
+/* ════ DYNAMIC KOMİSYON DROPDOWN ════ */
+(function loadKomisyonlar() {
+  const DEF = ['Ekonomi','Eğitim','Gençlik & Spor','Dış Politika','Hukuk & Anayasa','Kültür & Sanat','Toplum & Psikoloji','Toplumsal Cinsiyet Eşitliği','Dijitalleşme & Teknoloji'];
+  let names = DEF;
+  try {
+    const stored = JSON.parse(localStorage.getItem('vuf_komisyonlar') || 'null');
+    if (stored && stored.length) names = stored.map(k => k.name);
+  } catch {}
+  const sel = document.getElementById('d_komisyon');
+  names.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name + ' Komisyonu';
+    opt.textContent = name + ' Komisyonu';
+    sel.appendChild(opt);
+  });
+})();
+
+/* ════ CHAR COUNTER ════ */
+document.getElementById('d_motivasyon').addEventListener('input', function() {
+  const n = this.value.length;
+  const el = document.getElementById('d_charCount');
+  el.textContent = n + ' / 500';
+  el.style.color = n > 500 ? '#D94F4F' : '#B8C4D8';
+});
+
+/* ════ HELPERS ════ */
+function nextId(key) {
+  const arr = JSON.parse(localStorage.getItem(key) || '[]');
+  return arr.length ? Math.max(...arr.map(x => x.id)) + 1 : 1;
+}
+function now() {
+  return new Date().toLocaleDateString('tr-TR') + ' ' + new Date().toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit'});
+}
+function save(key, obj) {
+  const arr = JSON.parse(localStorage.getItem(key) || '[]');
+  arr.unshift(obj);
+  localStorage.setItem(key, JSON.stringify(arr));
+}
+function showModal(msg) {
+  document.getElementById('modalMsg').textContent = msg;
+  document.getElementById('modalOverlay').classList.remove('hidden');
+}
+function resetModal() {
+  document.getElementById('modalOverlay').classList.add('hidden');
+  // Only reset the currently visible form
+  const activePanel = document.getElementById('panelDelege').classList.contains('hidden') ? 'formDelegasyon' : 'formDelege';
+  document.getElementById(activePanel).reset();
+  document.getElementById('d_charCount').textContent = '0 / 500';
+  document.getElementById('d_kvkkErr').classList.add('hidden');
+  document.getElementById('dg_kvkkErr').classList.add('hidden');
+}
+
+/* ════ DELEGE FORM SUBMIT ════ */
+document.getElementById('formDelege').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // KVKK check (inline)
+  const kvkk = document.getElementById('d_kvkk');
+  const kvkkErr = document.getElementById('d_kvkkErr');
+  if (!kvkk.checked) {
+    kvkkErr.classList.remove('hidden');
+    kvkk.closest('.form-check').scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+  kvkkErr.classList.add('hidden');
+
+  // HTML5 validity
+  if (!this.checkValidity()) { this.reportValidity(); return; }
+
+  const mot = document.getElementById('d_motivasyon').value;
+
+  // Disable button
+  const btn = document.getElementById('d_submitBtn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Gönderiliyor…';
+
+  setTimeout(() => {
+    save('vuf_delegeler', {
+      id:         nextId('vuf_delegeler'),
+      ad_soyad:   document.getElementById('d_ad').value.trim(),
+      eposta:     document.getElementById('d_eposta').value.trim(),
+      telefon:    document.getElementById('d_tel').value.trim(),
+      okul:       document.getElementById('d_okul').value.trim(),
+      sinif:      document.getElementById('d_sinif').value,
+      sehir:      document.getElementById('d_sehir').value,
+      komisyon:   document.getElementById('d_komisyon').value,
+      motivasyon: mot.trim(),
+      durum: 'Başvuru Beklemede', tarih: now(), tip: 'delege'
+    });
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Başvurumu Gönder';
+    showModal('Delege başvurunuz alındı. İK ekibimiz başvurunuzu inceleyecek ve en kısa sürede e-posta ile bilgilendirileceksiniz.');
+    this.reset();
+    document.getElementById('d_charCount').textContent = '0 / 500';
+  }, 700);
+});
+
+/* ════ DELEGASYON FORM SUBMIT ════ */
+document.getElementById('formDelegasyon').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // KVKK check (inline)
+  const kvkk = document.getElementById('dg_kvkk');
+  const kvkkErr = document.getElementById('dg_kvkkErr');
+  if (!kvkk.checked) {
+    kvkkErr.classList.remove('hidden');
+    kvkk.closest('.form-check').scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+  kvkkErr.classList.add('hidden');
+
+  if (!this.checkValidity()) { this.reportValidity(); return; }
+
+  const sayi = parseInt(document.getElementById('dg_sayi').value);
+  if (isNaN(sayi) || sayi < 2) { document.getElementById('dg_sayi').setCustomValidity('En az 2 katılımcı giriniz.'); this.reportValidity(); return; }
+  document.getElementById('dg_sayi').setCustomValidity('');
+
+  const btn = document.getElementById('dg_submitBtn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Gönderiliyor…';
+
+  setTimeout(() => {
+    save('vuf_delegasyonlar', {
+      id:               nextId('vuf_delegasyonlar'),
+      okul:             document.getElementById('dg_okul').value.trim(),
+      ogretmen:         document.getElementById('dg_ogretmen').value.trim(),
+      unvan:            document.getElementById('dg_unvan').value.trim(),
+      eposta:           document.getElementById('dg_eposta').value.trim(),
+      telefon:          document.getElementById('dg_tel').value.trim(),
+      sehir:            document.getElementById('dg_sehir').value,
+      katilimci_sayisi: document.getElementById('dg_sayi').value,
+      not:              document.getElementById('dg_not').value.trim(),
+      durum: 'Başvuru Beklemede', tarih: now(), tip: 'delegasyon'
+    });
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Başvurumu Gönder';
+    showModal('Delegasyon başvurunuz alındı. Başvurunuz onaylandıktan sonra ödeme ve katılım detayları e-posta ile iletilecektir.');
+    this.reset();
+  }, 700);
+});
+
+/* ════ KVKK error hide on check ════ */
+document.getElementById('d_kvkk').addEventListener('change', () => { if (document.getElementById('d_kvkk').checked) document.getElementById('d_kvkkErr').classList.add('hidden'); });
+document.getElementById('dg_kvkk').addEventListener('change', () => { if (document.getElementById('dg_kvkk').checked) document.getElementById('dg_kvkkErr').classList.add('hidden'); });
+
+/* ════ NAVBAR & HAMBURGER ════ */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('navMenu').classList.toggle('open');
+});
+</script>
+</body>
+</html>

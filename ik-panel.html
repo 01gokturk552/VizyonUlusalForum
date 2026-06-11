@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>İK Panel – Vizyon Ulusal Forum 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f0f2f8; color: #1a1a2e; min-height: 100vh; }
+
+/* TOPBAR */
+.topbar {
+  background: #0d1b2a; color: #fff; padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 58px; position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.topbar-left { display: flex; align-items: center; gap: 1rem; }
+.top-logo { font-size: 1.2rem; font-weight: 900; }
+.top-logo span { color: #e63946; }
+.top-title { font-size: 0.95rem; font-weight: 600; color: rgba(255,255,255,0.8); border-left: 1px solid rgba(255,255,255,0.2); padding-left: 1rem; }
+.topbar-right { display: flex; align-items: center; gap: 1rem; }
+.top-user { font-size: 0.82rem; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 0.4rem; }
+.logout-btn {
+  background: #e63946; color: #fff; border: none; padding: 0.4rem 1rem;
+  border-radius: 6px; font-family: inherit; font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: background 0.2s;
+}
+.logout-btn:hover { background: #c1121f; }
+
+/* MAIN */
+.main { max-width: 1300px; margin: 0 auto; padding: 1.5rem; }
+
+/* INFO BANNER */
+.info-banner {
+  background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px;
+  padding: 0.9rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.88rem; color: #1e40af;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+/* STATS */
+.stats-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.stat-pill {
+  background: #fff; border-radius: 10px; padding: 0.9rem 1.25rem;
+  display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 140px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;
+}
+.stat-pill-icon { width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+.stat-pill-icon.blue { background: rgba(26,58,107,0.1); color: #1a3a6b; }
+.stat-pill-icon.green { background: rgba(34,197,94,0.12); color: #16a34a; }
+.stat-pill-icon.yellow { background: rgba(234,179,8,0.12); color: #ca8a04; }
+.stat-pill-icon.purple { background: rgba(139,92,246,0.12); color: #7c3aed; }
+.stat-pill-icon.red { background: rgba(230,57,70,0.12); color: #e63946; }
+.stat-pill-text { }
+.stat-pill-num { font-size: 1.4rem; font-weight: 800; line-height: 1; color: #1a1a2e; }
+.stat-pill-label { font-size: 0.75rem; color: #888; font-weight: 500; }
+
+/* PANEL TABS */
+.panel-tabs { display: flex; gap: 0.4rem; margin-bottom: 1.5rem; }
+.panel-tab {
+  padding: 0.6rem 1.4rem; border-radius: 8px; border: 1.5px solid #e2e8f0;
+  background: #fff; font-family: inherit; font-size: 0.88rem; font-weight: 600;
+  cursor: pointer; color: #666; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
+}
+.panel-tab.active { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+.panel-tab:not(.active):hover { border-color: #1a3a6b; color: #1a3a6b; }
+.badge {
+  background: rgba(255,255,255,0.25); color: inherit; font-size: 0.72rem;
+  padding: 0.1rem 0.5rem; border-radius: 100px; font-weight: 700;
+}
+.panel-tab:not(.active) .badge { background: #f0f2f8; color: #888; }
+
+/* TOOLBAR */
+.toolbar {
+  background: #fff; border-radius: 10px; padding: 1rem 1.25rem;
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+  flex-wrap: wrap; border: 1px solid #e2e8f0;
+}
+.search-wrap { position: relative; flex: 1; min-width: 200px; }
+.search-wrap i { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #aaa; font-size: 0.85rem; }
+.search-wrap input {
+  width: 100%; padding: 0.55rem 0.9rem 0.55rem 2.2rem;
+  border: 1.5px solid #e2e8f0; border-radius: 8px;
+  font-family: inherit; font-size: 0.88rem; outline: none;
+}
+.search-wrap input:focus { border-color: #1a3a6b; }
+.filter-select {
+  padding: 0.55rem 0.9rem; border: 1.5px solid #e2e8f0; border-radius: 8px;
+  font-family: inherit; font-size: 0.85rem; color: #555; cursor: pointer; outline: none;
+}
+.filter-select:focus { border-color: #1a3a6b; }
+.export-btn {
+  padding: 0.55rem 1.1rem; background: #f0f2f8; border: 1.5px solid #e2e8f0;
+  border-radius: 8px; font-family: inherit; font-size: 0.85rem; font-weight: 600;
+  color: #555; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s;
+}
+.export-btn:hover { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+
+/* TABLE */
+.table-wrap {
+  background: #fff; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;
+}
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+thead { background: #f8f9fc; }
+thead th {
+  padding: 0.9rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px; color: #888;
+  border-bottom: 1px solid #e2e8f0; white-space: nowrap;
+}
+tbody tr { border-bottom: 1px solid #f0f2f8; transition: background 0.15s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #f8f9fc; }
+tbody td { padding: 0.85rem 1rem; vertical-align: middle; }
+.td-id { font-weight: 700; color: #888; font-size: 0.8rem; }
+.td-name { font-weight: 600; color: #1a1a2e; }
+.td-email { color: #555; }
+.td-phone { color: #555; font-size: 0.82rem; white-space: nowrap; }
+.td-city { }
+.td-date { color: #888; font-size: 0.8rem; white-space: nowrap; }
+
+/* STATUS BADGES */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.25rem 0.65rem; border-radius: 100px; font-size: 0.75rem; font-weight: 700;
+  white-space: nowrap;
+}
+.status-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+.s-beklemede { background: #fef9c3; color: #a16207; }
+.s-onaylandi { background: #dcfce7; color: #15803d; }
+.s-reddedildi { background: #fee2e2; color: #dc2626; }
+.s-odeme { background: #ede9fe; color: #7c3aed; }
+.s-kabul { background: #dbeafe; color: #1d4ed8; }
+.s-komisyon { background: #fce7f3; color: #be185d; }
+
+/* STATUS SELECT */
+.status-select {
+  padding: 0.3rem 0.6rem; border-radius: 8px; border: 1.5px solid #e2e8f0;
+  font-family: inherit; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+  outline: none; transition: border-color 0.2s; min-width: 130px;
+}
+.status-select:focus { border-color: #1a3a6b; }
+
+/* ACTION BUTTONS */
+.actions-cell { display: flex; align-items: center; gap: 0.4rem; flex-wrap: nowrap; }
+.btn-detail {
+  padding: 0.3rem 0.65rem; background: #f0f2f8; border: 1px solid #e2e8f0;
+  border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
+  transition: all 0.15s; font-family: inherit; color: #1a3a6b; white-space: nowrap;
+}
+.btn-detail:hover { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+
+/* EMPTY STATE */
+.empty-state { text-align: center; padding: 4rem 2rem; color: #aaa; }
+.empty-state i { font-size: 3rem; display: block; margin-bottom: 1rem; }
+.empty-state p { font-size: 0.9rem; }
+
+/* PAGINATION */
+.pagination { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-top: 1px solid #f0f2f8; flex-wrap: wrap; gap: 0.5rem; }
+.page-info { font-size: 0.82rem; color: #888; }
+.page-btns { display: flex; gap: 0.3rem; }
+.page-btn {
+  width: 32px; height: 32px; border-radius: 6px; border: 1px solid #e2e8f0;
+  background: #fff; font-family: inherit; font-size: 0.82rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+}
+.page-btn:hover, .page-btn.active { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+.page-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* DETAIL MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999; padding: 1.5rem;
+}
+.modal-overlay.hidden { display: none; }
+.modal-box {
+  background: #fff; border-radius: 16px; max-width: 560px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 1.5rem; border-bottom: 1px solid #f0f2f8;
+  position: sticky; top: 0; background: #fff; border-radius: 16px 16px 0 0;
+}
+.modal-header h3 { font-size: 1.1rem; font-weight: 700; }
+.modal-close {
+  width: 32px; height: 32px; border: none; background: #f0f2f8;
+  border-radius: 8px; cursor: pointer; font-size: 1rem; display: flex;
+  align-items: center; justify-content: center; color: #555; transition: all 0.2s;
+}
+.modal-close:hover { background: #e63946; color: #fff; }
+.modal-body { padding: 1.5rem; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.detail-item label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; display: block; margin-bottom: 0.2rem; }
+.detail-item span { font-size: 0.9rem; font-weight: 600; color: #1a1a2e; }
+.detail-item.full { grid-column: 1/-1; }
+.detail-item.full span { white-space: pre-wrap; font-size: 0.85rem; font-weight: 400; color: #444; line-height: 1.6; }
+.modal-status-row { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #f0f2f8; }
+.modal-status-row label { font-size: 0.8rem; font-weight: 700; color: #555; display: block; margin-bottom: 0.5rem; }
+.modal-status-select {
+  width: 100%; padding: 0.65rem 1rem; border: 1.5px solid #e2e8f0; border-radius: 8px;
+  font-family: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer; outline: none;
+}
+.modal-status-select:focus { border-color: #1a3a6b; }
+.modal-save-btn {
+  width: 100%; margin-top: 0.75rem; padding: 0.75rem; background: #1a3a6b; color: #fff;
+  border: none; border-radius: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+.modal-save-btn:hover { background: #0d2651; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem; background: #1a3a6b; color: #fff;
+  padding: 0.8rem 1.4rem; border-radius: 10px; font-size: 0.88rem; font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 99999;
+  transform: translateY(100px); opacity: 0; transition: all 0.3s ease;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.success { background: #16a34a; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" style="height:32px;width:auto;max-width:140px;object-fit:contain;display:block;">
+    <div style="width:1px;height:22px;background:rgba(255,255,255,.15);flex-shrink:0"></div>
+    <div class="top-title"><i class="fas fa-users-cog"></i> İK Panel</div>
+  </div>
+  <div class="topbar-right">
+    <div class="top-user"><i class="fas fa-user-circle"></i> <span id="topUsername">—</span></div>
+    <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="info-banner">
+    <i class="fas fa-info-circle"></i>
+    İK Panel – Başvuru durumlarını güncelleyebilir ve inceleyebilirsiniz.
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar" id="statsBar"></div>
+
+  <!-- TABS -->
+  <div class="panel-tabs">
+    <button class="panel-tab" id="tabDlg" onclick="switchView('delegasyon')">
+      <i class="fas fa-users"></i> Delegasyon Başvuruları <span class="badge" id="bdgDlg">0</span>
+    </button>
+    <button class="panel-tab active" id="tabDel" onclick="switchView('delege')">
+      <i class="fas fa-user"></i> Delege Başvuruları <span class="badge" id="bdgDel">0</span>
+    </button>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Ad, e-posta, okul ara..." oninput="renderTable()">
+    </div>
+    <select class="filter-select" id="filterDurum" onchange="renderTable()">
+      <option value="">Tüm Durumlar</option>
+      <option value="Başvuru Beklemede">Beklemede</option>
+      <option value="Başvuru Onaylandı">Onaylandı</option>
+      <option value="Başvuru Reddedildi">Reddedildi</option>
+      <option value="Dekont Onaylandı">Dekont Onaylandı</option>
+      <option value="Kabul Maili Atıldı">Kabul Maili Atıldı</option>
+      <option value="Komisyon Atandı">Komisyon Atandı</option>
+    </select>
+    <button class="export-btn" onclick="exportCSV()"><i class="fas fa-download"></i> CSV İndir</button>
+    <button class="export-btn" onclick="addDemo()" style="color:#7c3aed;border-color:#c4b5fd;"><i class="fas fa-plus"></i> Demo Veri</button>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <div class="table-scroll">
+      <table id="mainTable">
+        <thead id="tableHead"></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="paginationBar"></div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay hidden" id="detailModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modalTitle">Başvuru Detayı</h3>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid" id="detailGrid"></div>
+      <div class="modal-status-row">
+        <label><i class="fas fa-edit"></i> Durumu Güncelle</label>
+        <select class="modal-status-select" id="modalStatusSelect">
+          <option value="Başvuru Beklemede">Başvuru Beklemede</option>
+          <option value="Başvuru Onaylandı">Başvuru Onaylandı</option>
+          <option value="Başvuru Reddedildi">Başvuru Reddedildi</option>
+          <option value="Dekont Onaylandı">Dekont Onaylandı</option>
+          <option value="Kabul Maili Atıldı">Kabul Maili Atıldı</option>
+          <option value="Komisyon Atandı">Komisyon Atandı</option>
+        </select>
+        <button class="modal-save-btn" onclick="saveStatus()"><i class="fas fa-save"></i> Kaydet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Auth guard ──
+const auth = JSON.parse(sessionStorage.getItem('vuf_ik_auth') || 'null');
+if (!auth) { window.location.href = 'ik-login.html'; }
+else { document.getElementById('topUsername').textContent = auth.username; }
+
+function logout() {
+  sessionStorage.removeItem('vuf_ik_auth');
+  window.location.href = 'ik-login.html';
+}
+
+// ── State ──
+let currentView = 'delege'; // 'delege' | 'delegasyon'
+let currentPage = 1;
+const PAGE_SIZE = 10;
+let currentModalId = null;
+
+function getKey() { return currentView === 'delege' ? 'vuf_delegeler' : 'vuf_delegasyonlar'; }
+function getData() { return JSON.parse(localStorage.getItem(getKey()) || '[]'); }
+function saveData(arr) { localStorage.setItem(getKey(), JSON.stringify(arr)); }
+
+// ── Status helpers ──
+const STATUS_CLASS = {
+  'Başvuru Beklemede': 's-beklemede',
+  'Başvuru Onaylandı': 's-onaylandi',
+  'Başvuru Reddedildi': 's-reddedildi',
+  'Dekont Onaylandı': 's-odeme',
+  'Kabul Maili Atıldı': 's-kabul',
+  'Komisyon Atandı': 's-komisyon'
+};
+
+function statusBadge(s) {
+  const cls = STATUS_CLASS[s] || 's-beklemede';
+  return `<span class="status-badge ${cls}">${s}</span>`;
+}
+
+function statusSelectHTML(currentStatus, id) {
+  const opts = Object.keys(STATUS_CLASS).map(s =>
+    `<option value="${s}" ${s === currentStatus ? 'selected' : ''}>${s}</option>`
+  ).join('');
+  return `<select class="status-select" onchange="quickStatus(${id}, this.value)">${opts}</select>`;
+}
+
+// ── Switch view ──
+function switchView(view) {
+  currentView = view;
+  currentPage = 1;
+  document.getElementById('tabDel').classList.toggle('active', view === 'delege');
+  document.getElementById('tabDlg').classList.toggle('active', view === 'delegasyon');
+  document.getElementById('searchInput').value = '';
+  document.getElementById('filterDurum').value = '';
+  renderTable();
+}
+
+// ── Stats ──
+function renderStats() {
+  const del = JSON.parse(localStorage.getItem('vuf_delegeler') || '[]');
+  const dlg = JSON.parse(localStorage.getItem('vuf_delegasyonlar') || '[]');
+  const all = [...del, ...dlg];
+  const beklemede = all.filter(x => x.durum === 'Başvuru Beklemede').length;
+  const onaylandi = all.filter(x => x.durum === 'Başvuru Onaylandı').length;
+  const odeme = all.filter(x => x.durum === 'Dekont Onaylandı').length;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-pill"><div class="stat-pill-icon blue"><i class="fas fa-file-alt"></i></div><div class="stat-pill-text"><div class="stat-pill-num">${all.length}</div><div class="stat-pill-label">Toplam Başvuru</div></div></div>
+    <div class="stat-pill"><div class="stat-pill-icon blue"><i class="fas fa-user"></i></div><div class="stat-pill-text"><div class="stat-pill-num">${del.length}</div><div class="stat-pill-label">Delege</div></div></div>
+    <div class="stat-pill"><div class="stat-pill-icon purple"><i class="fas fa-users"></i></div><div class="stat-pill-text"><div class="stat-pill-num">${dlg.length}</div><div class="stat-pill-label">Delegasyon</div></div></div>
+    <div class="stat-pill"><div class="stat-pill-icon yellow"><i class="fas fa-clock"></i></div><div class="stat-pill-text"><div class="stat-pill-num">${beklemede}</div><div class="stat-pill-label">Beklemede</div></div></div>
+    <div class="stat-pill"><div class="stat-pill-icon green"><i class="fas fa-check"></i></div><div class="stat-pill-text"><div class="stat-pill-num">${onaylandi}</div><div class="stat-pill-label">Onaylandı</div></div></div>
+    <div class="stat-pill"><div class="stat-pill-icon purple"><i class="fas fa-credit-card"></i></div><div class="stat-pill-text"><div class="stat-pill-num">${odeme}</div><div class="stat-pill-label">Ödeme OK</div></div></div>
+  `;
+  document.getElementById('bdgDel').textContent = del.length;
+  document.getElementById('bdgDlg').textContent = dlg.length;
+}
+
+// ── Render table ──
+function renderTable() {
+  renderStats();
+  const data = getData();
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filterDurum = document.getElementById('filterDurum').value;
+
+  let filtered = data.filter(row => {
+    const matchQ = !q || Object.values(row).some(v => String(v).toLowerCase().includes(q));
+    const matchD = !filterDurum || row.durum === filterDurum;
+    return matchQ && matchD;
+  });
+
+  const total = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  const slice = filtered.slice((currentPage-1)*PAGE_SIZE, currentPage*PAGE_SIZE);
+
+  // Headers
+  const head = document.getElementById('tableHead');
+  if (currentView === 'delege') {
+    head.innerHTML = `<tr>
+      <th>ID</th><th>Ad Soyad</th><th>E-posta</th><th>Telefon</th>
+      <th>Okul</th><th>Sınıf</th><th>Şehir</th><th>Komisyon</th>
+      <th>Durum</th><th>Tarih</th><th>İşlemler</th>
+    </tr>`;
+  } else {
+    head.innerHTML = `<tr>
+      <th>ID</th><th>Okul Adı</th><th>Öğretmen</th><th>E-posta</th>
+      <th>Telefon</th><th>Şehir</th><th>Katılımcı Sayısı</th>
+      <th>Durum</th><th>Tarih</th><th>İşlemler</th>
+    </tr>`;
+  }
+
+  // Body
+  const body = document.getElementById('tableBody');
+  if (slice.length === 0) {
+    const cols = currentView === 'delege' ? 11 : 10;
+    body.innerHTML = `<tr><td colspan="${cols}"><div class="empty-state"><i class="fas fa-inbox"></i><p>Henüz başvuru bulunmuyor.</p></div></td></tr>`;
+  } else {
+    body.innerHTML = slice.map(row => {
+      if (currentView === 'delege') {
+        return `<tr>
+          <td class="td-id">#${row.id}</td>
+          <td class="td-name">${esc(row.ad_soyad)}</td>
+          <td class="td-email">${esc(row.eposta)}</td>
+          <td class="td-phone">${esc(row.telefon)}</td>
+          <td>${esc(row.okul)}</td>
+          <td>${esc(row.sinif)}</td>
+          <td>${esc(row.sehir)}</td>
+          <td style="font-size:0.8rem">${esc(row.komisyon||'—')}</td>
+          <td>${statusBadge(row.durum)}</td>
+          <td class="td-date">${esc(row.tarih)}</td>
+          <td><div class="actions-cell">
+            <button class="btn-detail" onclick="openModal(${row.id})"><i class="fas fa-eye"></i> Detay</button>
+            ${statusSelectHTML(row.durum, row.id)}
+          </div></td>
+        </tr>`;
+      } else {
+        return `<tr>
+          <td class="td-id">#${row.id}</td>
+          <td class="td-name">${esc(row.okul)}</td>
+          <td>${esc(row.ogretmen)}</td>
+          <td class="td-email">${esc(row.eposta)}</td>
+          <td class="td-phone">${esc(row.telefon)}</td>
+          <td>${esc(row.sehir)}</td>
+          <td style="text-align:center;font-weight:700">${esc(row.katilimci_sayisi)}</td>
+          <td>${statusBadge(row.durum)}</td>
+          <td class="td-date">${esc(row.tarih)}</td>
+          <td><div class="actions-cell">
+            <button class="btn-detail" onclick="openModal(${row.id})"><i class="fas fa-eye"></i> Detay</button>
+            ${statusSelectHTML(row.durum, row.id)}
+          </div></td>
+        </tr>`;
+      }
+    }).join('');
+  }
+
+  // Pagination
+  const pgBar = document.getElementById('paginationBar');
+  const from = total === 0 ? 0 : (currentPage-1)*PAGE_SIZE + 1;
+  const to = Math.min(currentPage*PAGE_SIZE, total);
+
+  // Build visible page numbers with ellipsis markers
+  function buildPageNums(cur, total) {
+    if (total <= 7) return Array.from({length:total},(_,i)=>i+1);
+    const pages = new Set([1, total, cur]);
+    for (let d=-2; d<=2; d++) { const p=cur+d; if(p>=1&&p<=total) pages.add(p); }
+    const sorted = [...pages].sort((a,b)=>a-b);
+    const result = [];
+    let prev = 0;
+    for (const p of sorted) {
+      if (p - prev > 1) result.push('…');
+      result.push(p);
+      prev = p;
+    }
+    return result;
+  }
+
+  let pgHTML = `<div class="page-info">${from}–${to} / ${total} kayıt</div><div class="page-btns">`;
+  pgHTML += `<button class="page-btn" onclick="gotoPage(${currentPage-1})" ${currentPage===1?'disabled':''}><i class="fas fa-chevron-left"></i></button>`;
+  for (const p of buildPageNums(currentPage, totalPages)) {
+    if (p === '…') {
+      pgHTML += `<span style="display:flex;align-items:center;padding:0 4px;color:#aaa;font-size:.85rem">…</span>`;
+    } else {
+      pgHTML += `<button class="page-btn ${p===currentPage?'active':''}" onclick="gotoPage(${p})">${p}</button>`;
+    }
+  }
+  pgHTML += `<button class="page-btn" onclick="gotoPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}><i class="fas fa-chevron-right"></i></button>`;
+  pgHTML += '</div>';
+  pgBar.innerHTML = pgHTML;
+}
+
+function gotoPage(p) { currentPage = p; renderTable(); }
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Quick status change (inline dropdown) ──
+function quickStatus(id, newStatus) {
+  const data = getData();
+  const idx = data.findIndex(x => x.id === id);
+  if (idx === -1) return;
+  data[idx].durum = newStatus;
+  saveData(data);
+  showToast('Durum güncellendi: ' + newStatus, 'success');
+  renderTable();
+}
+
+// ── Detail modal ──
+function openModal(id) {
+  const data = getData();
+  const row = data.find(x => x.id === id);
+  if (!row) return;
+  currentModalId = id;
+
+  document.getElementById('modalTitle').textContent =
+    currentView === 'delege' ? `Delege #${id} – ${row.ad_soyad}` : `Delegasyon #${id} – ${row.okul}`;
+
+  let fields = [];
+  if (currentView === 'delege') {
+    fields = [
+      ['Ad Soyad', row.ad_soyad], ['Sınıf', row.sinif],
+      ['E-posta', row.eposta], ['Telefon', row.telefon],
+      ['Okul', row.okul], ['Şehir', row.sehir],
+      ['Komisyon Tercihi', row.komisyon], ['Başvuru Tarihi', row.tarih],
+      ['Motivasyon Mektubu', row.motivasyon, true]
+    ];
+  } else {
+    fields = [
+      ['Okul Adı', row.okul, true],
+      ['Koordinatör', row.ogretmen], ['Unvan / Branş', row.unvan || '—'],
+      ['E-posta', row.eposta], ['Telefon', row.telefon],
+      ['Şehir', row.sehir], ['Katılımcı Sayısı', row.katilimci_sayisi],
+      ['Başvuru Tarihi', row.tarih], ['Durum', row.durum],
+      ['Ek Not', row.not, true]
+    ];
+  }
+
+  document.getElementById('detailGrid').innerHTML = fields.map(([label, val, full]) =>
+    `<div class="detail-item ${full?'full':''}">
+      <label>${label}</label>
+      <span>${esc(val||'—')}</span>
+    </div>`
+  ).join('');
+
+  document.getElementById('modalStatusSelect').value = row.durum;
+  document.getElementById('detailModal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('detailModal').classList.add('hidden');
+  currentModalId = null;
+}
+
+function saveStatus() {
+  if (currentModalId === null) return;
+  const newStatus = document.getElementById('modalStatusSelect').value;
+  const data = getData();
+  const idx = data.findIndex(x => x.id === currentModalId);
+  if (idx === -1) return;
+  data[idx].durum = newStatus;
+  saveData(data);
+  showToast('Durum kaydedildi!', 'success');
+  closeModal();
+  renderTable();
+}
+
+// ── Export CSV ──
+function exportCSV() {
+  const data = getData();
+  if (data.length === 0) { showToast('Dışa aktarılacak veri yok.'); return; }
+  const keys = Object.keys(data[0]).filter(k => k !== 'tip');
+  const header = keys.join(';');
+  const rows = data.map(row => keys.map(k => `"${String(row[k]||'').replace(/"/g,'""')}"`).join(';'));
+  const csv = '﻿' + [header, ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = `vuf_${currentView}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('CSV indirildi!', 'success');
+}
+
+// ── Demo data ──
+function addDemo() {
+  const now = () => {
+    const d = new Date(); d.setMinutes(d.getMinutes() - Math.floor(Math.random()*10000));
+    return d.toLocaleDateString('tr-TR') + ' ' + d.toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit'});
+  };
+  const statuses = ['Başvuru Beklemede','Başvuru Onaylandı','Dekont Onaylandı','Kabul Maili Atıldı','Komisyon Atandı','Başvuru Reddedildi'];
+  const komisyonlar = ['Ekonomi','Eğitim','Dış Politika','Hukuk & Anayasa','Dijitalleşme & Teknoloji'];
+
+  const delegeler = JSON.parse(localStorage.getItem('vuf_delegeler') || '[]');
+  const nextDel = delegeler.length ? Math.max(...delegeler.map(x=>x.id))+1 : 1;
+  const adlar = [['Ahmet','Yılmaz'],['Zeynep','Kara'],['Mehmet','Demir'],['Ayşe','Çelik'],['Can','Öztürk'],['Elif','Şahin'],['Burak','Arslan'],['Selin','Koç']];
+  const okullar = ['Galatasaray Lisesi','Kadıköy Anadolu Lisesi','Robert Kolej','İTÜ Geliştirme Vakfı','Beşiktaş Atatürk Anadolu Lisesi'];
+
+  adlar.forEach(([ad,soyad],i) => {
+    delegeler.unshift({
+      id: nextDel+i, ad_soyad: ad+' '+soyad,
+      eposta: ad.toLowerCase()+'.'+soyad.toLowerCase()+'@gmail.com',
+      telefon: '05'+Math.floor(100000000+Math.random()*899999999),
+      okul: okullar[i%okullar.length], sinif: [9,10,11,12][i%4],
+      sehir: 'İstanbul', komisyon: komisyonlar[i%komisyonlar.length],
+      motivasyon: 'Forum deneyimi kazanmak ve fikirlerimi paylaşmak istiyorum.',
+      durum: statuses[i%statuses.length], tarih: now(), tip: 'delege'
+    });
+  });
+  localStorage.setItem('vuf_delegeler', JSON.stringify(delegeler));
+
+  const delegasyonlar = JSON.parse(localStorage.getItem('vuf_delegasyonlar') || '[]');
+  const nextDlg = delegasyonlar.length ? Math.max(...delegasyonlar.map(x=>x.id))+1 : 1;
+  [['Fen Lisesi A','Ali Kaya'],['Anadolu Lisesi B','Fatma Demir'],['Özel Kolej C','Hasan Çetin']].forEach(([okul,ogretmen],i) => {
+    delegasyonlar.unshift({
+      id: nextDlg+i, okul, ogretmen,
+      eposta: ogretmen.replace(' ','').toLowerCase()+'@okul.edu.tr',
+      telefon: '05'+Math.floor(100000000+Math.random()*899999999),
+      sehir: 'İstanbul', katilimci_sayisi: 5+i*3,
+      not: '', durum: statuses[i%3], tarih: now(), tip: 'delegasyon'
+    });
+  });
+  localStorage.setItem('vuf_delegasyonlar', JSON.stringify(delegasyonlar));
+
+  showToast('Demo veriler eklendi!', 'success');
+  renderTable();
+}
+
+// ── Toast ──
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = ''; t.className = 'toast' + (type ? ' '+type : '');
+  const icon = document.createElement('i');
+  icon.className = type==='success' ? 'fas fa-check-circle' : 'fas fa-info-circle';
+  t.appendChild(icon);
+  t.appendChild(document.createTextNode(' '+msg));
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── Close modal on backdrop click ──
+document.getElementById('detailModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ── Init ──
+switchView('delege');
+</script>
+</body>
+</html>

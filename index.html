@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<meta name="description" content="Vizyon Ulusal Forum 2026 – Türkiye'nin en büyük bağımsız ulusal forum etkinliği.">
+<title>Vizyon Ulusal Forum 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#anasayfa" class="nav-logo">
+      <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" class="nav-logo-img">
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#anasayfa"   class="nav-link">Ana Sayfa</a></li>
+      <li><a href="#hakkimizda" class="nav-link">Hakkımızda</a></li>
+      <li><a href="#akis"       class="nav-link">Program</a></li>
+      <li><a href="#komisyonlar"class="nav-link">Komisyonlar</a></li>
+      <li><a href="ekibimiz.html" class="nav-link">Ekibimiz</a></li>
+      <li><a href="#sponsorlar" class="nav-link">Sponsorlar</a></li>
+      <li><a href="basvuru.html" class="nav-cta"><i class="fas fa-pen-nib"></i> Başvur</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menüyü aç/kapat">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="hero" id="anasayfa">
+  <div class="hero-bg"></div>
+  <div class="hero-mesh"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <i class="fas fa-star"></i>
+      Türkiye'nin En Büyük Bağımsız Ulusal Forum Etkinliği
+    </div>
+    <h1 class="hero-title">
+      <span class="line-thin">Vizyon Ulusal Forum</span>
+      <span class="line-gold">2026</span>
+    </h1>
+    <p class="hero-sub">Gençlerin sesi, Türkiye'nin geleceği. Fikir üret, müzakere et, liderliğini keşfet.</p>
+
+    <div class="hero-meta" id="heroMeta">
+      <div class="hero-meta-pill"><i class="fas fa-users"></i> <span id="heroPillKatilimci">270+</span> Katılımcı</div>
+      <div class="hero-meta-pill"><i class="fas fa-layer-group"></i> <span id="heroPillKomisyon">9</span> Komisyon</div>
+      <div class="hero-meta-pill"><i class="fas fa-clock"></i> Tarih &amp; Mekan Yakında</div>
+    </div>
+
+    <div class="hero-coming-soon">
+      <i class="fas fa-hourglass-half"></i>
+      Tarih ve mekan bilgileri çok yakında duyurulacak
+    </div>
+
+    <div class="hero-actions">
+      <a href="basvuru.html" class="btn-primary">
+        <i class="fas fa-pen-nib"></i> Şimdi Başvur
+      </a>
+      <a href="#hakkimizda" class="btn-ghost">
+        Daha Fazla Öğren <i class="fas fa-arrow-down"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll" onclick="document.getElementById('hakkimizda').scrollIntoView({behavior:'smooth'})">
+    <i class="fas fa-chevron-down"></i>
+    <span>Kaydır</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     HAKKIMIZDA
+══════════════════════════════════════════ -->
+<section class="section" id="hakkimizda">
+  <div class="container">
+    <div class="about-layout">
+
+      <!-- Left: text & value props -->
+      <div class="about-text-col">
+        <div class="sec-eyebrow"><i class="fas fa-info-circle"></i> Hakkımızda</div>
+        <h2>Türkiye'nin gençleri için <em>bir araya geliyoruz</em></h2>
+        <p>Vizyon Ulusal Forum, Türkiye'nin dört bir yanındaki lise öğrencilerini bir çatı altında buluşturan, tamamen bağımsız ve gönüllü bir gençlik platformudur. Akademik müzakere, araştırma ve liderlik becerilerini gerçek bir forum atmosferinde deneyimleme fırsatı sunuyoruz.</p>
+        <a href="basvuru.html" class="btn-navy">Başvuru Yap <i class="fas fa-arrow-right"></i></a>
+
+        <div class="value-props stagger">
+          <div class="vp-item fade-up">
+            <div class="vp-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="vp-text">
+              <h4>Akademik Liderlik</h4>
+              <p>Profesyonel akademik kadro eşliğinde komisyon oturumları ve genel kurul çalışmaları.</p>
+            </div>
+          </div>
+          <div class="vp-item fade-up">
+            <div class="vp-icon"><i class="fas fa-handshake"></i></div>
+            <div class="vp-text">
+              <h4>Güçlü Ağ Kurma</h4>
+              <p>Türkiye'nin farklı şehirlerinden gelen öğrencilerle kalıcı profesyonel bağlar.</p>
+            </div>
+          </div>
+          <div class="vp-item fade-up">
+            <div class="vp-icon"><i class="fas fa-lightbulb"></i></div>
+            <div class="vp-text">
+              <h4>Yapılandırılmış Öğrenme</h4>
+              <p>Müzakere, araştırma ve sunum becerilerini gerçek bir forum deneyimiyle geliştir.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: stats -->
+      <div class="about-stats-col stagger" id="statsCol"></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     ETKİNLİK AKIŞI
+══════════════════════════════════════════ -->
+<section class="section section-dark" id="akis">
+  <div class="container">
+    <div class="sec-header light">
+      <div class="sec-eyebrow light"><i class="fas fa-calendar-week"></i> Program</div>
+      <h2>Etkinlik <span class="und">Akışı</span></h2>
+      <p>Üç gün boyunca yoğun, ilham verici ve keyifli bir program sizi bekliyor.</p>
+    </div>
+
+    <div class="program-wrapper">
+      <div class="day-tabs">
+        <button class="day-tab active" onclick="showDay(1,this)"><i class="fas fa-sun"></i> 1. Gün</button>
+        <button class="day-tab"        onclick="showDay(2,this)"><i class="fas fa-sun"></i> 2. Gün</button>
+        <button class="day-tab"        onclick="showDay(3,this)"><i class="fas fa-moon"></i> 3. Gün</button>
+      </div>
+
+      <!-- Rendered by JS from localStorage -->
+      <div class="timeline active" id="day1"></div>
+      <div class="timeline" id="day2"></div>
+      <div class="timeline" id="day3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     KOMİSYONLAR
+══════════════════════════════════════════ -->
+<section class="section" id="komisyonlar">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-eyebrow"><i class="fas fa-layer-group"></i> Komisyonlar</div>
+      <h2>Komisyonlarımız</h2>
+      <p>9 farklı komisyon alanında Türkiye'nin güncel meselelerini masaya yatırın.</p>
+    </div>
+    <div class="komisyon-grid stagger" id="komisyonGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SPONSORLAR
+══════════════════════════════════════════ -->
+<section class="section sponsor-section" id="sponsorlar">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-eyebrow"><i class="fas fa-handshake"></i> Sponsorlar</div>
+      <h2>Sponsorlarımız</h2>
+      <p>Etkinliğimizi destekleyen ve gençlere inanıp yatırım yapan değerli iş ortaklarımız.</p>
+    </div>
+
+    <div id="sponsorTiers"></div>
+
+    <div class="sponsor-contact">
+      <p>Projeyi desteklemek ve gençlere yatırım yapmak ister misiniz?</p>
+      <a href="mailto:vizyon@ulusalforum.com" class="btn-outline-navy">
+        <i class="fas fa-envelope"></i> Sponsor Olun
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CTA
+══════════════════════════════════════════ -->
+<section class="section cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <h2>Fırsatı Kaçırma, <span>Başvur!</span></h2>
+      <p>Türkiye'nin dört bir yanından gelen gençlerle bir araya gel, fikirlerini paylaş, geleceği birlikte şekillendir.</p>
+      <div class="cta-btns">
+        <a href="basvuru.html" class="btn-gold-solid">
+          <i class="fas fa-pen-nib"></i> Delege Olarak Başvur
+        </a>
+        <a href="basvuru.html#delegasyon" class="btn-ghost-white">
+          <i class="fas fa-users"></i> Delegasyon Getir
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" class="footer-logo-img">
+        <p>Türkiye'nin en büyük bağımsız ulusal forum etkinliği. Gençlerin geleceği şekillendirdiği platform.</p>
+        <div class="social-row">
+          <a href="#" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn" aria-label="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="social-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Keşfet</h5>
+        <ul>
+          <li><a href="#hakkimizda"><i class="fas fa-chevron-right"></i>Hakkımızda</a></li>
+          <li><a href="#akis"><i class="fas fa-chevron-right"></i>Program</a></li>
+          <li><a href="#komisyonlar"><i class="fas fa-chevron-right"></i>Komisyonlar</a></li>
+          <li><a href="#ekibimiz"><i class="fas fa-chevron-right"></i>Ekibimiz</a></li>
+          <li><a href="#sponsorlar"><i class="fas fa-chevron-right"></i>Sponsorlar</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Etkinlik</h5>
+        <ul>
+          <li class="meta"><i class="fas fa-calendar-alt"></i> Tarih Yakında Açıklanacak</li>
+          <li class="meta"><i class="fas fa-map-pin"></i> Mekan Yakında Açıklanacak</li>
+          <li class="meta"><i class="fas fa-users"></i> <span id="footerKatilimci">270+ Katılımcı</span></li>
+          <li class="meta"><i class="fas fa-layer-group"></i> <span id="footerKomisyon">9 Komisyon</span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>İletişim</h5>
+        <ul>
+          <li class="meta"><i class="fas fa-envelope"></i> vizyon@ulusalforum.com</li>
+          <li class="meta"><i class="fas fa-phone"></i> +90 XXX XXX XX XX</li>
+        </ul>
+        <div style="margin-top:1.5rem">
+          <a href="basvuru.html" class="btn-gold-solid" style="font-size:.82rem;padding:.55rem 1.25rem;border-radius:8px">
+            <i class="fas fa-pen-nib"></i> Başvur
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Vizyon Ulusal Forum. Tüm hakları saklıdır.</p>
+      <div class="footer-links">
+        <a href="#">Gizlilik Politikası</a>
+        <a href="#">Kullanım Koşulları</a>
+        <a href="ik-login.html" style="opacity:.25;font-size:.72rem">İK Panel</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script>
+/* ════════════════════════════════════════════
+   NAVBAR — scroll effect + active link
+════════════════════════════════════════════ */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+  const secs = ['anasayfa','hakkimizda','akis','komisyonlar','ekibimiz','sponsorlar'];
+  let cur = '';
+  secs.forEach(id => { const el = document.getElementById(id); if (el && window.scrollY >= el.offsetTop - 120) cur = id; });
+  document.querySelectorAll('.nav-link').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}, { passive: true });
+
+/* ════════════════════════════════════════════
+   HAMBURGER MENU
+════════════════════════════════════════════ */
+const hamburger = document.getElementById('hamburger');
+const navMenu   = document.getElementById('navMenu');
+hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); navMenu.classList.toggle('open'); });
+navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { hamburger.classList.remove('open'); navMenu.classList.remove('open'); }));
+
+/* ════════════════════════════════════════════
+   PROGRAM DAY TABS
+════════════════════════════════════════════ */
+function showDay(day, btn) {
+  document.querySelectorAll('.timeline').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.day-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('day' + day).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ════════════════════════════════════════════
+   COUNTER ANIMATION
+════════════════════════════════════════════ */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  if (!target) { el.textContent = '0'; return; }
+  const plus = target >= 10 ? '+' : '';
+  const dur = 1400, step = 16, inc = target / (dur / step);
+  let cur = 0;
+  const timer = setInterval(() => {
+    cur += inc;
+    if (cur >= target) { cur = target; clearInterval(timer); }
+    el.textContent = Math.floor(cur) + plus;
+  }, step);
+}
+
+/* ════════════════════════════════════════════
+   DYNAMIC CONTENT — Render from localStorage
+   (runs last so all elements exist before observers)
+════════════════════════════════════════════ */
+(function () {
+  const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const ls  = (k, def) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch { return def; } };
+
+  /* ─── Default data (must match admin-panel defaults) ─── */
+  const DEF_KOM = [
+    {num:'01',icon:'fas fa-chart-line',  name:'Ekonomi',                   desc:'Ekonomik kalkınma ve sürdürülebilir büyüme politikaları'},
+    {num:'02',icon:'fas fa-book-open',   name:'Eğitim',                    desc:'Eğitim reformu, müfredat geliştirme ve gençlik politikaları'},
+    {num:'03',icon:'fas fa-running',     name:'Gençlik & Spor',            desc:'Gençlik katılımı, istihdam ve spor politikaları'},
+    {num:'04',icon:'fas fa-globe-europe',name:'Dış Politika',              desc:'Uluslararası ilişkiler ve diplomatik stratejiler'},
+    {num:'05',icon:'fas fa-balance-scale',name:'Hukuk & Anayasa',          desc:'Hukuki reformlar ve anayasal düzenlemeler'},
+    {num:'06',icon:'fas fa-palette',     name:'Kültür & Sanat',            desc:'Kültürel miras, sanat politikaları ve kimlik'},
+    {num:'07',icon:'fas fa-brain',       name:'Toplum & Psikoloji',        desc:'Toplumsal sağlık, refah ve psikolojik destek politikaları'},
+    {num:'08',icon:'fas fa-venus-mars',  name:'Toplumsal Cinsiyet Eşitliği',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm'},
+    {num:'09',icon:'fas fa-microchip',   name:'Dijitalleşme & Teknoloji',  desc:'Dijital dönüşüm, yapay zeka ve teknoloji politikaları'},
+  ];
+  const DEF_SPONSOR = [
+    {name:'Sponsor Adı',tier:'gold'},{name:'Sponsor Adı',tier:'gold'},
+    {name:'Sponsor Adı',tier:'silver'},{name:'Sponsor Adı',tier:'silver'},{name:'Sponsor Adı',tier:'silver'},
+    {name:'Sponsor',tier:'bronze'},{name:'Sponsor',tier:'bronze'},{name:'Sponsor',tier:'bronze'},
+  ];
+  const DEF_PROG = {
+    day1:[{time:'08:30',title:'Kayıt & Akreditasyon',desc:'Delegelerin kayıt işlemleri ve kimlik doğrulama'},{time:'10:00',title:'Açılış Töreni',desc:'Genel Kurul Salonu — açılış konuşmaları ve resmi başlangıç'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'1. Komisyon Oturumu',desc:'Tüm komisyonlar eş zamanlı çalışmaya başlar'},{time:'16:00',title:'Akademik Konuşma',desc:'Davetli konuşmacı semineri'},{time:'17:30',title:'Sosyal Etkinlik',desc:'Icebreaker & Networking gecesi'}],
+    day2:[{time:'09:00',title:'2. Komisyon Oturumu',desc:'Yoğun müzakere ve araştırma çalışmaları'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'3. Komisyon Oturumu',desc:'Karar taslaklarının hazırlanması'},{time:'16:00',title:'Genel Kurul',desc:'Komisyon raporlarının sunumu'},{time:'19:00',title:'Resmi Gala Yemeği',desc:'Gala yemeği ve sosyal etkinlik'}],
+    day3:[{time:'09:00',title:'4. Komisyon Oturumu',desc:'Son müzakereler ve karar bildirgeleri'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'Kapanış Genel Kurulu',desc:'Tüm komisyonların ortak oturumu'},{time:'16:00',title:'Ödül Töreni & Kapanış',desc:'Sertifika dağıtımı ve kapanış konuşmaları'}],
+  };
+  const DEF_STATS = {komisyon:9, katilimci:270, sponsor:10, gun:3};
+
+  /* ─── Komisyonlar ─── */
+  const komisyonlar = ls('vuf_komisyonlar', DEF_KOM);
+  document.getElementById('komisyonGrid').innerHTML = komisyonlar.map(k => `
+    <div class="komisyon-card fade-up">
+      <span class="k-num">${esc(k.num)}</span>
+      <div class="k-icon-wrap"><i class="${esc(k.icon)}"></i></div>
+      <h3>${esc(k.name)}</h3>
+      <p>${esc(k.desc)}</p>
+      ${k.baskan ? `<p style="margin-top:.5rem;font-size:.78rem;font-weight:700;color:#3b82f6"><i class="fas fa-user-tie" style="margin-right:.3rem"></i>${esc(k.baskan)}</p>` : ''}
+    </div>`).join('');
+
+  /* ─── Sponsorlar ─── */
+  const sponsorlar = ls('vuf_sponsorlar', DEF_SPONSOR);
+  const tierCfg = {
+    gold:  {cls:'tier-gold',   icon:'fas fa-trophy', label:'Altın Sponsor',  box:'lg', iTag:'fas fa-building'},
+    silver:{cls:'tier-silver', icon:'fas fa-medal',  label:'Gümüş Sponsor',  box:'md', iTag:'fas fa-store'},
+    bronze:{cls:'tier-bronze', icon:'fas fa-award',  label:'Bronz Sponsor',  box:'sm', iTag:''},
+  };
+  const grouped = {gold:[],silver:[],bronze:[]};
+  sponsorlar.forEach(s => { if (grouped[s.tier]) grouped[s.tier].push(s); });
+  document.getElementById('sponsorTiers').innerHTML = ['gold','silver','bronze'].map(tier => {
+    if (!grouped[tier].length) return '';
+    const cfg = tierCfg[tier];
+    return `<div class="sponsor-tier ${cfg.cls}">
+      <div class="tier-label">
+        <div class="tier-label-line"></div>
+        <span><i class="${cfg.icon}"></i> ${cfg.label}</span>
+        <div class="tier-label-line"></div>
+      </div>
+      <div class="sponsor-logos">
+        ${grouped[tier].map(s => `<div class="sponsor-logo-box ${cfg.box}">${cfg.iTag ? `<i class="${cfg.iTag}"></i>` : ''}${esc(s.name)}</div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  /* ─── Program Akışı ─── */
+  const prog = ls('vuf_program', DEF_PROG);
+  [1,2,3].forEach(d => {
+    const items = prog['day'+d] || [];
+    document.getElementById('day'+d).innerHTML = items.length
+      ? items.map(p => `
+          <div class="tl-item">
+            <div class="tl-time-col"><span class="tl-time">${esc(p.time)}</span></div>
+            <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="tl-body"><strong>${esc(p.title)}</strong><p>${esc(p.desc)}</p></div>
+          </div>`).join('')
+      : '<p style="color:rgba(255,255,255,.35);text-align:center;padding:2rem">Bu gün için program henüz eklenmedi.</p>';
+  });
+
+  /* ─── İstatistikler ─── */
+  const stats = ls('vuf_istatistikler', DEF_STATS);
+  document.getElementById('statsCol').innerHTML = [
+    {k:'komisyon',  l:'Komisyon'},
+    {k:'katilimci', l:'Katılımcı'},
+    {k:'sponsor',   l:'Sponsor'},
+    {k:'gun',       l:'Gün'},
+  ].map(s => `<div class="stat-tile fade-up"><span class="st-num" data-target="${stats[s.k]||0}">0</span><span class="st-label">${s.l}</span></div>`).join('');
+
+  /* ─── Hero meta pills (dinamik) ─── */
+  document.getElementById('heroPillKatilimci').textContent = (stats.katilimci || 270) + '+';
+  document.getElementById('heroPillKomisyon').textContent  = stats.komisyon || 9;
+
+  /* ─── Footer meta (dinamik) ─── */
+  const fKatilimci = document.getElementById('footerKatilimci');
+  const fKomisyon  = document.getElementById('footerKomisyon');
+  if (fKatilimci) fKatilimci.textContent = (stats.katilimci || 270) + '+ Katılımcı';
+  if (fKomisyon)  fKomisyon.textContent  = (stats.komisyon  || 9)   + ' Komisyon';
+
+  /* ─── Intersection Observer (after all elements are in DOM) ─── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.fade-up, .stat-tile, .komisyon-card, .vp-item').forEach(el => io.observe(el));
+
+  /* ─── Counter Observer ─── */
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); cio.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.st-num[data-target]').forEach(el => cio.observe(el));
+})();
+</script>
+</body>
+</html>

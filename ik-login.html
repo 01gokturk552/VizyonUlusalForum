@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>İK Panel Girişi – VUF 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+  min-height: 100vh; display: flex;
+  background: #060d18;
+}
+
+/* ── Split Layout ── */
+.login-left {
+  flex: 1; display: none;
+  background: radial-gradient(ellipse 130% 100% at 20% 50%, #163567 0%, #0B1F3A 60%, #060d18 100%);
+  padding: 3rem; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;
+}
+@media (min-width: 900px) { .login-left { display: flex; } }
+.login-left::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(59,130,246,.07) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(59,130,246,.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.left-orb-1 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: rgba(37,99,235,.45); filter: blur(80px); top: -100px; right: -80px; }
+.left-orb-2 { position: absolute; width: 280px; height: 280px; border-radius: 50%; background: rgba(59,130,246,.20); filter: blur(60px); bottom: -60px; left: -40px; }
+.left-top { position: relative; z-index: 1; }
+.left-logo { display: flex; align-items: baseline; gap: 2px; margin-bottom: 3rem; }
+.left-logo .ltext { font-size: 1.7rem; font-weight: 900; color: #fff; letter-spacing: -.04em; }
+.left-logo .ldot  { color: #60a5fa; font-size: 2.2rem; line-height: 0; margin-bottom: -.2rem; }
+.left-logo .lyear { font-size: .85rem; font-weight: 700; color: #60a5fa; letter-spacing: .06em; margin-left: 4px; align-self: flex-end; margin-bottom: 4px; }
+.left-headline { position: relative; z-index: 1; }
+.left-headline h2 { font-size: 2.4rem; font-weight: 900; color: #fff; letter-spacing: -.03em; line-height: 1.15; margin-bottom: 1rem; }
+.left-headline h2 span { color: #60a5fa; }
+.left-headline p { color: rgba(255,255,255,.5); font-size: .95rem; line-height: 1.7; max-width: 340px; }
+.left-bottom { position: relative; z-index: 1; }
+.left-stats { display: flex; gap: 2rem; }
+.left-stat span { display: block; font-size: 1.8rem; font-weight: 900; color: #60a5fa; line-height: 1; }
+.left-stat label { font-size: .72rem; color: rgba(255,255,255,.4); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-top: .2rem; display: block; }
+
+/* ── Right Panel ── */
+.login-right {
+  width: 100%; max-width: 480px; background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  padding: 2.5rem 2rem;
+}
+@media (min-width: 900px) { .login-right { padding: 3rem; } }
+.login-card { width: 100%; max-width: 380px; }
+
+/* Logo (mobile only) */
+.mobile-logo {
+  display: flex; align-items: baseline; gap: 2px; justify-content: center; margin-bottom: 2.5rem;
+}
+@media (min-width: 900px) { .mobile-logo { display: none; } }
+.mobile-logo .ltext { font-size: 1.6rem; font-weight: 900; color: #0B1F3A; letter-spacing: -.04em; }
+.mobile-logo .ldot  { color: #2563EB; font-size: 2rem; line-height: 0; margin-bottom: -.15rem; }
+.mobile-logo .lyear { font-size: .78rem; font-weight: 700; color: #2563EB; letter-spacing: .06em; margin-left: 3px; align-self: flex-end; margin-bottom: 3px; }
+
+/* Card header */
+.card-header { margin-bottom: 2.25rem; }
+.ik-pill {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(11,31,58,.07); border: 1px solid rgba(11,31,58,.14);
+  color: #1e4080; padding: .28rem .9rem; border-radius: 100px;
+  font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.card-header h1 { font-size: 1.65rem; font-weight: 800; color: #0B1F3A; letter-spacing: -.025em; margin-bottom: .3rem; }
+.card-header p { font-size: .875rem; color: #6B7A99; }
+
+/* Error */
+.error-banner {
+  display: none; align-items: center; gap: .7rem;
+  background: #FEF2F2; border: 1px solid #FECACA; border-radius: 10px;
+  padding: .85rem 1rem; margin-bottom: 1.25rem; font-size: .85rem; color: #DC2626;
+}
+.error-banner.show { display: flex; }
+.error-banner i { font-size: 1rem; flex-shrink: 0; }
+
+/* Attempt warning */
+.attempt-warn {
+  display: none; align-items: center; gap: .6rem;
+  background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 10px;
+  padding: .75rem 1rem; margin-bottom: 1.25rem; font-size: .82rem; color: #92400E;
+}
+.attempt-warn.show { display: flex; }
+
+/* Form */
+.form-group { display: flex; flex-direction: column; gap: .42rem; margin-bottom: 1.1rem; }
+.form-group label { font-size: .78rem; font-weight: 700; color: #3D4F6E; letter-spacing: .02em; }
+.input-wrap { position: relative; }
+.input-icon { position: absolute; left: .95rem; top: 50%; transform: translateY(-50%); color: #B8C4D8; font-size: .85rem; pointer-events: none; }
+.form-group input {
+  width: 100%; padding: .78rem 1rem .78rem 2.6rem;
+  border: 1.5px solid #DDE3F0; border-radius: 10px;
+  font-family: inherit; font-size: .9rem; color: #1A2540; outline: none;
+  transition: border-color .2s, box-shadow .2s; background: #fff;
+}
+.form-group input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+.form-group input.error { border-color: #F87171; box-shadow: 0 0 0 3px rgba(248,113,113,.12); }
+.eye-btn {
+  position: absolute; right: .95rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; color: #B8C4D8; font-size: .88rem;
+  padding: 0; transition: color .2s; line-height: 1;
+}
+.eye-btn:hover { color: #0B1F3A; }
+
+/* Divider */
+.form-divider { border: none; border-top: 1px solid #EEF0F6; margin: 1.5rem 0; }
+
+/* Submit */
+.submit-btn {
+  width: 100%; padding: .92rem; background: #2563EB; color: #fff;
+  border: none; border-radius: 10px; font-family: inherit; font-size: .95rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: .55rem;
+  transition: background .22s, transform .22s, box-shadow .22s; letter-spacing: .01em;
+}
+.submit-btn:hover { background: #1d4ed8; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,99,235,.35); }
+.submit-btn:active { transform: translateY(0); }
+.submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-spinner { display: none; }
+.submit-btn.loading .btn-label { display: none; }
+.submit-btn.loading .btn-spinner { display: flex; align-items: center; gap: .5rem; }
+
+/* Back link */
+.back-link {
+  display: flex; align-items: center; justify-content: center; gap: .4rem;
+  margin-top: 1.75rem; color: #B8C4D8; font-size: .82rem;
+  transition: color .2s; text-decoration: none;
+}
+.back-link:hover { color: #0B1F3A; }
+
+/* Security note */
+.security-note {
+  display: flex; align-items: center; gap: .5rem; justify-content: center;
+  margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid #EEF0F6;
+  color: #B8C4D8; font-size: .75rem;
+}
+.security-note i { font-size: .8rem; }
+
+/* Loading spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.fa-spin-fast { animation: spin .6s linear infinite; }
+
+/* Logo boyut garantisi (style.css bu sayfaya linklenmediği için) */
+.panel-logo-img,
+.left-logo img,
+.mobile-logo img {
+  height: 32px !important;
+  width: auto !important;
+  max-width: 140px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+</style>
+</head>
+<body>
+
+<!-- LEFT PANEL -->
+<div class="login-left">
+  <div class="left-orb-1"></div>
+  <div class="left-orb-2"></div>
+
+  <div class="left-top">
+    <div class="left-logo">
+      <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" class="panel-logo-img">
+    </div>
+    <div class="left-headline">
+      <h2>İnsan <span>Kaynakları</span> Yönetim Paneli</h2>
+      <p>Başvuruları incele, durumları güncelle ve delegeleri yönet. Yalnızca yetkili personel erişebilir.</p>
+    </div>
+  </div>
+
+  <div class="left-bottom">
+    <div class="left-stats">
+      <div class="left-stat"><span>9</span><label>Komisyon</label></div>
+      <div class="left-stat"><span>270+</span><label>Katılımcı</label></div>
+      <div class="left-stat"><span>3</span><label>Gün</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="login-right">
+  <div class="login-card">
+
+    <!-- Mobile logo -->
+    <div class="mobile-logo">
+      <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" class="panel-logo-img" style="height:32px;width:auto;max-width:140px;object-fit:contain;">
+    </div>
+
+    <div class="card-header">
+      <div class="ik-pill"><i class="fas fa-shield-halved"></i> Güvenli Giriş</div>
+      <h1>Hoş Geldiniz</h1>
+      <p>Devam etmek için kimlik doğrulaması yapın.</p>
+    </div>
+
+    <div class="error-banner" id="errorBanner">
+      <i class="fas fa-circle-exclamation"></i>
+      <span id="errorText">Kullanıcı adı veya şifre hatalı.</span>
+    </div>
+    <div class="attempt-warn hidden" id="attemptWarn">
+      <i class="fas fa-triangle-exclamation"></i>
+      <span id="attemptText"></span>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label for="username">Kullanıcı Adı</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-user"></i>
+          <input type="text" id="username" placeholder="Kullanıcı adınız" required autocomplete="username" spellcheck="false">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Şifre</label>
+        <div class="input-wrap">
+          <i class="input-icon fas fa-lock"></i>
+          <input type="password" id="password" placeholder="••••••••••••" required autocomplete="current-password">
+          <button type="button" class="eye-btn" id="eyeBtn" aria-label="Şifreyi göster/gizle">
+            <i class="fas fa-eye" id="eyeIcon"></i>
+          </button>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="btn-label"><i class="fas fa-arrow-right-to-bracket"></i> Giriş Yap</span>
+        <span class="btn-spinner"><i class="fas fa-circle-notch fa-spin-fast"></i> Doğrulanıyor…</span>
+      </button>
+    </form>
+
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
+    </a>
+
+    <div class="security-note">
+      <i class="fas fa-lock"></i>
+      Bu oturum yalnızca yetkili personele açıktır.
+    </div>
+  </div>
+</div>
+
+<script>
+const USERS = [
+  { username: 'VUF_IK2026', password: 'iK!R3cr#Vz26@Panel', role: 'hr' }
+];
+
+const MAX_ATTEMPTS = 5;
+const LOCK_MINUTES = 10;
+const LOCK_KEY = 'vuf_login_lock';
+const ATTEMPTS_KEY = 'vuf_login_attempts';
+
+/* ── Lock helpers ── */
+function getLock() { return JSON.parse(localStorage.getItem(LOCK_KEY) || 'null'); }
+function setLock()  { localStorage.setItem(LOCK_KEY, JSON.stringify({ until: Date.now() + LOCK_MINUTES * 60000 })); }
+function clearLock(){ localStorage.removeItem(LOCK_KEY); localStorage.removeItem(ATTEMPTS_KEY); }
+function getAttempts() { return parseInt(localStorage.getItem(ATTEMPTS_KEY) || '0', 10); }
+function incAttempts() { const n = getAttempts() + 1; localStorage.setItem(ATTEMPTS_KEY, n); return n; }
+
+function checkLock() {
+  const lock = getLock();
+  if (!lock) return false;
+  if (Date.now() < lock.until) return true;
+  clearLock();
+  return false;
+}
+
+/* ── Eye toggle ── */
+document.getElementById('eyeBtn').addEventListener('click', () => {
+  const inp  = document.getElementById('password');
+  const icon = document.getElementById('eyeIcon');
+  if (inp.type === 'password') { inp.type = 'text';     icon.className = 'fas fa-eye-slash'; }
+  else                         { inp.type = 'password'; icon.className = 'fas fa-eye'; }
+});
+
+/* ── Show error ── */
+function showError(msg) {
+  const b = document.getElementById('errorBanner');
+  document.getElementById('errorText').textContent = msg;
+  b.classList.add('show');
+  document.getElementById('password').classList.add('error');
+  setTimeout(() => { b.classList.remove('show'); document.getElementById('password').classList.remove('error'); }, 5000);
+}
+
+function showWarn(msg) {
+  const w = document.getElementById('attemptWarn');
+  document.getElementById('attemptText').textContent = msg;
+  w.classList.remove('hidden'); w.classList.add('show');
+}
+function hideWarn() {
+  const w = document.getElementById('attemptWarn');
+  w.classList.remove('show'); w.classList.add('hidden');
+}
+
+/* ── Submit ── */
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  /* Locked? */
+  if (checkLock()) {
+    const lock = getLock();
+    const mins = Math.ceil((lock.until - Date.now()) / 60000);
+    showError(`Çok fazla başarısız deneme. ${mins} dakika sonra tekrar deneyin.`);
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading'); btn.disabled = true;
+
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value;
+
+  /* Simulate slight server delay for feel */
+  setTimeout(() => {
+    btn.classList.remove('loading'); btn.disabled = false;
+
+    const user = USERS.find(x => x.username === u && x.password === p);
+    if (user) {
+      clearLock();
+      sessionStorage.setItem('vuf_ik_auth', JSON.stringify({ username: u, role: user.role }));
+      btn.classList.add('loading'); btn.disabled = true;
+      btn.querySelector('.btn-spinner').innerHTML = '<i class="fas fa-circle-notch fa-spin-fast"></i> Yönlendiriliyor…';
+      setTimeout(() => { window.location.href = 'ik-panel.html'; }, 500);
+    } else {
+      document.getElementById('password').value = '';
+      document.getElementById('password').focus();
+      const attempts = incAttempts();
+      const remaining = MAX_ATTEMPTS - attempts;
+
+      if (attempts >= MAX_ATTEMPTS) {
+        setLock();
+        showError(`Hesap ${LOCK_MINUTES} dakika kilitlendi. Çok fazla başarısız giriş denemesi.`);
+        hideWarn();
+      } else {
+        showError('Kullanıcı adı veya şifre hatalı.');
+        if (remaining <= 2) {
+          showWarn(`Uyarı: ${remaining} deneme hakkınız kaldı. Daha fazla hatalı giriş hesabı kilitler.`);
+        }
+      }
+    }
+  }, 600);
+});
+
+/* ── On load: check lock ── */
+window.addEventListener('load', () => {
+  if (checkLock()) {
+    const lock = getLock();
+    const mins = Math.ceil((lock.until - Date.now()) / 60000);
+    document.getElementById('submitBtn').disabled = true;
+    showWarn(`Hesap kilitli. ${mins} dakika sonra tekrar deneyin.`);
+  }
+  if (sessionStorage.getItem('vuf_ik_auth')) {
+    window.location.href = 'ik-panel.html';
+  }
+});
+</script>
+</body>
+</html>

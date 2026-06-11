@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<meta name="description" content="Vizyon Ulusal Forum 2026 – Ekibimiz">
+<title>Ekibimiz – Vizyon Ulusal Forum 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<style>
+  .ekip-hero {
+    background: radial-gradient(ellipse 130% 100% at 60% 0%, #163567 0%, #0B1F3A 55%, #060f1e 100%);
+    padding: 9rem 2rem 5rem; text-align: center; position: relative; overflow: hidden;
+  }
+  .ekip-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(59,130,246,.07) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(59,130,246,.07) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black, transparent);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black, transparent);
+  }
+  .ekip-hero-orb-1 { position: absolute; width: 420px; height: 420px; border-radius: 50%; background: rgba(37,99,235,.4); filter: blur(80px); top: -120px; right: -80px; }
+  .ekip-hero-orb-2 { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: rgba(59,130,246,.18); filter: blur(60px); bottom: -60px; left: -40px; }
+  .ekip-hero-inner { position: relative; z-index: 1; }
+  .ekip-eyebrow {
+    display: inline-flex; align-items: center; gap: .45rem;
+    background: rgba(37,99,235,.18); border: 1px solid rgba(59,130,246,.4);
+    color: #60a5fa; padding: .35rem 1rem; border-radius: 100px;
+    font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .ekip-hero h1 {
+    color: #fff; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900;
+    letter-spacing: -.025em; margin-bottom: .75rem; line-height: 1.1;
+  }
+  .ekip-hero h1 span { color: #60a5fa; }
+  .ekip-hero p { color: rgba(255,255,255,.55); font-size: 1rem; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+
+  .ekip-section { padding: 5rem 0 6rem; background: var(--off-white); }
+
+  /* Larger cards for dedicated page */
+  .ekip-grid-lg {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.75rem;
+  }
+  .ekip-card {
+    background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 2.25rem 1.5rem 1.75rem; text-align: center;
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    opacity: 0; transform: translateY(22px);
+  }
+  .ekip-card.visible {
+    opacity: 1; transform: translateY(0);
+    transition: opacity .5s var(--ease), transform .5s var(--ease), box-shadow var(--dur) var(--ease);
+  }
+  .ekip-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .ekip-avatar-wrap { position: relative; width: 90px; height: 90px; margin: 0 auto 1.4rem; }
+  .ekip-avatar {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; font-weight: 800; color: var(--accent-light); letter-spacing: -.02em;
+  }
+  .ekip-badge {
+    position: absolute; bottom: -4px; right: -4px;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent); border: 2.5px solid #fff;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ekip-badge i { font-size: .7rem; color: #fff; }
+  .ekip-card .e-name { font-size: .85rem; color: var(--accent); font-weight: 700; margin-bottom: .25rem; }
+  .ekip-card h4 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .4rem; }
+  .ekip-card p { font-size: .83rem; color: var(--text-muted); line-height: 1.6; }
+  .ekip-card .e-insta {
+    display: inline-flex; align-items: center; gap: .3rem;
+    margin-top: .75rem; font-size: .78rem; color: #e1306c;
+    text-decoration: none; font-weight: 600;
+  }
+  .ekip-card .e-insta:hover { text-decoration: underline; }
+
+  .back-bar {
+    background: #fff; border-bottom: 1px solid var(--border);
+    padding: .65rem 2rem; display: flex; align-items: center;
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: .45rem;
+    color: var(--text-muted); font-size: .875rem; font-weight: 600;
+    transition: color var(--dur) var(--ease);
+  }
+  .back-btn:hover { color: var(--navy); }
+  .back-btn i { font-size: .8rem; }
+</style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" class="nav-logo-img">
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html"             class="nav-link">Ana Sayfa</a></li>
+      <li><a href="index.html#hakkimizda"  class="nav-link">Hakkımızda</a></li>
+      <li><a href="index.html#akis"        class="nav-link">Program</a></li>
+      <li><a href="index.html#komisyonlar" class="nav-link">Komisyonlar</a></li>
+      <li><a href="ekibimiz.html"          class="nav-link active">Ekibimiz</a></li>
+      <li><a href="index.html#sponsorlar"  class="nav-link">Sponsorlar</a></li>
+      <li><a href="basvuru.html" class="nav-cta"><i class="fas fa-pen-nib"></i> Başvur</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menüyü aç/kapat">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="ekip-hero">
+  <div class="ekip-hero-orb-1"></div>
+  <div class="ekip-hero-orb-2"></div>
+  <div class="ekip-hero-inner">
+    <div class="ekip-eyebrow"><i class="fas fa-users"></i> Organizasyon Ekibi</div>
+    <h1>Arkamızdaki <span>Güç</span></h1>
+    <p>Vizyon Ulusal Forum 2026'yı hayata geçiren genç ve dinamik organizasyon ekibimizle tanışın.</p>
+  </div>
+</section>
+
+<!-- ══ EKİP GRID ══ -->
+<section class="ekip-section">
+  <div class="container">
+    <div class="ekip-grid-lg stagger" id="ekipGrid"></div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" class="footer-logo-img">
+        <p>Türkiye'nin en büyük bağımsız ulusal forum etkinliği. Gençlerin sesi, Türkiye'nin geleceği.</p>
+        <div class="social-row">
+          <a href="#" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Hızlı Bağlantılar</h5>
+        <ul>
+          <li><a href="index.html#hakkimizda"><i class="fas fa-chevron-right"></i>Hakkımızda</a></li>
+          <li><a href="index.html#komisyonlar"><i class="fas fa-chevron-right"></i>Komisyonlar</a></li>
+          <li><a href="index.html#akis"><i class="fas fa-chevron-right"></i>Program</a></li>
+          <li><a href="ekibimiz.html"><i class="fas fa-chevron-right"></i>Ekibimiz</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Başvuru</h5>
+        <ul>
+          <li><a href="basvuru.html"><i class="fas fa-chevron-right"></i>Delege Başvurusu</a></li>
+          <li><a href="basvuru.html"><i class="fas fa-chevron-right"></i>Delegasyon Başvurusu</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>İletişim</h5>
+        <ul>
+          <li class="meta"><i class="fas fa-envelope"></i> info@vizyonulusalforum.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Vizyon Ulusal Forum. Tüm hakları saklıdır.</p>
+      <div class="footer-links">
+        <a href="#">Gizlilik Politikası</a>
+        <a href="#">KVKK</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── Navbar scroll ── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ── Hamburger ── */
+const hamburger = document.getElementById('hamburger');
+const navMenu   = document.getElementById('navMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navMenu.classList.toggle('open');
+});
+navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  navMenu.classList.remove('open');
+}));
+
+/* ── Dynamic ekip from localStorage ── */
+(function () {
+  const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const ls  = (k, def) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch { return def; } };
+
+  const DEF_EKIP = [
+    {initials:'GS',role:'Genel Sekreter',          name:'',desc:'Organizasyonun genel koordinasyon ve stratejisinden sorumlu', instagram:'',badge:'fas fa-star'},
+    {initials:'AD',role:'Akademik Direktör',        name:'',desc:'Komisyon içerikleri ve akademik kalitenin yöneticisi',        instagram:'',badge:'fas fa-graduation-cap'},
+    {initials:'İD',role:'İletişim Direktörü',      name:'',desc:'Tanıtım, sosyal medya ve marka iletişimi yöneticisi',         instagram:'',badge:'fas fa-bullhorn'},
+    {initials:'LD',role:'Lojistik Direktörü',      name:'',desc:'Etkinlik lojistiği ve operasyon planlamasından sorumlu',      instagram:'',badge:'fas fa-cogs'},
+    {initials:'FD',role:'Finans Direktörü',        name:'',desc:'Bütçe yönetimi ve sponsor ilişkilerinden sorumlu',            instagram:'',badge:'fas fa-coins'},
+    {initials:'İK',role:'İnsan Kaynakları',        name:'',desc:'Başvuru süreçleri ve delege ilişkilerinin yöneticisi',        instagram:'',badge:'fas fa-user-check'},
+  ];
+
+  const ekip = ls('vuf_ekip', DEF_EKIP);
+  document.getElementById('ekipGrid').innerHTML = ekip.map(e => `
+    <div class="ekip-card fade-up">
+      <div class="ekip-avatar-wrap">
+        <div class="ekip-avatar">${esc(e.initials)}</div>
+        <div class="ekip-badge"><i class="${esc(e.badge || 'fas fa-star')}"></i></div>
+      </div>
+      ${e.name ? `<p class="e-name">${esc(e.name)}</p>` : ''}
+      <h4>${esc(e.role)}</h4>
+      <p>${esc(e.desc)}</p>
+      ${e.instagram ? `<a href="https://instagram.com/${esc(e.instagram.replace('@',''))}" target="_blank" rel="noopener" class="e-insta"><i class="fab fa-instagram"></i>@${esc(e.instagram.replace('@',''))}</a>` : ''}
+    </div>`).join('');
+
+  /* ── Scroll animations ── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up, .ekip-card').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
