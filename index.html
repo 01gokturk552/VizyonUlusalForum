@@ -61,12 +61,36 @@
     <div class="hero-meta" id="heroMeta">
       <div class="hero-meta-pill"><i class="fas fa-users"></i> <span id="heroPillKatilimci">270+</span> Katılımcı</div>
       <div class="hero-meta-pill"><i class="fas fa-layer-group"></i> <span id="heroPillKomisyon">9</span> Komisyon</div>
-      <div class="hero-meta-pill"><i class="fas fa-clock"></i> Tarih &amp; Mekan Yakında</div>
+      <div class="hero-meta-pill"><i class="fas fa-map-pin"></i> Mekan Yakında Açıklanacak</div>
     </div>
 
-    <div class="hero-coming-soon">
-      <i class="fas fa-hourglass-half"></i>
-      Tarih ve mekan bilgileri çok yakında duyurulacak
+    <!-- Etkinlik tarihi bilgisi -->
+    <div class="hero-event-date">
+      <i class="fas fa-calendar-star"></i>
+      19 – 20 Eylül 2026
+    </div>
+
+    <!-- Geri Sayım -->
+    <div class="hero-countdown" id="heroCountdown">
+      <div class="cd-box">
+        <span id="cdDays">--</span>
+        <label>Gün</label>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box">
+        <span id="cdHours">--</span>
+        <label>Saat</label>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box">
+        <span id="cdMins">--</span>
+        <label>Dakika</label>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box">
+        <span id="cdSecs">--</span>
+        <label>Saniye</label>
+      </div>
     </div>
 
     <div class="hero-actions">
@@ -389,6 +413,41 @@ const hamburger = document.getElementById('hamburger');
 const navMenu   = document.getElementById('navMenu');
 hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); navMenu.classList.toggle('open'); });
 navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { hamburger.classList.remove('open'); navMenu.classList.remove('open'); }));
+
+/* ════════════════════════════════════════════
+   GERİ SAYIM — 19 Eylül 2026 09:00
+════════════════════════════════════════════ */
+(function () {
+  const TARGET = new Date('2026-09-19T09:00:00');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const now  = new Date();
+    const diff = TARGET - now;
+
+    if (diff <= 0) {
+      document.getElementById('cdDays').textContent  = '00';
+      document.getElementById('cdHours').textContent = '00';
+      document.getElementById('cdMins').textContent  = '00';
+      document.getElementById('cdSecs').textContent  = '00';
+      return;
+    }
+
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000)  / 60000);
+    const secs  = Math.floor((diff % 60000)    / 1000);
+
+    document.getElementById('cdDays').textContent  = pad(days);
+    document.getElementById('cdHours').textContent = pad(hours);
+    document.getElementById('cdMins').textContent  = pad(mins);
+    document.getElementById('cdSecs').textContent  = pad(secs);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
 
 /* Personel modal — dışına tıklayınca kapat */
 document.getElementById('personnelModal').addEventListener('click', function(e) {

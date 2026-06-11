@@ -210,10 +210,29 @@ button { font-family: inherit; }
 .cd-box span { display: block; font-size: 2.1rem; font-weight: 900; color: #fff; line-height: 1; position: relative; }
 .cd-box label { display: block; font-size: .65rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; margin-top: .35rem; font-weight: 600; position: relative; }
 .cd-sep { font-size: 1.8rem; font-weight: 300; color: rgba(255,255,255,.25); margin-bottom: 1rem; }
+/* Countdown */
+.hero-countdown {
+  display: flex; align-items: center; justify-content: center; gap: .75rem; flex-wrap: wrap;
+  margin-bottom: 2.5rem; animation: fadeUp .8s .34s var(--ease) both;
+}
+.cd-box {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.15);
+  backdrop-filter: blur(8px); border-radius: var(--radius);
+  padding: 1rem 1.4rem; min-width: 84px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.cd-box::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(37,99,235,.10) 0%, transparent 100%);
+}
+.cd-box span { display: block; font-size: 2.1rem; font-weight: 900; color: #fff; line-height: 1; position: relative; letter-spacing: -.02em; }
+.cd-box label { display: block; font-size: .65rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; margin-top: .35rem; font-weight: 600; position: relative; }
+.cd-sep { font-size: 1.8rem; font-weight: 300; color: rgba(255,255,255,.25); margin-bottom: 1rem; }
+
 /* Buttons */
 .hero-actions {
   display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;
-  animation: fadeUp .8s .36s var(--ease) both;
+  animation: fadeUp .8s .42s var(--ease) both;
 }
 .btn-primary {
   display: inline-flex; align-items: center; gap: .55rem;
@@ -240,6 +259,17 @@ button { font-family: inherit; }
   backdrop-filter: blur(6px); animation: fadeUp .8s .30s var(--ease) both;
 }
 .hero-coming-soon i { color: var(--accent-light); }
+
+/* Etkinlik tarihi rozeti */
+.hero-event-date {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18);
+  color: rgba(255,255,255,.88); padding: .52rem 1.3rem; border-radius: 100px;
+  font-size: .88rem; font-weight: 700; letter-spacing: .04em;
+  margin-bottom: 1.5rem; backdrop-filter: blur(6px);
+  animation: fadeUp .8s .28s var(--ease) both;
+}
+.hero-event-date i { color: var(--accent-light); font-size: .85rem; }
 
 /* Scroll indicator */
 .hero-scroll {
