@@ -625,6 +625,9 @@ function animateCounter(el) {
           </div>`).join('')
       : '<p style="color:rgba(255,255,255,.35);text-align:center;padding:2rem">Bu gün için program henüz eklenmedi.</p>';
   });
+  
+  // 1. günü varsayılan olarak aktif yap
+  document.getElementById('day1').classList.add('active');
 
   /* ─── İstatistikler ─── */
   const stats = ls('vuf_istatistikler', DEF_STATS);
