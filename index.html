@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<meta name="description" content="Vizyon Ulusal Forum 2026 – Türkiye'nin en büyük bağımsız ulusal forum etkinliği.">
-<title>Vizyon Ulusal Forum 2026</title>
+<meta name="description" content="II. Vizyon Ulusal Forum – Türkiye'nin en büyük bağımsız ulusal forum etkinliği.">
+<title>II. Vizyon Ulusal Forum</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -46,6 +46,18 @@
   <div class="hero-orb hero-orb-1"></div>
   <div class="hero-orb hero-orb-2"></div>
   <div class="hero-orb hero-orb-3"></div>
+  
+  <!-- Floating Vizyon Logos -->
+  <div class="hero-floating-logos">
+    <div class="floating-logo floating-logo-1"><img src="vizyonulusalforum.png" alt="Vizyon"></div>
+    <div class="floating-logo floating-logo-2"><img src="vizyonulusalforum.png" alt="Vizyon"></div>
+    <div class="floating-logo floating-logo-3"><img src="vizyonulusalforum.png" alt="Vizyon"></div>
+    <div class="floating-logo floating-logo-4"><img src="vizyonulusalforum.png" alt="Vizyon"></div>
+    <div class="floating-logo floating-logo-5"><img src="vizyonulusalforum.png" alt="Vizyon"></div>
+    <div class="floating-logo floating-logo-6"><img src="vizyonulusalforum.png" alt="Vizyon"></div>
+    <div class="floating-logo floating-logo-7"><img src="vizyonulusalforum.png" alt="Vizyon"></div>
+    <div class="floating-logo floating-logo-8"><img src="vizyonulusalforum.png" alt="Vizyon"></div>
+  </div>
 
   <div class="hero-content">
     <div class="hero-eyebrow">
@@ -53,22 +65,20 @@
       Türkiye'nin En Büyük Bağımsız Ulusal Forum Etkinliği
     </div>
     <h1 class="hero-title">
-      <span class="line-thin">Vizyon Ulusal Forum</span>
-      <span class="line-gold">2026</span>
+      <span class="line-thin">II. Vizyon Ulusal Forum</span>
     </h1>
     <p class="hero-sub">Gençlerin sesi, Türkiye'nin geleceği. Fikir üret, müzakere et, liderliğini keşfet.</p>
 
     <div class="hero-meta" id="heroMeta">
-      <div class="hero-meta-pill"><i class="fas fa-users"></i> <span id="heroPillKatilimci">270+</span> Katılımcı</div>
       <div class="hero-meta-pill"><i class="fas fa-layer-group"></i> <span id="heroPillKomisyon">9</span> Komisyon</div>
-      <div class="hero-meta-pill"><i class="fas fa-calendar-days"></i> 19 – 20 Eylül 2026</div>
-      <div class="hero-meta-pill"><i class="fas fa-map-pin"></i> Mekan Yakında Açıklanacak</div>
+      <div class="hero-meta-pill"><i class="fas fa-calendar-days"></i> <span id="heroPillTarih">Tarih Yakında Açıklanacak</span></div>
+      <div class="hero-meta-pill"><i class="fas fa-map-pin"></i> <span id="heroPillMekan">Mekan Yakında Açıklanacak</span></div>
     </div>
 
     <!-- Etkinlik tarihi bilgisi -->
     <div class="hero-event-date">
       <i class="fas fa-calendar-star"></i>
-      19 – 20 Eylül 2026
+      <span id="heroEventDate">Tarih Yakında Açıklanacak</span>
     </div>
 
     <!-- Geri Sayım -->
@@ -92,6 +102,26 @@
         <span id="cdSecs">--</span>
         <label>Saniye</label>
       </div>
+    </div>
+
+    <!-- Etkinlik Başladı Mesajı -->
+    <div class="hero-event-started" id="heroEventStarted" style="display:none">
+      <i class="fas fa-check-circle"></i>
+      <span>Etkinliğimiz Başlamıştır</span>
+    </div>
+
+    <!-- Başvuru Durumu Mesajı -->
+    <div class="hero-basvuru-status" id="heroBasvuruStatus" style="display:none">
+      <i class="fas fa-info-circle"></i>
+      <span id="basvuruStatusText"></span>
+    </div>
+
+    <!-- Instagram Link -->
+    <div class="hero-instagram" id="heroInstagram" style="display:none">
+      <a href="#" id="instagramLink" target="_blank" rel="noopener">
+        <i class="fab fa-instagram"></i>
+        <span id="instagramText">@vizyonulusalforum</span>
+      </a>
     </div>
 
     <div class="hero-actions">
@@ -169,9 +199,9 @@
 
     <div class="program-wrapper">
       <div class="day-tabs">
-        <button class="day-tab active" onclick="showDay(1,this)"><i class="fas fa-sun"></i> 1. Gün</button>
-        <button class="day-tab"        onclick="showDay(2,this)"><i class="fas fa-sun"></i> 2. Gün</button>
-        <button class="day-tab"        onclick="showDay(3,this)"><i class="fas fa-moon"></i> 3. Gün</button>
+        <button class="day-tab active" onclick="showDay(1,this)">1. Gün</button>
+        <button class="day-tab"        onclick="showDay(2,this)">2. Gün</button>
+        <button class="day-tab"        onclick="showDay(3,this)">3. Gün</button>
       </div>
 
       <!-- Rendered by JS from localStorage -->
@@ -269,9 +299,8 @@
       <div class="footer-col">
         <h5>Etkinlik</h5>
         <ul>
-          <li class="meta"><i class="fas fa-calendar-alt"></i> 19 – 20 Eylül 2026</li>
+          <li class="meta"><i class="fas fa-calendar-alt"></i> Tarih Yakında Açıklanacak</li>
           <li class="meta"><i class="fas fa-map-pin"></i> Mekan Yakında Açıklanacak</li>
-          <li class="meta"><i class="fas fa-users"></i> <span id="footerKatilimci">270+ Katılımcı</span></li>
           <li class="meta"><i class="fas fa-layer-group"></i> <span id="footerKomisyon">9 Komisyon</span></li>
         </ul>
       </div>
@@ -419,19 +448,50 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h
    GERİ SAYIM — 19 Eylül 2026 09:00
 ════════════════════════════════════════════ */
 (function () {
-  const TARGET = new Date('2026-09-19T09:00:00');
-
   function pad(n) { return String(n).padStart(2, '0'); }
 
+  function getAyarlar() {
+    try {
+      const v = localStorage.getItem('vuf_ayarlar');
+      return v ? JSON.parse(v) : { countdown: true, instagram: '', eventDate: '2026-09-19T09:00' };
+    } catch { return { countdown: true, instagram: '', eventDate: '2026-09-19T09:00' }; }
+  }
+
   function tick() {
+    const ayarlar = getAyarlar();
+    const TARGET = new Date(ayarlar.eventDate || '2026-09-19T09:00');
     const now  = new Date();
     const diff = TARGET - now;
+    const countdownEl = document.getElementById('heroCountdown');
+    const eventStartedEl = document.getElementById('heroEventStarted');
+    const instagramEl = document.getElementById('heroInstagram');
+    const instagramLink = document.getElementById('instagramLink');
+    const instagramText = document.getElementById('instagramText');
 
+    // Geri sayım ayarı
+    if (!ayarlar.countdown) {
+      countdownEl.style.display = 'none';
+    } else {
+      countdownEl.style.display = 'flex';
+    }
+
+    // Geri sayım dolunca
     if (diff <= 0) {
       document.getElementById('cdDays').textContent  = '00';
       document.getElementById('cdHours').textContent = '00';
       document.getElementById('cdMins').textContent  = '00';
       document.getElementById('cdSecs').textContent  = '00';
+      
+      // Geri sayımı gizle, etkinlik başladı mesajını göster
+      countdownEl.style.display = 'none';
+      eventStartedEl.style.display = 'flex';
+      
+      // Instagram linkini göster
+      if (ayarlar.instagram) {
+        instagramEl.style.display = 'flex';
+        instagramLink.href = `https://instagram.com/${ayarlar.instagram.replace('@', '')}`;
+        instagramText.textContent = `@${ayarlar.instagram.replace('@', '')}`;
+      }
       return;
     }
 
@@ -495,15 +555,15 @@ function animateCounter(el) {
 
   /* ─── Default data (must match admin-panel defaults) ─── */
   const DEF_KOM = [
-    {num:'01',icon:'fas fa-chart-line',  name:'Ekonomi',                   desc:'Ekonomik kalkınma ve sürdürülebilir büyüme politikaları'},
-    {num:'02',icon:'fas fa-book-open',   name:'Eğitim',                    desc:'Eğitim reformu, müfredat geliştirme ve gençlik politikaları'},
-    {num:'03',icon:'fas fa-running',     name:'Gençlik & Spor',            desc:'Gençlik katılımı, istihdam ve spor politikaları'},
-    {num:'04',icon:'fas fa-globe-europe',name:'Dış Politika',              desc:'Uluslararası ilişkiler ve diplomatik stratejiler'},
-    {num:'05',icon:'fas fa-balance-scale',name:'Hukuk & Anayasa',          desc:'Hukuki reformlar ve anayasal düzenlemeler'},
-    {num:'06',icon:'fas fa-palette',     name:'Kültür & Sanat',            desc:'Kültürel miras, sanat politikaları ve kimlik'},
-    {num:'07',icon:'fas fa-brain',       name:'Toplum & Psikoloji',        desc:'Toplumsal sağlık, refah ve psikolojik destek politikaları'},
-    {num:'08',icon:'fas fa-venus-mars',  name:'Toplumsal Cinsiyet Eşitliği',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm'},
-    {num:'09',icon:'fas fa-microchip',   name:'Dijitalleşme & Teknoloji',  desc:'Dijital dönüşüm, yapay zeka ve teknoloji politikaları'},
+    {num:'01',icon:'fas fa-shield-halved',name:'Savunma ve Askeri İşbirliği Komisyonu',desc:'Milli savunma politikaları ve askeri işbirlikleri'},
+    {num:'02',icon:'fas fa-globe',        name:'Dış Politika Komisyonu',              desc:'Uluslararası ilişkiler ve diplomatik stratejiler'},
+    {num:'03',icon:'fas fa-microchip',    name:'Teknoloji Komisyonu',                 desc:'Teknoloji politikaları ve dijital dönüşüm'},
+    {num:'04',icon:'fas fa-balance-scale',name:'Hukuk ve Anayasa Komisyonu',          desc:'Hukuki reformlar ve anayasal düzenlemeler'},
+    {num:'05',icon:'fas fa-running',      name:'Gençlik ve Spor Komisyonu',            desc:'Gençlik katılımı, istihdam ve spor politikaları'},
+    {num:'06',icon:'fas fa-venus-mars',   name:'Toplumsal Cinsiyet Eşitliği Komisyonu',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm'},
+    {num:'07',icon:'fas fa-book-open',    name:'Eğitim Politikaları Komisyonu',       desc:'Eğitim reformu, müfredat geliştirme'},
+    {num:'08',icon:'fas fa-shield-alt',   name:'İç Güvenlik ve Terörle Mücadele Komisyonu',desc:'İç güvenlik politikaları ve terörle mücadele'},
+    {num:'09',icon:'fas fa-chart-line',  name:'Ekonomi ve Finans Politikaları Komisyonu',desc:'Ekonomik kalkınma ve finans politikaları'},
   ];
   const DEF_SPONSOR = [
     {name:'Sponsor Adı',tier:'gold'},{name:'Sponsor Adı',tier:'gold'},
@@ -515,7 +575,7 @@ function animateCounter(el) {
     day2:[{time:'09:00',title:'2. Komisyon Oturumu',desc:'Yoğun müzakere ve araştırma çalışmaları'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'3. Komisyon Oturumu',desc:'Karar taslaklarının hazırlanması'},{time:'16:00',title:'Genel Kurul',desc:'Komisyon raporlarının sunumu'},{time:'19:00',title:'Resmi Gala Yemeği',desc:'Gala yemeği ve sosyal etkinlik'}],
     day3:[{time:'09:00',title:'4. Komisyon Oturumu',desc:'Son müzakereler ve karar bildirgeleri'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'Kapanış Genel Kurulu',desc:'Tüm komisyonların ortak oturumu'},{time:'16:00',title:'Ödül Töreni & Kapanış',desc:'Sertifika dağıtımı ve kapanış konuşmaları'}],
   };
-  const DEF_STATS = {komisyon:9, katilimci:270, sponsor:10, gun:3};
+  const DEF_STATS = {komisyon:9, sponsor:10, gun:3};
 
   /* ─── Komisyonlar ─── */
   const komisyonlar = ls('vuf_komisyonlar', DEF_KOM);
@@ -570,19 +630,34 @@ function animateCounter(el) {
   const stats = ls('vuf_istatistikler', DEF_STATS);
   document.getElementById('statsCol').innerHTML = [
     {k:'komisyon',  l:'Komisyon'},
-    {k:'katilimci', l:'Katılımcı'},
     {k:'sponsor',   l:'Sponsor'},
     {k:'gun',       l:'Gün'},
   ].map(s => `<div class="stat-tile fade-up"><span class="st-num" data-target="${stats[s.k]||0}">0</span><span class="st-label">${s.l}</span></div>`).join('');
 
   /* ─── Hero meta pills (dinamik) ─── */
-  document.getElementById('heroPillKatilimci').textContent = (stats.katilimci || 270) + '+';
   document.getElementById('heroPillKomisyon').textContent  = stats.komisyon || 9;
+  
+  /* ─── Etkinlik bilgileri (localStorage'dan) ─── */
+  const ayarlar = JSON.parse(localStorage.getItem('vuf_ayarlar') || '{}');
+  const heroPillTarih = document.getElementById('heroPillTarih');
+  const heroPillMekan = document.getElementById('heroPillMekan');
+  const heroEventDate = document.getElementById('heroEventDate');
+  
+  if (ayarlar.eventDate) {
+    const eventDate = new Date(ayarlar.eventDate);
+    const formattedDate = eventDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+    const formattedTime = eventDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+    const dateStr = `${formattedDate} - ${formattedTime}`;
+    heroPillTarih.textContent = dateStr;
+    heroEventDate.textContent = dateStr;
+  }
+  
+  if (ayarlar.mekan) {
+    heroPillMekan.textContent = ayarlar.mekan;
+  }
 
   /* ─── Footer meta (dinamik) ─── */
-  const fKatilimci = document.getElementById('footerKatilimci');
   const fKomisyon  = document.getElementById('footerKomisyon');
-  if (fKatilimci) fKatilimci.textContent = (stats.katilimci || 270) + '+ Katılımcı';
   if (fKomisyon)  fKomisyon.textContent  = (stats.komisyon  || 9)   + ' Komisyon';
 
   /* ─── Intersection Observer (after all elements are in DOM) ─── */
@@ -597,6 +672,298 @@ function animateCounter(el) {
   }, { threshold: 0.5 });
   document.querySelectorAll('.st-num[data-target]').forEach(el => cio.observe(el));
 })();
+</script>
+
+<!-- ══ BAŞVURU SEÇİM MODALI ══ -->
+<div class="basvuru-modal-overlay" id="basvuruModal">
+  <div class="basvuru-modal-box">
+    <div class="basvuru-modal-close" onclick="closeBasvuruModal()">
+      <i class="fas fa-times"></i>
+    </div>
+    <div class="basvuru-modal-header">
+      <i class="fas fa-pen-nib"></i>
+      <h2>Başvuru Türünü Seçin</h2>
+      <p>Hangi türde başvuru yapmak istiyorsunuz?</p>
+    </div>
+    <div class="basvuru-modal-options">
+      <button class="basvuru-option-card" onclick="goToBasvuru('delege')">
+        <div class="option-icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="option-content">
+          <h3>Delege Başvurusu</h3>
+          <p>Bireysel olarak foruma katılmak istiyorsanız seçin</p>
+          <span class="option-fee">650 TL</span>
+        </div>
+      </button>
+      <button class="basvuru-option-card" onclick="goToBasvuru('delegasyon')">
+        <div class="option-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="option-content">
+          <h3>Delegasyon Başvurusu</h3>
+          <p>Okulunuzdan grup halinde katılmak istiyorsanız seçin</p>
+          <span class="option-fee">600 TL</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openBasvuruModal() {
+  document.getElementById('basvuruModal').classList.add('active');
+}
+
+function closeBasvuruModal() {
+  document.getElementById('basvuruModal').classList.remove('active');
+}
+
+function goToBasvuru(type) {
+  closeBasvuruModal();
+  if (type === 'delegasyon') {
+    window.location.href = 'basvuru.html#delegasyon';
+  } else {
+    window.location.href = 'basvuru.html';
+  }
+}
+
+// Başvuru linklerini modal'a yönlendir
+document.querySelectorAll('a[href="basvuru.html"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    openBasvuruModal();
+  });
+});
+
+// Delegasyon linki için özel durum
+document.querySelectorAll('a[href="basvuru.html#delegasyon"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    goToBasvuru('delegasyon');
+  });
+});
+
+// Modal dışına tıklayınca kapat
+document.getElementById('basvuruModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeBasvuruModal();
+  }
+});
+</script>
+
+<style>
+.basvuru-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 13, 24, 0.7);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1.5rem;
+}
+
+.basvuru-modal-overlay.active {
+  display: flex;
+}
+
+.basvuru-modal-box {
+  background: #fff;
+  border-radius: 24px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(11, 31, 58, 0.25);
+  animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.basvuru-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #F0F3F9;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6B7A99;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.basvuru-modal-close:hover {
+  background: #E2E8F0;
+  color: #0B1F3A;
+}
+
+.basvuru-modal-header {
+  text-align: center;
+  padding: 2.5rem 2rem 1.5rem;
+}
+
+.basvuru-modal-header i {
+  font-size: 2rem;
+  color: #7c3aed;
+  margin-bottom: 1rem;
+}
+
+.basvuru-modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0B1F3A;
+  margin-bottom: 0.5rem;
+}
+
+.basvuru-modal-header p {
+  font-size: 0.9rem;
+  color: #6B7A99;
+}
+
+.basvuru-modal-options {
+  display: grid;
+  gap: 1rem;
+  padding: 0 2rem 2.5rem;
+}
+
+.basvuru-option-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: #F8F9FC;
+  border: 2px solid #DDE3F0;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+}
+
+.basvuru-option-card:hover {
+  background: #EFF6FF;
+  border-color: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
+}
+
+.option-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.option-icon i {
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.option-content {
+  flex: 1;
+}
+
+.option-content h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0B1F3A;
+  margin-bottom: 0.25rem;
+}
+
+.option-content p {
+  font-size: 0.8rem;
+  color: #6B7A99;
+  margin-bottom: 0.5rem;
+}
+
+.option-fee {
+  display: inline-block;
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .basvuru-modal-box {
+    margin: 1rem;
+    max-width: none;
+  }
+  
+  .basvuru-modal-header {
+    padding: 2rem 1.5rem 1rem;
+  }
+  
+  .basvuru-modal-options {
+    padding: 0 1.5rem 2rem;
+  }
+  
+  .basvuru-option-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+</style>
+<script>
+// Başvuru durumu kontrolü
+function checkBasvuruDurumu() {
+  const ayarlar = JSON.parse(localStorage.getItem('vuf_basvuru_ayarlar') || '{}');
+  const basvuruAcik = ayarlar.basvuruAcik !== undefined ? ayarlar.basvuruAcik : true;
+  const basvuruSonTarih = ayarlar.basvuruSonTarih || '';
+  
+  const statusEl = document.getElementById('heroBasvuruStatus');
+  const statusTextEl = document.getElementById('basvuruStatusText');
+  const applyBtns = document.querySelectorAll('.btn-primary, .btn-navy');
+  
+  if (!basvuruAcik) {
+    // Başvurular kapalı
+    if (statusEl && statusTextEl) {
+      statusEl.style.display = 'flex';
+      statusTextEl.textContent = 'Başvurularımız Kapanmıştır';
+    }
+    applyBtns.forEach(btn => {
+      btn.style.display = 'none';
+    });
+  } else if (basvuruSonTarih) {
+    // Son tarih kontrolü
+    const sonTarih = new Date(basvuruSonTarih);
+    const suan = new Date();
+    
+    if (suan > sonTarih) {
+      if (statusEl && statusTextEl) {
+        statusEl.style.display = 'flex';
+        statusTextEl.textContent = 'Başvuru Süresi Dolmuştur';
+      }
+      applyBtns.forEach(btn => {
+        btn.style.display = 'none';
+      });
+    }
+  }
+}
+
+// Sayfa yüklendiğinde kontrol et
+document.addEventListener('DOMContentLoaded', checkBasvuruDurumu);
 </script>
 </body>
 </html>

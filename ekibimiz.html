@@ -67,6 +67,10 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 1.8rem; font-weight: 800; color: var(--accent-light); letter-spacing: -.02em;
   }
+  .ekip-avatar-img {
+    width: 90px; height: 90px; border-radius: 50%;
+    object-fit: cover; border: 2px solid var(--border);
+  }
   .ekip-badge {
     position: absolute; bottom: -4px; right: -4px;
     width: 30px; height: 30px; border-radius: 50%;
@@ -209,20 +213,24 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   const ls  = (k, def) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch { return def; } };
 
   const DEF_EKIP = [
-    {initials:'GS',role:'Genel Sekreter',          name:'',desc:'Organizasyonun genel koordinasyon ve stratejisinden sorumlu', instagram:'',badge:'fas fa-star'},
-    {initials:'AD',role:'Akademik Direktör',        name:'',desc:'Komisyon içerikleri ve akademik kalitenin yöneticisi',        instagram:'',badge:'fas fa-graduation-cap'},
-    {initials:'İD',role:'İletişim Direktörü',      name:'',desc:'Tanıtım, sosyal medya ve marka iletişimi yöneticisi',         instagram:'',badge:'fas fa-bullhorn'},
-    {initials:'LD',role:'Lojistik Direktörü',      name:'',desc:'Etkinlik lojistiği ve operasyon planlamasından sorumlu',      instagram:'',badge:'fas fa-cogs'},
-    {initials:'FD',role:'Finans Direktörü',        name:'',desc:'Bütçe yönetimi ve sponsor ilişkilerinden sorumlu',            instagram:'',badge:'fas fa-coins'},
-    {initials:'İK',role:'İnsan Kaynakları',        name:'',desc:'Başvuru süreçleri ve delege ilişkilerinin yöneticisi',        instagram:'',badge:'fas fa-user-check'},
+    {initials:'GK',role:'Genel Koordinatör',          name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu', instagram:'',badge:'fas fa-star'},
+    {initials:'OB',role:'Organizasyon Başkanı',      name:'',desc:'Organizasyon süreçlerinden sorumlu', instagram:'',badge:'fas fa-cog'},
+    {initials:'AB',role:'Akademi Başkanı',           name:'',desc:'Akademik içerik ve komisyon yönetiminden sorumlu', instagram:'',badge:'fas fa-graduation-cap'},
+    {initials:'PB',role:'PR Başkanı',                name:'',desc:'Halkla ilişkiler ve iletişimden sorumlu', instagram:'',badge:'fas fa-bullhorn'},
+    {initials:'FB',role:'Finans Başkanı',            name:'',desc:'Finans yönetimi ve sponsor ilişkilerinden sorumlu', instagram:'',badge:'fas fa-coins'},
+    {initials:'SB',role:'Saha Başkanı',              name:'',desc:'Saha organizasyonu ve operasyondan sorumlu', instagram:'',badge:'fas fa-map-marker-alt'},
+    {initials:'PRB',role:'Press Başkanı',            name:'',desc:'Basın ilişkileri ve medya yönetiminden sorumlu', instagram:'',badge:'fas fa-newspaper'},
+    {initials:'TB',role:'Tasarım Başkanı',           name:'',desc:'Grafik tasarım ve görsel yönetimden sorumlu', instagram:'',badge:'fas fa-palette'},
+    {initials:'GB',role:'Güvenlik Başkanı',          name:'',desc:'Güvenlik ve emniyetten sorumlu', instagram:'',badge:'fas fa-shield-alt'},
+    {initials:'İKB',role:'İnsan Kaynakları Başkanı', name:'',desc:'İnsan kaynakları ve personel yönetiminden sorumlu', instagram:'',badge:'fas fa-user-check'},
   ];
 
   const ekip = ls('vuf_ekip', DEF_EKIP);
   document.getElementById('ekipGrid').innerHTML = ekip.map(e => `
     <div class="ekip-card fade-up">
       <div class="ekip-avatar-wrap">
-        <div class="ekip-avatar">${esc(e.initials)}</div>
-        <div class="ekip-badge"><i class="${esc(e.badge || 'fas fa-star')}"></i></div>
+        ${e.photo ? `<img src="${e.photo}" class="ekip-avatar-img" alt="${esc(e.role)}">` : `<div class="ekip-avatar">${esc(e.initials)}</div>`}
+        <div class="ekip-badge"><i class="fas fa-star"></i></div>
       </div>
       ${e.name ? `<p class="e-name">${esc(e.name)}</p>` : ''}
       <h4>${esc(e.role)}</h4>

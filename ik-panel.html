@@ -303,6 +303,12 @@ tbody td { padding: 0.85rem 1rem; vertical-align: middle; }
     </div>
     <div class="modal-body">
       <div class="detail-grid" id="detailGrid"></div>
+      <div class="modal-status-row" id="komisyonRow" style="display:none">
+        <label><i class="fas fa-layer-group"></i> Komisyon Ata</label>
+        <select class="modal-status-select" id="modalKomisyonSelect">
+          <option value="">Komisyon Seçin</option>
+        </select>
+      </div>
       <div class="modal-status-row">
         <label><i class="fas fa-edit"></i> Durumu Güncelle</label>
         <select class="modal-status-select" id="modalStatusSelect">
@@ -565,6 +571,21 @@ function openModal(id) {
   ).join('');
 
   document.getElementById('modalStatusSelect').value = row.durum;
+  
+  // Komisyon seçme alanını sadece delege başvurularında göster
+  const komisyonRow = document.getElementById('komisyonRow');
+  const komisyonSelect = document.getElementById('modalKomisyonSelect');
+  
+  if (currentView === 'delege') {
+    komisyonRow.style.display = 'block';
+    // Komisyonları localStorage'dan yükle
+    const komisyonlar = JSON.parse(localStorage.getItem('vuf_komisyonlar') || '[]');
+    komisyonSelect.innerHTML = '<option value="">Komisyon Seçin</option>' + 
+      komisyonlar.map(k => `<option value="${k.name}" ${row.komisyon === k.name ? 'selected' : ''}>${k.name}</option>`).join('');
+  } else {
+    komisyonRow.style.display = 'none';
+  }
+  
   document.getElementById('detailModal').classList.remove('hidden');
 }
 
@@ -573,15 +594,67 @@ function closeModal() {
   currentModalId = null;
 }
 
-function saveStatus() {
+async function saveStatus() {
   if (currentModalId === null) return;
   const newStatus = document.getElementById('modalStatusSelect').value;
   const data = getData();
   const idx = data.findIndex(x => Number(x.id) === Number(currentModalId));
   if (idx === -1) { showToast('Kayıt bulunamadı, durum kaydedilemedi.', 'error'); return; }
+  
+  const oldStatus = data[idx].durum;
   data[idx].durum = newStatus;
+  
+  // Komisyon atamasını kaydet (sadece delege başvurularında)
+  if (currentView === 'delege') {
+    const komisyonSelect = document.getElementById('modalKomisyonSelect');
+    if (komisyonSelect.value) {
+      data[idx].komisyon = komisyonSelect.value;
+    }
+  }
+  
   saveData(data);
-  showToast('Durum kaydedildi!', 'success');
+  
+  // E-posta gönderme (onay veya red durumunda)
+  if ((newStatus === 'Başvuru Onaylandı' || newStatus === 'Başvuru Reddedildi') && oldStatus !== newStatus) {
+    const applicant = data[idx];
+    const basvuruAyarlar = JSON.parse(localStorage.getItem('vuf_basvuru_ayarlar') || '{}');
+    const ucret = currentView === 'delege' ? (basvuruAyarlar.delegeUcret || 650) : (basvuruAyarlar.delegasyonUcret || 600);
+    
+    const emailData = {
+      to: applicant.eposta,
+      type: newStatus === 'Başvuru Onaylandı' ? 'approve' : 'reject',
+      data: {
+        name: currentView === 'delege' ? applicant.ad_soyad : applicant.ogretmen,
+        type: currentView === 'delege' ? 'Delege Başvurusu' : 'Delegasyon Başvurusu',
+        school: currentView === 'delege' ? applicant.okul : applicant.okul,
+        commission: currentView === 'delege' ? applicant.komisyon : null,
+        fee: ucret,
+        dekontEmail: basvuruAyarlar.dekontEmail || 'vizyonulusalforumik@gmail.com',
+        paymentName: basvuruAyarlar.odemeAd || 'Rabia Karabaş',
+        iban: basvuruAyarlar.iban || 'TR640020500009820452500002'
+      }
+    };
+    
+    try {
+      const response = await fetch('http://localhost:3000/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(emailData)
+      });
+      
+      if (response.ok) {
+        showToast('Durum kaydedildi ve e-posta gönderildi!', 'success');
+      } else {
+        showToast('Durum kaydedildi ama e-posta gönderilemedi.', 'error');
+      }
+    } catch (error) {
+      console.error('E-posta hatası:', error);
+      showToast('Durum kaydedildi (e-posta servisi çalışmıyor)', 'error');
+    }
+  } else {
+    showToast('Durum kaydedildi!', 'success');
+  }
+  
   closeModal();
   renderTable();
 }

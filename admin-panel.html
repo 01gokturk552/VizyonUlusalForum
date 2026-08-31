@@ -55,41 +55,42 @@ body{font-family:'Inter',sans-serif;background:#F0F3F9;color:#1A2540;min-height:
 .add-btn:hover{background:#6d28d9;transform:translateY(-1px)}
 
 /* ── DASHBOARD ── */
-.dash-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;margin-bottom:2rem}
-.dash-stat{background:#fff;border-radius:14px;padding:1.25rem;border:1px solid #DDE3F0;text-align:center;position:relative;overflow:hidden;cursor:default}
-.dash-stat::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#0B1F3A,#1e4080);opacity:0;transition:opacity .25s}
+.dash-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;margin-bottom:2rem}
+.dash-stat{background:#fff;border-radius:16px;padding:1.5rem;border:1px solid #DDE3F0;text-align:center;position:relative;overflow:hidden;cursor:default;box-shadow:0 2px 8px rgba(11,31,58,.05);transition:all .3s ease}
+.dash-stat::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#0B1F3A,#1e4080);opacity:0;transition:opacity .3s ease}
 .dash-stat:hover::before{opacity:1}
-.dash-stat-num{font-size:2rem;font-weight:900;color:#0B1F3A;line-height:1;position:relative;transition:color .25s}
+.dash-stat:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(11,31,58,.15)}
+.dash-stat-num{font-size:2.2rem;font-weight:900;color:#0B1F3A;line-height:1;position:relative;transition:color .3s ease}
 .dash-stat:hover .dash-stat-num{color:#60a5fa}
-.dash-stat-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B8C4D8;margin-top:.3rem;position:relative;transition:color .25s}
-.dash-stat:hover .dash-stat-label{color:rgba(255,255,255,.6)}
-.dash-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
-.dash-card{background:#fff;border-radius:14px;padding:1.5rem;border:1px solid #DDE3F0;transition:box-shadow .2s,transform .2s}
-.dash-card:hover{box-shadow:0 8px 28px rgba(11,31,58,.1);transform:translateY(-2px)}
-.dc-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
-.dc-icon{width:42px;height:42px;border-radius:10px;background:rgba(124,58,237,.1);display:flex;align-items:center;justify-content:center}
-.dc-icon i{color:#7c3aed;font-size:1.1rem}
-.dc-header h3{font-size:.95rem;font-weight:700;color:#1A2540}
-.dc-desc{font-size:.82rem;color:#6B7A99;line-height:1.55;margin-bottom:1rem}
-.dc-btn{display:inline-flex;align-items:center;gap:.4rem;background:#0B1F3A;color:#fff;padding:.5rem 1.1rem;border-radius:7px;font-size:.8rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:background .2s}
-.dc-btn:hover{background:#1e4080}
-.dc-badge{display:inline-flex;align-items:center;gap:.3rem;background:#fee2e2;color:#dc2626;font-size:.72rem;font-weight:800;padding:.2rem .6rem;border-radius:100px;margin-left:.5rem}
-.quick-actions{background:#fff;border-radius:14px;padding:1.5rem;border:1px solid #DDE3F0;margin-top:1rem}
-.quick-actions h3{font-size:.9rem;font-weight:700;color:#1A2540;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
-.qa-btns{display:flex;gap:.75rem;flex-wrap:wrap}
-.qa-btn{display:flex;align-items:center;gap:.4rem;padding:.55rem 1.1rem;border-radius:7px;font-size:.82rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .2s;text-decoration:none}
-.qa-btn.green{background:#dcfce7;color:#16a34a}.qa-btn.green:hover{background:#bbf7d0}
-.qa-btn.blue{background:#dbeafe;color:#1d4ed8}.qa-btn.blue:hover{background:#bfdbfe}
+.dash-stat-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#B8C4D8;margin-top:.35rem;position:relative;transition:color .3s ease}
+.dash-stat:hover .dash-stat-label{color:rgba(255,255,255,.7)}
+.dash-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.dash-card{background:#fff;border-radius:16px;padding:1.75rem;border:1px solid #DDE3F0;transition:all .3s ease;box-shadow:0 2px 12px rgba(11,31,58,.06)}
+.dash-card:hover{box-shadow:0 12px 40px rgba(11,31,58,.12);transform:translateY(-4px)}
+.dc-header{display:flex;align-items:center;gap:.85rem;margin-bottom:.85rem}
+.dc-icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(124,58,237,.05));display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(124,58,237,.15)}
+.dc-icon i{color:#7c3aed;font-size:1.2rem}
+.dc-header h3{font-size:1rem;font-weight:800;color:#1A2540;letter-spacing:-.01em}
+.dc-desc{font-size:.85rem;color:#6B7A99;line-height:1.6;margin-bottom:1.1rem}
+.dc-btn{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#0B1F3A,#1e4080);color:#fff;padding:.6rem 1.3rem;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .3s ease;box-shadow:0 4px 12px rgba(11,31,58,.2)}
+.dc-btn:hover{background:linear-gradient(135deg,#1e4080,#2d5a87);box-shadow:0 6px 20px rgba(11,31,58,.3);transform:translateY(-2px)}
+.dc-badge{display:inline-flex;align-items:center;gap:.35rem;background:linear-gradient(135deg,#fee2e2,#fecaca);color:#dc2626;font-size:.7rem;font-weight:800;padding:.25rem .75rem;border-radius:100px;margin-left:.6rem;box-shadow:0 2px 8px rgba(220,38,38,.15)}
+.quick-actions{background:linear-gradient(135deg,#fff,#fafbfc);border-radius:16px;padding:1.75rem;border:1px solid #DDE3F0;margin-top:1.5rem;box-shadow:0 2px 12px rgba(11,31,58,.06)}
+.quick-actions h3{font-size:.95rem;font-weight:800;color:#1A2540;margin-bottom:1.1rem;display:flex;align-items:center;gap:.55rem;letter-spacing:-.01em}
+.qa-btns{display:flex;gap:.85rem;flex-wrap:wrap}
+.qa-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.3rem;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .3s ease;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.qa-btn.green{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#16a34a}.qa-btn.green:hover{background:linear-gradient(135deg,#bbf7d0,#a7f3d0);box-shadow:0 6px 20px rgba(22,163,74,.2);transform:translateY(-2px)}
+.qa-btn.blue{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1d4ed8}.qa-btn.blue:hover{background:linear-gradient(135deg,#bfdbfe,#93c5fd);box-shadow:0 6px 20px rgba(29,78,216,.2);transform:translateY(-2px)}
 
 /* ── TABLE ── */
-.table-card{background:#fff;border-radius:14px;border:1px solid #DDE3F0;overflow:hidden}
+.table-card{background:#fff;border-radius:16px;border:1px solid #DDE3F0;overflow:hidden;box-shadow:0 2px 12px rgba(11,31,58,.06)}
 .table-scroll{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:.85rem}
-thead{background:#F8F9FC}
-thead th{padding:.85rem 1rem;text-align:left;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#B8C4D8;border-bottom:1px solid #DDE3F0;white-space:nowrap}
-tbody tr{border-bottom:1px solid #F0F3F9;transition:background .15s}
+thead{background:linear-gradient(135deg,#F8F9FC,#F0F3F9)}
+thead th{padding:1rem 1.1rem;text-align:left;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#B8C4D8;border-bottom:1px solid #DDE3F0;white-space:nowrap}
+tbody tr{border-bottom:1px solid #F0F3F9;transition:all .2s ease}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:#F8F9FC}
+tbody tr:hover{background:linear-gradient(135deg,#F8F9FC,#F0F3F9)}
 tbody td{padding:.85rem 1rem;vertical-align:middle}
 .td-icon{font-size:1.1rem;color:#7c3aed}
 .td-num{font-size:.75rem;font-weight:800;color:#B8C4D8}
@@ -101,7 +102,8 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
 .btn-edit,.btn-del{padding:.3rem .7rem;border-radius:6px;border:none;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:.3rem;transition:all .15s}
 .btn-edit{background:#EDE9FE;color:#7c3aed}.btn-edit:hover{background:#7c3aed;color:#fff}
 .btn-del{background:#FEE2E2;color:#dc2626}.btn-del:hover{background:#dc2626;color:#fff}
-.empty-row td{text-align:center;padding:3rem;color:#B8C4D8;font-size:.9rem}
+.empty-row td{text-align:center;padding:2rem;color:#B8C4D8;font-size:.8rem}
+.empty-row i{font-size:1.5rem;margin-bottom:.5rem;display:block}
 
 /* ── PROGRAM ── */
 .prog-day-tabs{display:flex;gap:.4rem;margin-bottom:1.25rem;flex-wrap:wrap}
@@ -110,15 +112,15 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
 .prog-day-content{display:none}
 .prog-day-content.active{display:block}
 
-/* ── İSTATİSTİK ── */
-.stat-form{background:#fff;border-radius:14px;border:1px solid #DDE3F0;padding:2rem;max-width:480px}
-.stat-field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.25rem}
-.stat-field label{font-size:.8rem;font-weight:700;color:#3D4F6E}
-.stat-field input{padding:.7rem 1rem;border:1.5px solid #DDE3F0;border-radius:8px;font-family:inherit;font-size:.95rem;color:#1A2540;outline:none;transition:border-color .2s}
-.stat-field input:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.08)}
-.stat-field small{font-size:.75rem;color:#B8C4D8}
-.save-stat-btn{display:flex;align-items:center;gap:.45rem;background:#7c3aed;color:#fff;border:none;padding:.75rem 1.75rem;border-radius:8px;font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s}
-.save-stat-btn:hover{background:#6d28d9}
+/* ── FORMS ── */
+.stat-form{background:#fff;border-radius:16px;padding:2rem;border:1px solid #DDE3F0;box-shadow:0 2px 12px rgba(11,31,58,.06)}
+.stat-field{margin-bottom:1.4rem}
+.stat-field label{display:flex;align-items:center;gap:.55rem;font-size:.8rem;font-weight:700;color:#3D4F6E;margin-bottom:.45rem;letter-spacing:-.01em}
+.stat-field input,.stat-field select{width:100%;padding:.75rem 1.1rem;border:1.5px solid #DDE3F0;border-radius:10px;font-family:inherit;font-size:.9rem;color:#1A2540;outline:none;transition:all .2s ease;box-shadow:0 2px 8px rgba(11,31,58,.04)}
+.stat-field input:focus,.stat-field select:focus{border-color:#7c3aed;box-shadow:0 0 0 4px rgba(124,58,237,.12)}
+.stat-field small{display:block;font-size:.75rem;color:#B8C4D8;margin-top:.35rem}
+.save-stat-btn{display:flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none;padding:.75rem 1.6rem;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .3s ease;box-shadow:0 4px 16px rgba(124,58,237,.25)}
+.save-stat-btn:hover{background:linear-gradient(135deg,#6d28d9,#5b21b6);box-shadow:0 6px 24px rgba(124,58,237,.35);transform:translateY(-2px)}
 
 /* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(7,13,24,.6);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1.5rem;backdrop-filter:blur(4px)}
@@ -154,6 +156,27 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
 /* ── ICONS PREVIEW ── */
 .icon-preview{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:rgba(124,58,237,.1);border-radius:8px}
 .icon-preview i{color:#7c3aed}
+
+/* ── EKIP GRID ADMIN ── */
+.ekip-grid-admin{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.ekip-card-admin{background:#fff;border:1px solid #DDE3F0;border-radius:12px;padding:1.25rem;display:flex;flex-direction:column;gap:1rem;position:relative}
+.ekip-photo-wrap{display:flex;justify-content:center;margin-bottom:.25rem}
+.ekip-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid #DDE3F0}
+.ekip-photo-placeholder{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#0B1F3A,#1e4080);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;color:#60a5fa;border:2px solid #DDE3F0}
+.ekip-info{text-align:center}
+.ekip-role{font-size:.95rem;font-weight:700;color:#0B1F3A;margin-bottom:.25rem}
+.ekip-name{font-size:.85rem;color:#6B7A99;margin-bottom:.25rem}
+.ekip-instagram{display:inline-flex;align-items:center;gap:.3rem;font-size:.8rem;color:#e1306c;text-decoration:none;font-weight:600}
+.ekip-instagram:hover{text-decoration:underline}
+.ekip-actions{display:flex;gap:.5rem;justify-content:center;margin-top:.5rem}
+.ekip-actions .btn-edit,.ekip-actions .btn-del{width:36px;height:36px;border-radius:8px;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;transition:all .2s}
+.ekip-actions .btn-edit{background:#F0F3F9;color:#0B1F3A}
+.ekip-actions .btn-edit:hover{background:#7c3aed;color:#fff}
+.ekip-actions .btn-del{background:#F0F3F9;color:#e63946}
+.ekip-actions .btn-del:hover{background:#e63946;color:#fff}
+.empty-state{text-align:center;padding:3rem 1.5rem;color:#B8C4D8}
+.empty-state i{font-size:2.5rem;margin-bottom:1rem;display:block}
+.empty-state p{font-size:.9rem}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
@@ -196,8 +219,18 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
       <button class="nav-item" onclick="go('istatistik')"><i class="fas fa-chart-bar"></i> İstatistikler</button>
     </div>
     <div class="sidebar-section">
+      <div class="sidebar-label">Ayarlar</div>
+      <button class="nav-item" onclick="go('ayarlar')"><i class="fas fa-cog"></i> Genel Ayarlar</button>
+      <button class="nav-item" onclick="go('basvuru-ayarlari')"><i class="fas fa-sliders-h"></i> Başvuru Ayarları</button>
+      <button class="nav-item" onclick="go('basvuru-formu')"><i class="fas fa-edit"></i> Başvuru Formu</button>
+    </div>
+    <div class="sidebar-section">
       <div class="sidebar-divider"></div>
       <button class="nav-item" onclick="go('basvurular')"><i class="fas fa-file-alt"></i> Başvurular <span class="badge" id="sidebarBadge">0</span></button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">SİSTEM</div>
+      <button class="nav-item" onclick="go('veri')"><i class="fas fa-database"></i> Veri Yönetimi</button>
     </div>
   </aside>
 
@@ -245,12 +278,7 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
         <h2><i class="fas fa-users"></i> Ekip</h2>
         <button class="add-btn" onclick="openModal('ekip')"><i class="fas fa-plus"></i> Yeni Üye</button>
       </div>
-      <div class="table-card">
-        <div class="table-scroll">
-          <table><thead><tr><th>Kısaltma</th><th>Rol</th><th>Ad Soyad</th><th>Instagram</th><th>İşlemler</th></tr></thead>
-          <tbody id="ekipTable"></tbody></table>
-        </div>
-      </div>
+      <div class="ekip-grid-admin" id="ekipGrid"></div>
     </div>
 
     <!-- ══ SPONSORLAR ══ -->
@@ -274,9 +302,9 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
         <button class="add-btn" id="addProgBtn" onclick="openModal('program')"><i class="fas fa-plus"></i> Yeni Madde</button>
       </div>
       <div class="prog-day-tabs">
-        <button class="prog-tab active" onclick="switchProgDay(1,this)"><i class="fas fa-sun"></i> 1. Gün</button>
-        <button class="prog-tab" onclick="switchProgDay(2,this)"><i class="fas fa-sun"></i> 2. Gün</button>
-        <button class="prog-tab" onclick="switchProgDay(3,this)"><i class="fas fa-moon"></i> 3. Gün</button>
+        <button class="prog-tab active" onclick="switchProgDay(1,this)">1. Gün</button>
+        <button class="prog-tab" onclick="switchProgDay(2,this)">2. Gün</button>
+        <button class="prog-tab" onclick="switchProgDay(3,this)">3. Gün</button>
       </div>
       <div class="prog-day-content active" id="prog-day1">
         <div class="table-card"><div class="table-scroll"><table><thead><tr><th>Saat</th><th>Başlık</th><th>Açıklama</th><th>İşlemler</th></tr></thead><tbody id="progTable1"></tbody></table></div></div>
@@ -302,14 +330,199 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
       </div>
     </div>
 
+    <!-- ══ AYARLAR ══ -->
+    <div class="section-view" id="sec-ayarlar">
+      <div class="sec-top"><h2><i class="fas fa-cog"></i> Genel Ayarlar</h2></div>
+      <div class="stat-form">
+        <p style="font-size:.85rem;color:#6B7A99;margin-bottom:1.5rem">Ana sayfadaki bilgileri buradan yönetebilirsiniz.</p>
+        
+        <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
+          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-map-marker-alt" style="color:#7c3aed"></i> Etkinlik Bilgileri</h3>
+          <div class="stat-field"><label><i class="fas fa-map"></i> Mekan</label>
+            <input type="text" id="ay-mekan" placeholder="İstanbul Üniversitesi">
+            <small>Etkinlik yapılacak mekan</small>
+          </div>
+          <div class="stat-field"><label><i class="fas fa-calendar-alt"></i> Etkinlik Tarihi</label>
+            <input type="datetime-local" id="ay-event-date">
+            <small>Etkinlik başlangıç tarihi ve saati</small>
+          </div>
+        </div>
+
+        <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
+          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-phone" style="color:#7c3aed"></i> İletişim Bilgileri</h3>
+          <div class="stat-field"><label><i class="fas fa-user"></i> Koordinatör 1 Ad Soyad</label>
+            <input type="text" id="ay-koordinator1-ad" placeholder="Yiğit Efe SEVİR">
+            <small>Birinci koordinatör adı</small>
+          </div>
+          <div class="stat-field"><label><i class="fas fa-phone"></i> Koordinatör 1 Telefon</label>
+            <input type="text" id="ay-koordinator1-tel" placeholder="0546 926 2010">
+            <small>Birinci koordinatör telefonu</small>
+          </div>
+          <div class="stat-field"><label><i class="fas fa-user"></i> Koordinatör 2 Ad Soyad</label>
+            <input type="text" id="ay-koordinator2-ad" placeholder="Ada Nehir ŞAHİN">
+            <small>İkinci koordinatör adı</small>
+          </div>
+          <div class="stat-field"><label><i class="fas fa-phone"></i> Koordinatör 2 Telefon</label>
+            <input type="text" id="ay-koordinator2-tel" placeholder="0501 012 58 60">
+            <small>İkinci koordinatör telefonu</small>
+          </div>
+        </div>
+
+        <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
+          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-cog" style="color:#7c3aed"></i> Diğer Ayarlar</h3>
+          <div class="stat-field"><label><i class="fas fa-clock"></i> Geri Sayım Göster</label>
+            <select id="ay-countdown">
+              <option value="true">Açık</option>
+              <option value="false">Kapalı</option>
+            </select>
+            <small>Etkinlik tarihine kadar geri sayım göster/gizle</small>
+          </div>
+          <div class="stat-field"><label><i class="fab fa-instagram"></i> Vizyon Instagram</label>
+            <input type="text" id="ay-instagram" placeholder="vizyonulusalforum">
+            <small>Instagram kullanıcı adı (@ olmadan)</small>
+          </div>
+        </div>
+
+        <button class="save-stat-btn" onclick="saveAyarlar()"><i class="fas fa-save"></i> Kaydet</button>
+      </div>
+    </div>
+
+    <!-- ══ BAŞVURU AYARLARI ══ -->
+    <div class="section-view" id="sec-basvuru-ayarlari">
+      <div class="sec-top"><h2><i class="fas fa-sliders-h"></i> Başvuru Ayarları</h2></div>
+      <div class="stat-form">
+        <p style="font-size:.85rem;color:#6B7A99;margin-bottom:1.5rem">Başvuru ücretlerini, ödeme bilgilerini ve başvuru süresini buradan yönetebilirsiniz.</p>
+        
+        <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
+          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-toggle-on" style="color:#7c3aed"></i> Başvuru Durumu</h3>
+          <div class="stat-field"><label><i class="fas fa-power-off"></i> Başvurular Açık/Kapalı</label>
+            <select id="ba-basvuru-acik">
+              <option value="true">Açık</option>
+              <option value="false">Kapalı</option>
+            </select>
+            <small>Başvuruları açın veya kapatın</small>
+          </div>
+          <div class="stat-field"><label><i class="fas fa-calendar-times"></i> Başvuru Son Tarihi</label>
+            <input type="datetime-local" id="ba-basvuru-son-tarih">
+            <small>Başvuruların son gönderim tarihi</small>
+          </div>
+        </div>
+
+        <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
+          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-tag" style="color:#7c3aed"></i> Başvuru Ücretleri</h3>
+          <div class="stat-field"><label><i class="fas fa-user"></i> Delege Ücreti (TL)</label>
+            <input type="number" id="ba-delege-ucret" min="0" step="10">
+            <small>Örn: 650</small>
+          </div>
+          <div class="stat-field"><label><i class="fas fa-users"></i> Delegasyon Ücreti (TL)</label>
+            <input type="number" id="ba-delegasyon-ucret" min="0" step="10">
+            <small>Örn: 600</small>
+          </div>
+        </div>
+
+        <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
+          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-credit-card" style="color:#7c3aed"></i> Ödeme Bilgileri</h3>
+          <div class="stat-field"><label><i class="fas fa-user"></i> Hesap Sahibi Ad Soyad</label>
+            <input type="text" id="ba-odeme-ad" placeholder="Rabia Karabaş">
+            <small>IBAN hesap sahibinin adı</small>
+          </div>
+          <div class="stat-field"><label><i class="fas fa-university"></i> IBAN</label>
+            <input type="text" id="ba-iban" placeholder="TR640020500009820452500002">
+            <small>Ödeme yapılacak IBAN numarası</small>
+          </div>
+          <div class="stat-field"><label><i class="fas fa-envelope"></i> Dekont E-posta Adresi</label>
+            <input type="email" id="ba-dekont-email" placeholder="vizyonulusalforumik@gmail.com">
+            <small>Dekontların gönderileceği e-posta adresi</small>
+          </div>
+        </div>
+
+        <button class="save-stat-btn" onclick="saveBasvuruAyarlar()"><i class="fas fa-save"></i> Kaydet</button>
+      </div>
+    </div>
+
+    <!-- ══ BAŞVURU FORMU ══ -->
+    <div class="section-view" id="sec-basvuru-formu">
+      <div class="sec-top">
+        <h2><i class="fas fa-edit"></i> Başvuru Formu Düzenle</h2>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <select id="formTypeSelect" onchange="loadFormBuilder()" style="padding:0.6rem 1rem;border:1px solid #DDE3F0;border-radius:8px;background:#fff;color:#0B1F3A;font-size:0.9rem;font-weight:600">
+            <option value="delege">Delege Formu</option>
+            <option value="delegasyon">Delegasyon Formu</option>
+          </select>
+          <button class="save-stat-btn" onclick="saveFormBuilder()" style="padding:0.6rem 1.2rem;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;transition:all 0.2s">
+            <i class="fas fa-save"></i> Kaydet
+          </button>
+        </div>
+      </div>
+      
+      <div class="form-builder-container">
+        <!-- Sol Panel - Form Önizleme -->
+        <div class="form-builder-main">
+          <div class="form-builder-header">
+            <h3><i class="fas fa-eye"></i> Form Önizleme</h3>
+            <div style="display:flex;gap:0.5rem">
+              <button class="fb-action-btn" onclick="addSection()" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none">
+                <i class="fas fa-plus"></i> Bölüm Ekle
+              </button>
+            </div>
+          </div>
+          <div id="formBuilderContent" class="form-builder-content">
+            <p class="empty-state">
+              <i class="fas fa-layer-group"></i>
+              <p>Henüz bölüm eklenmedi.</p>
+              <p style="font-size:0.85rem;margin-top:0.5rem">"Bölüm Ekle" butonuna tıklayarak form oluşturmaya başlayın.</p>
+            </p>
+          </div>
+        </div>
+        
+        <!-- Sağ Panel - Soru Özellikleri -->
+        <div class="form-builder-sidebar" id="questionPropertiesPanel">
+          <h3><i class="fas fa-cog"></i> Öğe Özellikleri</h3>
+          <div id="propertiesContent">
+            <p style="color:#6B7A99;font-size:0.9rem;text-align:center;padding:2rem">Düzenlemek için bir öğe seçin.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ══ BAŞVURULAR ══ -->
     <div class="section-view" id="sec-basvurular">
-      <div class="sec-top"><h2><i class="fas fa-file-alt"></i> Başvuru Yönetimi</h2></div>
-      <div style="background:#fff;border-radius:14px;border:1px solid #DDE3F0;padding:2.5rem;text-align:center;max-width:480px">
-        <div style="width:64px;height:64px;background:rgba(11,31,58,.07);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem"><i class="fas fa-users" style="font-size:1.6rem;color:#0B1F3A"></i></div>
-        <h3 style="font-size:1.1rem;font-weight:800;color:#0B1F3A;margin-bottom:.5rem">İK Paneli</h3>
-        <p style="font-size:.875rem;color:#6B7A99;line-height:1.6;margin-bottom:1.5rem">Delege ve delegasyon başvuruları İnsan Kaynakları Paneli üzerinden yönetilmektedir. Durumları güncellemek, detayları incelemek ve CSV indirmek için İK Paneline gidin.</p>
-        <a href="ik-panel.html" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:#0B1F3A;color:#fff;padding:.75rem 1.75rem;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;transition:background .2s" onmouseover="this.style.background='#1e4080'" onmouseout="this.style.background='#0B1F3A'"><i class="fas fa-external-link-alt"></i> İK Paneline Git</a>
+      <div class="sec-top">
+        <h2><i class="fas fa-file-alt"></i> Başvuru Yönetimi</h2>
+        <div style="display:flex;gap:.5rem">
+          <a href="ik-panel.html" target="_blank" class="add-btn" style="background:#0B1F3A"><i class="fas fa-external-link-alt"></i> İK Paneline Git</a>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table><thead><tr><th>Tür</th><th>Ad Soyad</th><th>Email</th><th>Durum</th><th>Tarih</th></tr></thead>
+          <tbody id="basvuruTable"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ VERİ YÖNETİMİ ══ -->
+    <div class="section-view" id="sec-veri">
+      <div class="sec-top"><h2><i class="fas fa-database"></i> Veri Yönetimi</h2></div>
+      <div style="background:#fff;border-radius:14px;border:1px solid #DDE3F0;padding:2.5rem;max-width:600px">
+        <p style="font-size:.875rem;color:#6B7A99;line-height:1.6;margin-bottom:2rem">
+          Admin panelindeki tüm verileri (komisyonlar, ekip, sponsorlar, program, istatistikler) dışa aktarabilir veya başka bir cihazdan içe aktarabilirsiniz. Bu özellik sayesinde bilgisayar ve telefon arasında veri senkronizasyonu yapabilirsiniz.
+        </p>
+        
+        <div style="display:grid;gap:1.5rem">
+          <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;border:1px solid #DDE3F0">
+            <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-download" style="color:#7c3aed"></i> Verileri Dışa Aktar</h3>
+            <p style="font-size:.85rem;color:#6B7A99;margin-bottom:1rem">Tüm verileri JSON dosyası olarak indirin. Bu dosyayı başka cihazlara aktarabilir veya yedek olarak saklayabilirsiniz.</p>
+            <button onclick="exportData()" style="display:inline-flex;align-items:center;gap:.5rem;background:#7c3aed;color:#fff;border:none;padding:.75rem 1.5rem;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;transition:background .2s" onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'"><i class="fas fa-download"></i> JSON Dosyası İndir</button>
+          </div>
+          
+          <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;border:1px solid #DDE3F0">
+            <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-upload" style="color:#059669"></i> Verileri İçe Aktar</h3>
+            <p style="font-size:.85rem;color:#6B7A99;margin-bottom:1rem">Daha önce dışa aktardığınız JSON dosyasını yükleyerek verileri geri yükleyin. Mevcut verilerin üzerine yazılacaktır.</p>
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+            <button onclick="document.getElementById('importFile').click()" style="display:inline-flex;align-items:center;gap:.5rem;background:#059669;color:#fff;border:none;padding:.75rem 1.5rem;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;transition:background .2s" onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'"><i class="fas fa-upload"></i> JSON Dosyası Yükle</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -346,23 +559,27 @@ function logout(){sessionStorage.removeItem('vuf_admin_auth');window.location.hr
    DEFAULT DATA
 ════════════════════════════════════ */
 const DEF_KOMISYON=[
-  {id:1,num:'01',icon:'fas fa-chart-line',name:'Ekonomi',desc:'Ekonomik kalkınma ve sürdürülebilir büyüme politikaları',baskan:''},
-  {id:2,num:'02',icon:'fas fa-book-open',name:'Eğitim',desc:'Eğitim reformu, müfredat geliştirme ve gençlik politikaları',baskan:''},
-  {id:3,num:'03',icon:'fas fa-running',name:'Gençlik & Spor',desc:'Gençlik katılımı, istihdam ve spor politikaları',baskan:''},
-  {id:4,num:'04',icon:'fas fa-globe-europe',name:'Dış Politika',desc:'Uluslararası ilişkiler ve diplomatik stratejiler',baskan:''},
-  {id:5,num:'05',icon:'fas fa-balance-scale',name:'Hukuk & Anayasa',desc:'Hukuki reformlar ve anayasal düzenlemeler',baskan:''},
-  {id:6,num:'06',icon:'fas fa-palette',name:'Kültür & Sanat',desc:'Kültürel miras, sanat politikaları ve kimlik',baskan:''},
-  {id:7,num:'07',icon:'fas fa-brain',name:'Toplum & Psikoloji',desc:'Toplumsal sağlık, refah ve psikolojik destek politikaları',baskan:''},
-  {id:8,num:'08',icon:'fas fa-venus-mars',name:'Toplumsal Cinsiyet Eşitliği',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm',baskan:''},
-  {id:9,num:'09',icon:'fas fa-microchip',name:'Dijitalleşme & Teknoloji',desc:'Dijital dönüşüm, yapay zeka ve teknoloji politikaları',baskan:''},
+  {id:1,num:'01',icon:'fas fa-shield-halved',name:'Savunma ve Askeri İşbirliği Komisyonu',desc:'Milli savunma politikaları ve askeri işbirlikleri',baskan:''},
+  {id:2,num:'02',icon:'fas fa-globe',name:'Dış Politika Komisyonu',desc:'Uluslararası ilişkiler ve diplomatik stratejiler',baskan:''},
+  {id:3,num:'03',icon:'fas fa-microchip',name:'Teknoloji Komisyonu',desc:'Teknoloji politikaları ve dijital dönüşüm',baskan:''},
+  {id:4,num:'04',icon:'fas fa-balance-scale',name:'Hukuk ve Anayasa Komisyonu',desc:'Hukuki reformlar ve anayasal düzenlemeler',baskan:''},
+  {id:5,num:'05',icon:'fas fa-running',name:'Gençlik ve Spor Komisyonu',desc:'Gençlik katılımı, istihdam ve spor politikaları',baskan:''},
+  {id:6,num:'06',icon:'fas fa-venus-mars',name:'Toplumsal Cinsiyet Eşitliği Komisyonu',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm',baskan:''},
+  {id:7,num:'07',icon:'fas fa-book-open',name:'Eğitim Politikaları Komisyonu',desc:'Eğitim reformu, müfredat geliştirme',baskan:''},
+  {id:8,num:'08',icon:'fas fa-shield-alt',name:'İç Güvenlik ve Terörle Mücadele Komisyonu',desc:'İç güvenlik politikaları ve terörle mücadele',baskan:''},
+  {id:9,num:'09',icon:'fas fa-chart-line',name:'Ekonomi ve Finans Politikaları Komisyonu',desc:'Ekonomik kalkınma ve finans politikaları',baskan:''},
 ];
 const DEF_EKIP=[
-  {id:1,initials:'GS',role:'Genel Sekreter',name:'',desc:'Organizasyonun genel koordinasyon ve stratejisinden sorumlu',instagram:'',badge:'fas fa-star'},
-  {id:2,initials:'AD',role:'Akademik Direktör',name:'',desc:'Komisyon içerikleri ve akademik kalitenin yöneticisi',instagram:'',badge:'fas fa-graduation-cap'},
-  {id:3,initials:'İD',role:'İletişim Direktörü',name:'',desc:'Tanıtım, sosyal medya ve marka iletişimi yöneticisi',instagram:'',badge:'fas fa-bullhorn'},
-  {id:4,initials:'LD',role:'Lojistik Direktörü',name:'',desc:'Etkinlik lojistiği ve operasyon planlamasından sorumlu',instagram:'',badge:'fas fa-cogs'},
-  {id:5,initials:'FD',role:'Finans Direktörü',name:'',desc:'Bütçe yönetimi ve sponsor ilişkilerinden sorumlu',instagram:'',badge:'fas fa-coins'},
-  {id:6,initials:'İK',role:'İnsan Kaynakları',name:'',desc:'Başvuru süreçleri ve delege ilişkilerinin yöneticisi',instagram:'',badge:'fas fa-user-check'},
+  {id:1,initials:'GK',role:'Genel Koordinatör',name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu',instagram:'',photo:''},
+  {id:2,initials:'OB',role:'Organizasyon Başkanı',name:'',desc:'Organizasyon süreçlerinden sorumlu',instagram:'',photo:''},
+  {id:3,initials:'AB',role:'Akademi Başkanı',name:'',desc:'Akademik içerik ve komisyon yönetiminden sorumlu',instagram:'',photo:''},
+  {id:4,initials:'PB',role:'PR Başkanı',name:'',desc:'Halkla ilişkiler ve iletişimden sorumlu',instagram:'',photo:''},
+  {id:5,initials:'FB',role:'Finans Başkanı',name:'',desc:'Finans yönetimi ve sponsor ilişkilerinden sorumlu',instagram:'',photo:''},
+  {id:6,initials:'SB',role:'Saha Başkanı',name:'',desc:'Saha organizasyonu ve operasyondan sorumlu',instagram:'',photo:''},
+  {id:7,initials:'PRB',role:'Press Başkanı',name:'',desc:'Basın ilişkileri ve medya yönetiminden sorumlu',instagram:'',photo:''},
+  {id:8,initials:'TB',role:'Tasarım Başkanı',name:'',desc:'Grafik tasarım ve görsel yönetimden sorumlu',instagram:'',photo:''},
+  {id:9,initials:'GB',role:'Güvenlik Başkanı',name:'',desc:'Güvenlik ve emniyetten sorumlu',instagram:'',photo:''},
+  {id:10,initials:'İKB',role:'İnsan Kaynakları Başkanı',name:'',desc:'İnsan kaynakları ve personel yönetiminden sorumlu',instagram:'',photo:''},
 ];
 const DEF_SPONSOR=[
   {id:1,name:'Sponsor Adı',tier:'gold'},{id:2,name:'Sponsor Adı',tier:'gold'},
@@ -409,6 +626,10 @@ function renderSection(sec){
   else if(sec==='komisyonlar')renderKomisyonlar();
   else if(sec==='ekip')renderEkip();
   else if(sec==='sponsorlar')renderSponsorlar();
+  else if(sec==='ayarlar')renderAyarlar();
+  else if(sec==='basvuru-ayarlari')loadBasvuruAyarlar();
+  else if(sec==='basvuru-formu')loadBasvuruFormu();
+  else if(sec==='basvurular')renderBasvurular();
   else if(sec==='program')renderProgram();
   else if(sec==='istatistik')renderIstatistik();
 }
@@ -421,6 +642,7 @@ function renderDashboard(){
   const total=del.length+dlg.length;
   const bek=[...del,...dlg].filter(x=>x.durum==='Başvuru Beklemede').length;
   const onay=[...del,...dlg].filter(x=>x.durum==='Başvuru Onaylandı').length;
+  const red=[...del,...dlg].filter(x=>x.durum==='Başvuru Reddedildi').length;
   const kom=get('vuf_komisyonlar',DEF_KOMISYON).length;
   const spon=get('vuf_sponsorlar',DEF_SPONSOR).length;
   const ekp=get('vuf_ekip',DEF_EKIP).length;
@@ -431,6 +653,7 @@ function renderDashboard(){
     <div class="dash-stat"><div class="dash-stat-num">${total}</div><div class="dash-stat-label">Toplam Başvuru</div></div>
     <div class="dash-stat"><div class="dash-stat-num">${bek}</div><div class="dash-stat-label">Bekleyen</div></div>
     <div class="dash-stat"><div class="dash-stat-num">${onay}</div><div class="dash-stat-label">Onaylanan</div></div>
+    <div class="dash-stat"><div class="dash-stat-num">${red}</div><div class="dash-stat-label">Reddedilen</div></div>
   `;
   const pendingBadge=bek>0?bek:0;
   document.getElementById('sidebarBadge').textContent=pendingBadge;
@@ -462,18 +685,23 @@ function renderKomisyonlar(){
 ════════════════════════════════════ */
 function renderEkip(){
   const data=get('vuf_ekip',DEF_EKIP);
-  const tbody=document.getElementById('ekipTable');
-  if(!data.length){tbody.innerHTML='<tr><td colspan="5" class="empty-row"><i class="fas fa-inbox"></i> Henüz ekip üyesi yok.</td></tr>';return}
-  tbody.innerHTML=data.map(e=>`<tr>
-    <td><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:linear-gradient(135deg,#0B1F3A,#1e4080);border-radius:8px;color:#60a5fa;font-weight:800;font-size:.85rem">${esc(e.initials)}</span></td>
-    <td class="td-name">${esc(e.role)}</td>
-    <td class="td-sub">${e.name?esc(e.name):'<span style="color:#ddd">—</span>'}</td>
-    <td class="td-sub">${e.instagram?`<a href="https://instagram.com/${e.instagram.replace('@','')}" target="_blank" style="color:#e1306c">@${esc(e.instagram.replace('@',''))}</a>`:'<span style="color:#ddd">—</span>'}</td>
-    <td><div class="tbl-actions">
-      <button class="btn-edit" onclick="openModal('ekip',${e.id})"><i class="fas fa-edit"></i> Düzenle</button>
-      <button class="btn-del" onclick="deleteItem('ekip',${e.id})"><i class="fas fa-trash"></i></button>
-    </div></td>
-  </tr>`).join('');
+  const grid=document.getElementById('ekipGrid');
+  if(!data.length){grid.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>Henüz ekip üyesi yok.</p></div>';return}
+  grid.innerHTML=data.map(e=>`
+    <div class="ekip-card-admin">
+      <div class="ekip-photo-wrap">
+        ${e.photo ? `<img src="${e.photo}" class="ekip-photo" alt="${esc(e.role)}">` : `<div class="ekip-photo-placeholder">${esc(e.initials)}</div>`}
+      </div>
+      <div class="ekip-info">
+        <h4 class="ekip-role">${esc(e.role)}</h4>
+        ${e.name ? `<p class="ekip-name">${esc(e.name)}</p>` : ''}
+        ${e.instagram ? `<a href="https://instagram.com/${e.instagram.replace('@','')}" target="_blank" class="ekip-instagram"><i class="fab fa-instagram"></i> @${esc(e.instagram.replace('@',''))}</a>` : ''}
+      </div>
+      <div class="ekip-actions">
+        <button class="btn-edit" onclick="openModal('ekip',${e.id})"><i class="fas fa-edit"></i></button>
+        <button class="btn-del" onclick="deleteItem('ekip',${e.id})"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`).join('');
 }
 
 /* ════════════════════════════════════
@@ -544,6 +772,973 @@ function saveStats(){
 }
 
 /* ════════════════════════════════════
+   AYARLAR
+════════════════════════════════════ */
+function loadAyarlar(){
+  const ayarlar=get('vuf_ayarlar',{});
+  document.getElementById('ay-mekan').value=ayarlar.mekan||'';
+  document.getElementById('ay-event-date').value=ayarlar.eventDate||'';
+  document.getElementById('ay-koordinator1-ad').value=ayarlar.koordinator1Ad||'';
+  document.getElementById('ay-koordinator1-tel').value=ayarlar.koordinator1Tel||'';
+  document.getElementById('ay-koordinator2-ad').value=ayarlar.koordinator2Ad||'';
+  document.getElementById('ay-koordinator2-tel').value=ayarlar.koordinator2Tel||'';
+  document.getElementById('ay-countdown').value=ayarlar.countdown!==undefined?ayarlar.countdown:true;
+  document.getElementById('ay-instagram').value=ayarlar.instagram||'';
+}
+function saveAyarlar(){
+  set('vuf_ayarlar',{
+    eventDate:document.getElementById('ay-event-date').value,
+    mekan:document.getElementById('ay-mekan').value,
+    koordinator1Ad:document.getElementById('ay-koordinator1-ad').value,
+    koordinator1Tel:document.getElementById('ay-koordinator1-tel').value,
+    koordinator2Ad:document.getElementById('ay-koordinator2-ad').value,
+    koordinator2Tel:document.getElementById('ay-koordinator2-tel').value,
+    countdown:document.getElementById('ay-countdown').value==='true',
+    instagram:document.getElementById('ay-instagram').value.trim()
+  });
+  toast('Ayarlar kaydedildi!','success');
+}
+
+function loadBasvuruAyarlar(){
+  const ayarlar=get('vuf_basvuru_ayarlar',{});
+  document.getElementById('ba-basvuru-acik').value=ayarlar.basvuruAcik!==undefined?ayarlar.basvuruAcik:true;
+  document.getElementById('ba-basvuru-son-tarih').value=ayarlar.basvuruSonTarih||'';
+  document.getElementById('ba-delege-ucret').value=ayarlar.delegeUcret||650;
+  document.getElementById('ba-delegasyon-ucret').value=ayarlar.delegasyonUcret||600;
+  document.getElementById('ba-odeme-ad').value=ayarlar.odemeAd||'';
+  document.getElementById('ba-iban').value=ayarlar.iban||'';
+  document.getElementById('ba-dekont-email').value=ayarlar.dekontEmail||'';
+}
+
+function saveBasvuruAyarlar(){
+  set('vuf_basvuru_ayarlar',{
+    basvuruAcik:document.getElementById('ba-basvuru-acik').value==='true',
+    basvuruSonTarih:document.getElementById('ba-basvuru-son-tarih').value,
+    delegeUcret:parseInt(document.getElementById('ba-delege-ucret').value)||650,
+    delegasyonUcret:parseInt(document.getElementById('ba-delegasyon-ucret').value)||600,
+    odemeAd:document.getElementById('ba-odeme-ad').value.trim(),
+    iban:document.getElementById('ba-iban').value.trim(),
+    dekontEmail:document.getElementById('ba-dekont-email').value.trim()
+  });
+  toast('Başvuru ayarları kaydedildi!','success');
+}
+
+</script>
+<style>
+/* ════════════════════════════════════
+   FORM BUILDER (Google Forms Style)
+════════════════════════════════════ */
+.form-builder-container {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.form-builder-main {
+  background: #fff;
+  border: 1px solid #DDE3F0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(11, 31, 58, 0.08);
+}
+
+.form-builder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #673ab7 0%, #512da8 100%);
+  border-bottom: 1px solid #DDE3F0;
+}
+
+.form-builder-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.fb-action-btn {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fb-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(103, 58, 183, 0.4);
+}
+
+.form-builder-content {
+  padding: 1.5rem;
+  min-height: 400px;
+  background: #f8f9fa;
+}
+
+.empty-state {
+  color: #6B7A99;
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 2px dashed #DDE3F0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  color: #673ab7;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.form-builder-sidebar {
+  background: #fff;
+  border: 1px solid #DDE3F0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: fit-content;
+  box-shadow: 0 2px 12px rgba(11, 31, 58, 0.08);
+  position: sticky;
+  top: 1rem;
+}
+
+.form-builder-sidebar h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0B1F3A;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #DDE3F0;
+}
+
+.form-builder-sidebar h3 i {
+  color: #673ab7;
+}
+
+/* Form Section (Google Forms Style) */
+.form-section {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  position: relative;
+}
+
+.form-section:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.form-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.form-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #202124;
+  flex: 1;
+}
+
+.form-section-title input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #202124;
+  padding: 0.25rem 0;
+}
+
+.form-section-title input:focus {
+  outline: none;
+  border-bottom: 2px solid #673ab7;
+}
+
+.form-section-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.form-section-actions button {
+  background: #f1f3f4;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #5f6368;
+  transition: all 0.2s;
+}
+
+.form-section-actions button:hover:not(:disabled) {
+  background: #e8eaed;
+  color: #202124;
+}
+
+.form-section-actions button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.form-section-actions button.delete {
+  color: #d93025;
+}
+
+.form-section-actions button.delete:hover {
+  background: #fce8e6;
+}
+
+/* Form Item (Google Forms Style) */
+.form-item {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.form-item:hover {
+  border-color: #673ab7;
+  box-shadow: 0 2px 8px rgba(103, 58, 183, 0.15);
+}
+
+.form-item.selected {
+  border-color: #673ab7;
+  box-shadow: 0 0 0 3px rgba(103, 58, 183, 0.1);
+}
+
+.form-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.form-item-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #202124;
+  flex: 1;
+}
+
+.form-item-label input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #202124;
+  padding: 0.25rem 0;
+}
+
+.form-item-label input:focus {
+  outline: none;
+  border-bottom: 2px solid #673ab7;
+}
+
+.form-item-type-badge {
+  background: #e8f0fe;
+  color: #1967d2;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 0.75rem;
+}
+
+.form-item-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.form-item-actions button {
+  background: #f1f3f4;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: #5f6368;
+  transition: all 0.2s;
+}
+
+.form-item-actions button:hover:not(:disabled) {
+  background: #e8eaed;
+  color: #202124;
+}
+
+.form-item-actions button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.form-item-actions button.delete {
+  color: #d93025;
+}
+
+.form-item-actions button.delete:hover {
+  background: #fce8e6;
+}
+
+.form-item-preview {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #5f6368;
+  border: 1px solid #e0e0e0;
+}
+
+/* Add Item Button */
+.add-item-btn {
+  width: 100%;
+  padding: 0.85rem;
+  background: #fff;
+  border: 1px dashed #673ab7;
+  border-radius: 8px;
+  color: #673ab7;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.add-item-btn:hover {
+  background: #673ab7;
+  color: #fff;
+  border-color: #673ab7;
+}
+
+/* Question Type Selector */
+.question-type-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.question-type-btn {
+  padding: 0.75rem;
+  background: #f1f3f4;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #5f6368;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.question-type-btn:hover {
+  background: #e8eaed;
+  border-color: #673ab7;
+  color: #673ab7;
+}
+
+/* Properties Panel */
+.prop-group {
+  margin-bottom: 1.25rem;
+}
+
+.prop-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5f6368;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.prop-input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #202124;
+  transition: all 0.2s;
+}
+
+.prop-input:focus {
+  outline: none;
+  border-color: #673ab7;
+  box-shadow: 0 0 0 3px rgba(103, 58, 183, 0.1);
+}
+
+.prop-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.prop-checkbox input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.prop-checkbox label {
+  font-size: 0.9rem;
+  color: #5f6368;
+  cursor: pointer;
+}
+
+.form-option-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.form-option-item input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  color: #202124;
+  font-weight: 500;
+}
+
+.form-option-item button {
+  background: #fce8e6;
+  border: none;
+  color: #d93025;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all 0.2s;
+}
+
+.form-option-item button:hover {
+  background: #d93025;
+  color: #fff;
+}
+
+.add-option-btn {
+  margin-top: 0.75rem;
+  background: #e8f0fe;
+  border: 1px solid #d2e3fc;
+  color: #1967d2;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  width: 100%;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.add-option-btn:hover {
+  background: #1967d2;
+  color: #fff;
+  border-color: #1967d2;
+}
+
+.form-image-item {
+  text-align: center;
+  padding: 1.25rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.form-image-item img {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-description-item {
+  padding: 1.25rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #5f6368;
+  line-height: 1.6;
+  border: 1px solid #e0e0e0;
+}
+</style>
+<script>
+/* ════════════════════════════════════
+   FORM BUILDER
+════════════════════════════════════ */
+let currentFormType = 'delege';
+let formData = { delege: [], delegasyon: [] };
+
+// Varsayılan form verileri (mevcut başvuru formundan)
+const defaultFormData = {
+  delege: [
+    {
+      title: 'Kişisel Bilgiler',
+      items: [
+        { type: 'text', label: 'Ad Soyad', required: true, placeholder: 'Adınız Soyadınız' },
+        { type: 'select', label: 'Sınıf', required: true, options: ['9. Sınıf', '10. Sınıf', '11. Sınıf', '12. Sınıf', 'Hazırlık', 'Mezun'], placeholder: 'Sınıf seçin' },
+        { type: 'email', label: 'E-posta', required: true, placeholder: 'ornek@email.com' },
+        { type: 'tel', label: 'Telefon', required: true, placeholder: '05XX XXX XX XX' }
+      ]
+    },
+    {
+      title: 'Okul Bilgileri',
+      items: [
+        { type: 'text', label: 'Okul Adı', required: true, placeholder: 'Okulunuzun tam adı' },
+        { type: 'select', label: 'Şehir', required: true, options: ['Adana', 'Adıyaman', 'Afyonkarahisar', 'Ağrı', 'Aksaray', 'Amasya', 'Ankara', 'Antalya', 'Ardahan', 'Artvin', 'Aydın', 'Balıkesir', 'Bilecik', 'Bingöl', 'Bitlis', 'Bolu', 'Burdur', 'Bursa', 'Çanakkale', 'Çankırı', 'Çorum', 'Denizli', 'Diyarbakır', 'Düzce', 'Edirne', 'Elazığ', 'Erzincan', 'Erzurum', 'Eskişehir', 'Gaziantep', 'Giresun', 'Gümüşhane', 'Hakkari', 'Hatay', 'Iğdır', 'Isparta', 'İstanbul', 'İzmir', 'Kahramanmaraş', 'Karabük', 'Karaman', 'Kars', 'Kastamonu', 'Kayseri', 'Kilis', 'Kırıkkale', 'Kırklareli', 'Kırşehir', 'Kocaeli', 'Konya', 'Kütahya', 'Malatya', 'Manisa', 'Mardin', 'Mersin', 'Muğla', 'Muş', 'Nevşehir', 'Niğde', 'Ordu', 'Osmaniye', 'Rize', 'Sakarya', 'Samsun', 'Şanlıurfa', 'Şırnak', 'Siirt', 'Sinop', 'Sivas', 'Tekirdağ', 'Tokat', 'Trabzon', 'Tunceli', 'Uşak', 'Van', 'Yalova', 'Yozgat', 'Zonguldak'], placeholder: 'Şehir seçin' }
+      ]
+    },
+    {
+      title: 'Komisyon Tercihi',
+      items: [
+        { type: 'select', label: 'Komisyon Tercihi', required: true, options: ['Ekonomi Komisyonu', 'Eğitim Komisyonu', 'Gençlik & Spor Komisyonu', 'Dış Politika Komisyonu', 'Hukuk & Anayasa Komisyonu', 'Kültür & Sanat Komisyonu', 'Toplum & Psikoloji Komisyonu', 'Toplumsal Cinsiyet Eşitliği Komisyonu', 'Dijitalleşme & Teknoloji Komisyonu'], placeholder: 'Katılmak istediğiniz komisyonu seçin' }
+      ]
+    },
+    {
+      title: 'Motivasyon',
+      items: [
+        { type: 'textarea', label: 'Motivasyon Mektubu', required: true, placeholder: 'Neden Vizyon Ulusal Forum\'a katılmak istiyorsunuz? Hedeflerinizi ve kendinizi kısaca tanıtın...' }
+      ]
+    }
+  ],
+  delegasyon: [
+    {
+      title: 'Okul Bilgileri',
+      items: [
+        { type: 'text', label: 'Okul Adı', required: true, placeholder: 'Okulunuzun tam resmi adı' },
+        { type: 'text', label: 'Koordinatör Adı Soyad', required: true, placeholder: 'Ad Soyad' },
+        { type: 'text', label: 'Unvan / Branş', required: false, placeholder: 'Örn: Sosyal Bilgiler Öğretmeni' }
+      ]
+    },
+    {
+      title: 'İletişim Bilgileri',
+      items: [
+        { type: 'email', label: 'E-posta', required: true, placeholder: 'ornek@okul.edu.tr' },
+        { type: 'tel', label: 'Telefon', required: true, placeholder: '05XX XXX XX XX' },
+        { type: 'select', label: 'Şehir', required: true, options: ['Adana', 'Ankara', 'Antalya', 'Bursa', 'Diyarbakır', 'Eskişehir', 'Gaziantep', 'İstanbul', 'İzmir', 'Kayseri', 'Kocaeli', 'Konya', 'Malatya', 'Mersin', 'Samsun', 'Trabzon', 'Diğer'], placeholder: 'Şehir seçin' }
+      ]
+    },
+    {
+      title: 'Delegasyon Bilgileri',
+      items: [
+        { type: 'number', label: 'Tahmini Katılımcı Sayısı', required: true, placeholder: 'Örn: 12' }
+      ]
+    },
+    {
+      title: 'Ek Notlar',
+      items: [
+        { type: 'textarea', label: 'Ek Notlar', required: false, placeholder: 'Özel talebiniz veya belirtmek istediğiniz bir husus varsa yazabilirsiniz...' }
+      ]
+    }
+  ]
+};
+
+function loadFormBuilder() {
+  currentFormType = document.getElementById('formTypeSelect').value;
+  const stored = JSON.parse(localStorage.getItem('vuf_form_builder') || '{}');
+  
+  // Eğer localStorage'da veri yoksa, varsayılan verileri kullan
+  if (!stored.delege || stored.delege.length === 0) {
+    formData.delege = JSON.parse(JSON.stringify(defaultFormData.delege));
+  } else {
+    formData.delege = stored.delege;
+  }
+  
+  if (!stored.delegasyon || stored.delegasyon.length === 0) {
+    formData.delegasyon = JSON.parse(JSON.stringify(defaultFormData.delegasyon));
+  } else {
+    formData.delegasyon = stored.delegasyon;
+  }
+  
+  renderFormBuilder();
+}
+
+function renderFormBuilder() {
+  const container = document.getElementById('formBuilderContent');
+  const sections = formData[currentFormType] || [];
+  
+  if (sections.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-layer-group"></i>
+        <p>Henüz bölüm eklenmedi.</p>
+        <p style="font-size:0.85rem;margin-top:0.5rem">Sol panelden "Bölüm Ekle" butonuna tıklayarak form oluşturmaya başlayın.</p>
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = sections.map((section, sIndex) => `
+    <div class="form-section" data-section="${sIndex}">
+      <div class="form-section-header">
+        <input type="text" class="form-section-title" value="${esc(section.title || 'Bölüm')}" onchange="updateSectionTitle(${sIndex}, this.value)" style="border:none;background:transparent;font-size:0.95rem;font-weight:600;color:#0B1F3A;width:200px">
+        <div class="form-section-actions">
+          <button onclick="moveSection(${sIndex}, -1)" ${sIndex === 0 ? 'disabled' : ''}><i class="fas fa-arrow-up"></i></button>
+          <button onclick="moveSection(${sIndex}, 1)" ${sIndex === sections.length - 1 ? 'disabled' : ''}><i class="fas fa-arrow-down"></i></button>
+          <button onclick="deleteSection(${sIndex})" class="delete"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      ${section.items.map((item, iIndex) => renderItem(item, sIndex, iIndex)).join('')}
+      <button class="add-option-btn" onclick="addItemToSection(${sIndex})"><i class="fas fa-plus"></i> Öğe Ekle</button>
+    </div>
+  `).join('');
+}
+
+function renderItem(item, sIndex, iIndex) {
+  const typeLabels = {
+    text: 'Kısa Metin',
+    textarea: 'Uzun Metin',
+    radio: 'Şıklı (Tek)',
+    checkbox: 'Şıklı (Çok)',
+    select: 'Dropdown',
+    email: 'E-posta',
+    tel: 'Telefon',
+    number: 'Sayı',
+    date: 'Tarih',
+    image: 'Görsel',
+    description: 'Açıklama'
+  };
+  
+  let preview = '';
+  if (item.type === 'text' || item.type === 'email' || item.type === 'tel' || item.type === 'number' || item.type === 'date') {
+    preview = `<input type="${item.type}" placeholder="${item.placeholder || ''}" disabled style="width:100%;padding:0.5rem;border:1px solid #DDE3F0;border-radius:4px">`;
+  } else if (item.type === 'textarea') {
+    preview = `<textarea placeholder="${item.placeholder || ''}" disabled rows="3" style="width:100%;padding:0.5rem;border:1px solid #DDE3F0;border-radius:4px"></textarea>`;
+  } else if (item.type === 'radio' || item.type === 'checkbox') {
+    preview = (item.options || []).map(opt => `<div style="padding:0.3rem 0"><input type="${item.type}" disabled> ${esc(opt)}</div>`).join('');
+  } else if (item.type === 'select') {
+    preview = `<select disabled style="width:100%;padding:0.5rem;border:1px solid #DDE3F0;border-radius:4px"><option>${item.placeholder || 'Seçin'}</option>${(item.options || []).map(o => `<option>${esc(o)}</option>`).join('')}</select>`;
+  } else if (item.type === 'image') {
+    preview = `<div class="form-image-item"><img src="${item.url || ''}" alt="Görsel"></div>`;
+  } else if (item.type === 'description') {
+    preview = `<div class="form-description-item">${esc(item.text || 'Açıklama metni')}</div>`;
+  }
+  
+  let optionsEditor = '';
+  if (item.type === 'radio' || item.type === 'checkbox' || item.type === 'select') {
+    optionsEditor = `
+      <div style="margin-top:0.5rem">
+        ${(item.options || []).map((opt, oIndex) => `
+          <div class="form-option-item">
+            <input type="text" value="${esc(opt)}" onchange="updateOption(${sIndex}, ${iIndex}, ${oIndex}, this.value)">
+            <button onclick="removeOption(${sIndex}, ${iIndex}, ${oIndex})"><i class="fas fa-times"></i></button>
+          </div>
+        `).join('')}
+        <button class="add-option-btn" onclick="addOption(${sIndex}, ${iIndex})"><i class="fas fa-plus"></i> Şık Ekle</button>
+      </div>
+    `;
+  }
+  
+  let imageEditor = '';
+  if (item.type === 'image') {
+    imageEditor = `
+      <div style="margin-top:0.5rem">
+        <input type="text" placeholder="Görsel URL" value="${item.url || ''}" onchange="updateImage(${sIndex}, ${iIndex}, this.value)" style="width:100%;padding:0.5rem;border:1px solid #DDE3F0;border-radius:4px">
+      </div>
+    `;
+  }
+  
+  let descriptionEditor = '';
+  if (item.type === 'description') {
+    descriptionEditor = `
+      <div style="margin-top:0.5rem">
+        <textarea onchange="updateDescription(${sIndex}, ${iIndex}, this.value)" rows="3" style="width:100%;padding:0.5rem;border:1px solid #DDE3F0;border-radius:4px">${esc(item.text || '')}</textarea>
+      </div>
+    `;
+  }
+  
+  return `
+    <div class="form-item" data-item="${iIndex}">
+      <div class="form-item-header">
+        <input type="text" class="form-item-label" value="${esc(item.label || '')}" onchange="updateItemLabel(${sIndex}, ${iIndex}, this.value)" style="border:none;background:transparent;font-size:0.9rem;font-weight:600;color:#0B1F3A;flex:1">
+        <span style="font-size:0.75rem;color:#6B7A99;margin-left:0.5rem">${typeLabels[item.type] || item.type}</span>
+        <div class="form-item-actions">
+          <button onclick="moveItem(${sIndex}, ${iIndex}, -1)" ${iIndex === 0 ? 'disabled' : ''}><i class="fas fa-arrow-up"></i></button>
+          <button onclick="moveItem(${sIndex}, ${iIndex}, 1)" ${iIndex === formData[currentFormType][sIndex].items.length - 1 ? 'disabled' : ''}><i class="fas fa-arrow-down"></i></button>
+          <button onclick="deleteItem(${sIndex}, ${iIndex})" class="delete"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <div class="form-item-preview">${preview}</div>
+      ${optionsEditor}
+      ${imageEditor}
+      ${descriptionEditor}
+      <div style="margin-top:0.5rem;display:flex;align-items:center;gap:0.5rem">
+        <label style="font-size:0.8rem;color:#6B7A99">
+          <input type="checkbox" ${item.required ? 'checked' : ''} onchange="updateRequired(${sIndex}, ${iIndex}, this.checked)"> Zorunlu
+        </label>
+      </div>
+    </div>
+  `;
+}
+
+function addSection() {
+  const title = prompt('Bölüm başlığı:');
+  if (!title) return;
+  
+  formData[currentFormType].push({
+    title: title,
+    items: []
+  });
+  renderFormBuilder();
+}
+
+function updateSectionTitle(sIndex, value) {
+  formData[currentFormType][sIndex].title = value;
+}
+
+function moveSection(sIndex, direction) {
+  const sections = formData[currentFormType];
+  const newIndex = sIndex + direction;
+  if (newIndex < 0 || newIndex >= sections.length) return;
+  [sections[sIndex], sections[newIndex]] = [sections[newIndex], sections[sIndex]];
+  renderFormBuilder();
+}
+
+function deleteSection(sIndex) {
+  if (confirm('Bu bölümü ve içindeki tüm öğeleri silmek istediğinize emin misiniz?')) {
+    formData[currentFormType].splice(sIndex, 1);
+    renderFormBuilder();
+  }
+}
+
+function addItemToSection(sIndex) {
+  const type = prompt('Öğe türü (text, textarea, radio, checkbox, select, email, tel, number, date, image, description):', 'text');
+  if (!type || !['text', 'textarea', 'radio', 'checkbox', 'select', 'email', 'tel', 'number', 'date', 'image', 'description'].includes(type)) {
+    alert('Geçersiz tür!');
+    return;
+  }
+  
+  const label = prompt('Etiket:');
+  if (!label) return;
+  
+  const newItem = {
+    type: type,
+    label: label,
+    required: false
+  };
+  
+  if (type === 'radio' || type === 'checkbox' || type === 'select') {
+    newItem.options = ['Seçenek 1', 'Seçenek 2'];
+  }
+  
+  if (type === 'text' || type === 'textarea' || type === 'email' || type === 'tel' || type === 'number') {
+    newItem.placeholder = label;
+  }
+  
+  formData[currentFormType][sIndex].items.push(newItem);
+  renderFormBuilder();
+}
+
+function updateItemLabel(sIndex, iIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].label = value;
+}
+
+function moveItem(sIndex, iIndex, direction) {
+  const items = formData[currentFormType][sIndex].items;
+  const newIndex = iIndex + direction;
+  if (newIndex < 0 || newIndex >= items.length) return;
+  [items[iIndex], items[newIndex]] = [items[newIndex], items[iIndex]];
+  renderFormBuilder();
+}
+
+function deleteItem(sIndex, iIndex) {
+  if (confirm('Bu öğeyi silmek istediğinize emin misiniz?')) {
+    formData[currentFormType][sIndex].items.splice(iIndex, 1);
+    renderFormBuilder();
+  }
+}
+
+function addOption(sIndex, iIndex) {
+  formData[currentFormType][sIndex].items[iIndex].options.push('Yeni Seçenek');
+  renderFormBuilder();
+}
+
+function updateOption(sIndex, iIndex, oIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].options[oIndex] = value;
+}
+
+function removeOption(sIndex, iIndex, oIndex) {
+  formData[currentFormType][sIndex].items[iIndex].options.splice(oIndex, 1);
+  renderFormBuilder();
+}
+
+function updateImage(sIndex, iIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].url = value;
+  renderFormBuilder();
+}
+
+function updateDescription(sIndex, iIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].text = value;
+}
+
+function updateRequired(sIndex, iIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].required = value;
+}
+
+function addItemToSection(sIndex, type) {
+  const label = prompt('Etiket:');
+  if (!label) return;
+  
+  const newItem = {
+    type: type,
+    label: label,
+    required: false
+  };
+  
+  if (type === 'radio' || type === 'checkbox' || type === 'select') {
+    newItem.options = ['Seçenek 1', 'Seçenek 2'];
+  }
+  
+  if (type === 'text' || type === 'textarea' || type === 'email' || type === 'tel' || type === 'number') {
+    newItem.placeholder = label;
+  }
+  
+  formData[currentFormType][sIndex].items.push(newItem);
+  renderFormBuilder();
+  selectItem(sIndex, formData[currentFormType][sIndex].items.length - 1);
+}
+
+function updateItemLabel(sIndex, iIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].label = value;
+}
+
+function updatePlaceholder(sIndex, iIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].placeholder = value;
+  renderFormBuilder();
+  selectItem(sIndex, iIndex);
+}
+
+function moveItem(sIndex, iIndex, direction) {
+  const items = formData[currentFormType][sIndex].items;
+  const newIndex = iIndex + direction;
+  if (newIndex < 0 || newIndex >= items.length) return;
+  [items[iIndex], items[newIndex]] = [items[newIndex], items[iIndex]];
+  renderFormBuilder();
+}
+
+function deleteItem(sIndex, iIndex) {
+  if (confirm('Bu öğeyi silmek istediğinize emin misiniz?')) {
+    formData[currentFormType][sIndex].items.splice(iIndex, 1);
+    renderFormBuilder();
+    document.getElementById('propertiesContent').innerHTML = '<p style="color:#6B7A99;font-size:0.9rem;text-align:center;padding:2rem">Düzenlemek için bir öğe seçin.</p>';
+  }
+}
+
+function addOption(sIndex, iIndex) {
+  formData[currentFormType][sIndex].items[iIndex].options.push('Yeni Seçenek');
+  renderFormBuilder();
+  selectItem(sIndex, iIndex);
+}
+
+function updateOption(sIndex, iIndex, oIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].options[oIndex] = value;
+}
+
+function removeOption(sIndex, iIndex, oIndex) {
+  formData[currentFormType][sIndex].items[iIndex].options.splice(oIndex, 1);
+  renderFormBuilder();
+  selectItem(sIndex, iIndex);
+}
+
+function updateImage(sIndex, iIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].url = value;
+  renderFormBuilder();
+}
+
+function updateDescription(sIndex, iIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].text = value;
+}
+
+function updateRequired(sIndex, iIndex, value) {
+  formData[currentFormType][sIndex].items[iIndex].required = value;
+}
+
+function addSection() {
+  const title = prompt('Bölüm başlığı:');
+  if (!title) return;
+  
+  formData[currentFormType].push({
+    title: title,
+    items: []
+  });
+  renderFormBuilder();
+}
+
+function updateSectionTitle(sIndex, value) {
+  formData[currentFormType][sIndex].title = value;
+}
+
+function moveSection(sIndex, direction) {
+  const sections = formData[currentFormType];
+  const newIndex = sIndex + direction;
+  if (newIndex < 0 || newIndex >= sections.length) return;
+  [sections[sIndex], sections[newIndex]] = [sections[newIndex], sections[sIndex]];
+  renderFormBuilder();
+}
+
+function deleteSection(sIndex) {
+  if (confirm('Bu bölümü ve içindeki tüm öğeleri silmek istediğinize emin misiniz?')) {
+    formData[currentFormType].splice(sIndex, 1);
+    renderFormBuilder();
+  }
+}
+
+function saveFormBuilder() {
+  localStorage.setItem('vuf_form_builder', JSON.stringify(formData));
+  toast('Form kaydedildi!', 'success');
+}
+
+// Form builder'ı yükle
+loadBasvuruFormu();
+
+function renderBasvurular(){
+  const del=get('vuf_delegeler',[]),dlg=get('vuf_delegasyonlar',[]);
+  const tbody=document.getElementById('basvuruTable');
+  const all=[...del.map(x=>({...x,type:'Delege'})),...dlg.map(x=>({...x,type:'Delegasyon'}))];
+  if(!all.length){tbody.innerHTML='<tr><td colspan="5" class="empty-row"><i class="fas fa-inbox"></i> Henüz başvuru yok.</td></tr>';return}
+  tbody.innerHTML=all.map(b=>`
+    <tr>
+      <td><span class="tier-badge ${b.type==='Delege'?'tier-gold':'tier-silver'}">${esc(b.type)}</span></td>
+      <td class="td-name">${esc(b.adSoyad||b.delegasyonAd||'—')}</td>
+      <td class="td-sub">${esc(b.email||'—')}</td>
+      <td><span class="tier-badge ${b.durum==='Başvuru Onaylandı'?'tier-gold':b.durum==='Başvuru Reddedildi'?'tier-bronze':'tier-silver'}">${esc(b.durum||'—')}</span></td>
+      <td class="td-sub">${b.tarih?new Date(b.tarih).toLocaleDateString('tr-TR'):'—'}</td>
+    </tr>`).join('');
+}
+
+/* ════════════════════════════════════
    MODAL
 ════════════════════════════════════ */
 let modalType='',modalId=null;
@@ -570,15 +1765,32 @@ function openModal(type,id=null){
     const data=get('vuf_ekip',DEF_EKIP);
     const item=id?data.find(x=>x.id===id):{};
     title.textContent=id?'Üye Düzenle':'Yeni Ekip Üyesi';
+    const roles=[
+      'Genel Koordinatör',
+      'Organizasyon Başkanı',
+      'Akademi Başkanı',
+      'PR Başkanı',
+      'Finans Başkanı',
+      'Saha Başkanı',
+      'Press Başkanı',
+      'Tasarım Başkanı',
+      'Güvenlik Başkanı',
+      'İnsan Kaynakları Başkanı'
+    ];
+    const roleOptions=roles.map(r=>`<option value="${r}" ${item.role===r?'selected':''}>${r}</option>`).join('');
     body.innerHTML=`
-      <div class="mf-row">
-        <div class="mf-group"><label>Kısaltma (Avatar)</label><input id="mf-initials" value="${esc(item.initials||'')}" maxlength="3" placeholder="Örn: GS"><div class="mf-hint">Max 3 karakter</div></div>
-        <div class="mf-group"><label>Rol / Pozisyon</label><input id="mf-role" value="${esc(item.role||'')}"></div>
+      <div class="mf-group"><label>Rol / Pozisyon</label>
+        <select id="mf-role">${roleOptions}</select>
+        <div class="mf-hint">Rol seçildiğinde otomatik sıralanır</div>
       </div>
       <div class="mf-group"><label>Ad Soyad</label><input id="mf-name" value="${esc(item.name||'')}" placeholder="Boş bırakılabilir"></div>
-      <div class="mf-group"><label>Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>
       <div class="mf-group"><label>Instagram Kullanıcı Adı</label><input id="mf-instagram" value="${esc(item.instagram||'')}" placeholder="@olmadan yazın"></div>
-      <div class="mf-group"><label>Rozet İkonu</label><input id="mf-badge" value="${esc(item.badge||'fas fa-star')}"><div class="mf-hint">FontAwesome sınıfı, örn: fas fa-star</div></div>`;
+      <div class="mf-group"><label>Profil Fotoğrafı</label>
+        <input type="file" id="mf-photo" accept="image/*" ${item.photo?'':'placeholder="Fotoğraf seçin"'}>
+        ${item.photo?`<div style="margin-top:.5rem"><img src="${item.photo}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #DDE3F0"></div>`:''}
+        <div class="mf-hint">Fotoğraf seçilmezse avatar kullanılır</div>
+      </div>
+      <div class="mf-group"><label>Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>`;
   }
   else if(type==='sponsor'){
     const data=get('vuf_sponsorlar',DEF_SPONSOR);
@@ -635,17 +1847,58 @@ function saveModal(){
   }
   else if(modalType==='ekip'){
     const data=get('vuf_ekip',DEF_EKIP);
+    const role=document.getElementById('mf-role').value.trim();
+    const roles=['Genel Koordinatör','Organizasyon Başkanı','Akademi Başkanı','PR Başkanı','Finans Başkanı','Saha Başkanı','Press Başkanı','Tasarım Başkanı','Güvenlik Başkanı','İnsan Kaynakları Başkanı'];
+    const roleIndex=roles.indexOf(role);
+    const initials=role.split(' ').map(w=>w[0]).join('').toUpperCase().substring(0,3);
+    
+    // Fotoğraf yükleme
+    const photoInput=document.getElementById('mf-photo');
+    let photo='';
+    if(modalId){
+      const existing=data.find(x=>x.id===modalId);
+      photo=existing.photo||'';
+    }
+    if(photoInput.files[0]){
+      const reader=new FileReader();
+      reader.onload=function(e){
+        const obj={
+          id:modalId||nextId(data),
+          initials:initials,
+          role:role,
+          name:document.getElementById('mf-name').value.trim(),
+          desc:document.getElementById('mf-desc').value.trim(),
+          instagram:document.getElementById('mf-instagram').value.trim(),
+          photo:e.target.result,
+        };
+        if(!obj.role){toast('Rol boş olamaz','error');return}
+        if(modalId){
+          const i=data.findIndex(x=>x.id===modalId);
+          data[i]=obj;
+        }else{
+          data.push(obj);
+        }
+        // Rol sıralaması
+        data.sort((a,b)=>roles.indexOf(a.role)-roles.indexOf(b.role));
+        set('vuf_ekip',data);renderEkip();toast('Ekip üyesi kaydedildi!','success');closeModal();
+      };
+      reader.readAsDataURL(photoInput.files[0]);
+      return;
+    }
+    
     const obj={
       id:modalId||nextId(data),
-      initials:document.getElementById('mf-initials').value.trim(),
-      role:document.getElementById('mf-role').value.trim(),
+      initials:initials,
+      role:role,
       name:document.getElementById('mf-name').value.trim(),
       desc:document.getElementById('mf-desc').value.trim(),
       instagram:document.getElementById('mf-instagram').value.trim(),
-      badge:document.getElementById('mf-badge').value.trim()||'fas fa-star',
+      photo:photo,
     };
     if(!obj.role){toast('Rol boş olamaz','error');return}
     if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
+    // Rol sıralaması
+    data.sort((a,b)=>roles.indexOf(a.role)-roles.indexOf(b.role));
     set('vuf_ekip',data);renderEkip();toast('Ekip üyesi kaydedildi!','success');
   }
   else if(modalType==='sponsor'){
@@ -714,6 +1967,65 @@ function toast(msg,type='info'){
   t.innerHTML=`<i class="fas fa-${type==='success'?'check-circle':type==='error'?'exclamation-circle':'info-circle'}"></i> ${msg}`;
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+/* ════════════════════════════════════
+   EXPORT / IMPORT
+════════════════════════════════════ */
+function exportData(){
+  const data={
+    komisyonlar:get('vuf_komisyonlar',DEF_KOMISYON),
+    ekip:get('vuf_ekip',DEF_EKIP),
+    sponsorlar:get('vuf_sponsorlar',DEF_SPONSOR),
+    program:get('vuf_program',DEF_PROGRAM),
+    istatistikler:get('vuf_istatistikler',DEF_ISTATISTIKLER),
+    exportDate:new Date().toISOString(),
+    version:'1.0'
+  };
+  const json=JSON.stringify(data,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='vizyon-ulusalforum-veri-'+new Date().toISOString().split('T')[0]+'.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Veriler başarıyla dışa aktarıldı','success');
+}
+
+function importData(input){
+  const file=input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const data=JSON.parse(e.target.result);
+      if(!data.komisyonlar||!data.ekip||!data.sponsorlar||!data.program||!data.istatistikler){
+        toast('Geçersiz dosya formatı','error');
+        return;
+      }
+      if(confirm('Mevcut verilerin üzerine yazılacak. Devam etmek istiyor musunuz?')){
+        set('vuf_komisyonlar',data.komisyonlar);
+        set('vuf_ekip',data.ekip);
+        set('vuf_sponsorlar',data.sponsorlar);
+        set('vuf_program',data.program);
+        set('vuf_istatistikler',data.istatistikler);
+        toast('Veriler başarıyla içe aktarıldı','success');
+        initData();
+        renderDashboard();
+        renderKomisyonlar();
+        renderEkip();
+        renderSponsorlar();
+        renderProgram();
+      }
+    }catch(err){
+      toast('Dosya okuma hatası','error');
+    }
+  };
+  reader.readAsText(file);
+  input.value='';
 }
 
 /* ════════════════════════════════════
