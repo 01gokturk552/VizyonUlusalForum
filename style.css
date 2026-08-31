@@ -815,6 +815,27 @@ button { font-family: inherit; }
 .fade-up { opacity: 0; transform: translateY(24px); }
 .fade-up.visible { opacity: 1; transform: translateY(0); transition: opacity .6s var(--ease), transform .6s var(--ease); }
 
+/* ── Başvuru Durumu Mesajı ── */
+.hero-basvuru-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  backdrop-filter: blur(8px);
+}
+.hero-basvuru-status i {
+  color: #ef4444;
+  font-size: 1.1rem;
+}
+
 /* Stagger delays */
 .stagger > *:nth-child(1)  { transition-delay: .05s; }
 .stagger > *:nth-child(2)  { transition-delay: .10s; }
