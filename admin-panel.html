@@ -559,15 +559,15 @@ function logout(){sessionStorage.removeItem('vuf_admin_auth');window.location.hr
    DEFAULT DATA
 ════════════════════════════════════ */
 const DEF_KOMISYON=[
-  {id:1,num:'01',icon:'fas fa-shield-halved',name:'Savunma ve Askeri İşbirliği Komisyonu',desc:'Milli savunma politikaları ve askeri işbirlikleri',baskan:''},
-  {id:2,num:'02',icon:'fas fa-globe',name:'Dış Politika Komisyonu',desc:'Uluslararası ilişkiler ve diplomatik stratejiler',baskan:''},
-  {id:3,num:'03',icon:'fas fa-microchip',name:'Teknoloji Komisyonu',desc:'Teknoloji politikaları ve dijital dönüşüm',baskan:''},
-  {id:4,num:'04',icon:'fas fa-balance-scale',name:'Hukuk ve Anayasa Komisyonu',desc:'Hukuki reformlar ve anayasal düzenlemeler',baskan:''},
-  {id:5,num:'05',icon:'fas fa-running',name:'Gençlik ve Spor Komisyonu',desc:'Gençlik katılımı, istihdam ve spor politikaları',baskan:''},
-  {id:6,num:'06',icon:'fas fa-venus-mars',name:'Toplumsal Cinsiyet Eşitliği Komisyonu',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm',baskan:''},
-  {id:7,num:'07',icon:'fas fa-book-open',name:'Eğitim Politikaları Komisyonu',desc:'Eğitim reformu, müfredat geliştirme',baskan:''},
-  {id:8,num:'08',icon:'fas fa-shield-alt',name:'İç Güvenlik ve Terörle Mücadele Komisyonu',desc:'İç güvenlik politikaları ve terörle mücadele',baskan:''},
-  {id:9,num:'09',icon:'fas fa-chart-line',name:'Ekonomi ve Finans Politikaları Komisyonu',desc:'Ekonomik kalkınma ve finans politikaları',baskan:''},
+  {id:1,num:'01',icon:'fas fa-dollar-sign',name:'Ekonomi ve Kalkınma Komisyonu',desc:'Ekonomik politikalar ve kalkınma stratejileri',baskan:''},
+  {id:2,num:'02',icon:'fas fa-book-open',name:'Eğitim Politikaları Komisyonu',desc:'Eğitim reformu ve müfredat geliştirme',baskan:''},
+  {id:3,num:'03',icon:'fas fa-running',name:'Gençlik ve Spor Politikaları Komisyonu',desc:'Gençlik katılımı, istihdam ve spor politikaları',baskan:''},
+  {id:4,num:'04',icon:'fas fa-globe',name:'Dış Politika Komisyonu',desc:'Uluslararası ilişkiler ve diplomatik stratejiler',baskan:''},
+  {id:5,num:'05',icon:'fas fa-balance-scale',name:'Hukuk ve Anayasa Komisyonu',desc:'Hukuki reformlar ve anayasal düzenlemeler',baskan:''},
+  {id:6,num:'06',icon:'fas fa-palette',name:'Kültür Ve Sanat Komisyonu',desc:'Kültür ve sanat politikaları, yaratıcı endüstri',baskan:''},
+  {id:7,num:'07',icon:'fas fa-brain',name:'Toplum ve Psikoloji Komisyonu',desc:'Toplumsal konular ve psikolojik iyilik hali',baskan:''},
+  {id:8,num:'08',icon:'fas fa-venus-mars',name:'Toplumsal Cinsiyet Eşitliği Komisyonu',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm',baskan:''},
+  {id:9,num:'09',icon:'fas fa-microchip',name:'Dijitalleşme ve Teknoloji Politikaları Komisyonu',desc:'Teknoloji politikaları ve dijital dönüşüm',baskan:''},
 ];
 const DEF_EKIP=[
   {id:1,initials:'GK',role:'Genel Koordinatör',name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu',instagram:'',photo:''},
@@ -582,16 +582,16 @@ const DEF_EKIP=[
   {id:10,initials:'İKB',role:'İnsan Kaynakları Başkanı',name:'',desc:'İnsan kaynakları ve personel yönetiminden sorumlu',instagram:'',photo:''},
 ];
 const DEF_SPONSOR=[
-  {id:1,name:'Sponsor Adı',tier:'gold'},{id:2,name:'Sponsor Adı',tier:'gold'},
-  {id:3,name:'Sponsor Adı',tier:'silver'},{id:4,name:'Sponsor Adı',tier:'silver'},{id:5,name:'Sponsor Adı',tier:'silver'},
-  {id:6,name:'Sponsor',tier:'bronze'},{id:7,name:'Sponsor',tier:'bronze'},{id:8,name:'Sponsor',tier:'bronze'},
+  {id:1,name:'BIST MTAL Başakşehir',tier:'gold'},{id:2,name:'İstanbul Üniversitesi Hukuk Simülasyonları Kulübü',tier:'gold'},{id:3,name:'Biofin Kozmetik',tier:'gold'},
+  {id:4,name:'İKÜ Siyaset Bilimi ve Uluslararası İlişkiler Kulübü',tier:'silver'},{id:5,name:'Altınbaş Üniversitesi Siyaset & Diplomasi Kulübü',tier:'silver'},{id:6,name:'İKÜ Ekonomi Kulübü',tier:'silver'},{id:7,name:'İKÜ Uluslararası Hukuk Kulübü',tier:'silver'},{id:8,name:'Toybox Pidem',tier:'silver'},
+  {id:9,name:'Sun Brothers',tier:'bronze'},{id:10,name:'Vimex Global',tier:'bronze'},{id:11,name:'Wiwify Kozmetik',tier:'bronze'},{id:12,name:'Starfood Saadet Gıda',tier:'bronze'},
 ];
 const DEF_PROGRAM={
-  day1:[{id:1,time:'08:30',title:'Kayıt & Akreditasyon',desc:'Delegelerin kayıt işlemleri ve kimlik doğrulama'},{id:2,time:'10:00',title:'Açılış Töreni',desc:'Genel Kurul Salonu — açılış konuşmaları'},{id:3,time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{id:4,time:'13:30',title:'1. Komisyon Oturumu',desc:'Tüm komisyonlar eş zamanlı çalışmaya başlar'},{id:5,time:'16:00',title:'Akademik Konuşma',desc:'Davetli konuşmacı semineri'},{id:6,time:'17:30',title:'Sosyal Etkinlik',desc:'Icebreaker & Networking gecesi'}],
-  day2:[{id:1,time:'09:00',title:'2. Komisyon Oturumu',desc:'Yoğun müzakere ve araştırma çalışmaları'},{id:2,time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{id:3,time:'13:30',title:'3. Komisyon Oturumu',desc:'Karar taslaklarının hazırlanması'},{id:4,time:'16:00',title:'Genel Kurul',desc:'Komisyon raporlarının sunumu'},{id:5,time:'19:00',title:'Resmi Gala Yemeği',desc:'Gala yemeği ve sosyal etkinlik'}],
+  day1:[{id:1,time:'14:00',title:'Toplanma ve Kayıt İşlemleri',desc:'Katılımcı kayıtları ve hoş geldin ikramı'},{id:2,time:'14:45',title:'Açılış Konuşmaları',desc:'Departman Başkanlarının Açılış Konuşmaları'},{id:3,time:'15:15',title:'Akademik Konuşmalar',desc:'Alanında Uzman Akademisyenlerin Konuşmaları'},{id:4,time:'16:15',title:'Öğle Arası',desc:'Yemek Molası'},{id:5,time:'17:15',title:'1. Komisyon Oturumu',desc:'Tanışma Oturumu'}],
+  day2:[{id:1,time:'09:30',title:'2. Komisyon Oturumu',desc:'Yoğun müzakere ve araştırma çalışmaları'},{id:2,time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{id:3,time:'13:30',title:'3. Komisyon Oturumu',desc:'Karar taslaklarının hazırlanması'},{id:4,time:'16:00',title:'Genel Kurul',desc:'Komisyon raporlarının sunumu'},{id:5,time:'19:00',title:'Resmi Gala Yemeği',desc:'Gala yemeği ve sosyal etkinlik'}],
   day3:[{id:1,time:'09:00',title:'4. Komisyon Oturumu',desc:'Son müzakereler ve karar bildirgeleri'},{id:2,time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{id:3,time:'13:30',title:'Kapanış Genel Kurulu',desc:'Tüm komisyonların ortak oturumu'},{id:4,time:'16:00',title:'Ödül Töreni & Kapanış',desc:'Sertifika dağıtımı ve kapanış konuşmaları'}],
 };
-const DEF_STATS={komisyon:9,katilimci:270,sponsor:10,gun:3};
+const DEF_STATS={komisyon:9,katilimci:340,sponsor:10,gun:3};
 
 /* ════════════════════════════════════
    DATA HELPERS
