@@ -6,9 +6,37 @@ const nodemailer = require('nodemailer');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Validate environment variables at startup
+const requiredEnvVars = ['EMAIL_USER', 'EMAIL_PASS'];
+const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingEnvVars.length > 0) {
+  console.error('❌ HATA: Gerekli ortam değişkenleri eksik:', missingEnvVars.join(', '));
+  console.error('Lütfen .env dosyasını düzenleyin ve şu değişkenleri ayarlayın:', missingEnvVars.join(', '));
+  process.exit(1);
+}
+
+// Utility function for email validation
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length <= 254;
+};
+
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  credentials: true,
+  maxAge: 600
+}));
+app.use(express.json({ limit: '1mb' }));
+
+// Request logging middleware
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${req.method} ${req.path}`);
+  next();
+});
 
 // E-posta transporter
 const transporter = nodemailer.createTransport({
@@ -101,13 +129,25 @@ app.post('/api/send-email', async (req, res) => {
   try {
     const { to, type, data } = req.body;
     
+    // Validate input parameters
     if (!to || !type || !data) {
       return res.status(400).json({ success: false, error: 'Eksik parametreler' });
     }
     
+    // Validate email format
+    if (!validateEmail(to)) {
+      return res.status(400).json({ success: false, error: 'Geçersiz e-posta adresi' });
+    }
+    
+    // Validate email type
     const template = emailTemplates[type];
     if (!template) {
       return res.status(400).json({ success: false, error: 'Geçersiz e-posta türü' });
+    }
+    
+    // Validate and sanitize data object
+    if (typeof data !== 'object' || Array.isArray(data)) {
+      return res.status(400).json({ success: false, error: 'Geçersiz veri formatı' });
     }
     
     const emailContent = template(data);
@@ -116,23 +156,57 @@ app.post('/api/send-email', async (req, res) => {
       from: process.env.EMAIL_USER,
       to: to,
       subject: emailContent.subject,
-      html: emailContent.html
+      html: emailContent.html,
+      replyTo: process.env.EMAIL_USER
     };
     
     await transporter.sendMail(mailOptions);
     
+    console.log(`✓ E-posta gönderildi: ${to} (Tür: ${type})`);
     res.json({ success: true, message: 'E-posta başarıyla gönderildi' });
   } catch (error) {
-    console.error('E-posta gönderme hatası:', error);
-    res.status(500).json({ success: false, error: 'E-posta gönderilemedi' });
+    console.error('❌ E-posta gönderme hatası:', error.message);
+    res.status(500).json({ success: false, error: 'E-posta gönderilemedi. Lütfen daha sonra tekrar deneyin.' });
   }
 });
 
-// Health check
+// Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Backend çalışıyor' });
+  res.json({ 
+    status: 'ok', 
+    message: 'Backend çalışıyor',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0'
+  });
 });
 
-app.listen(PORT, () => {
-  console.log(`Backend sunucusu ${PORT} portunda çalışıyor`);
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ success: false, error: 'Endpoint bulunamadı' });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error('❌ Sunucu Hatası:', err);
+  res.status(500).json({ 
+    success: false, 
+    error: 'İç sunucu hatası. Lütfen daha sonra tekrar deneyin.' 
+  });
+});
+
+const server = app.listen(PORT, () => {
+  console.log('═══════════════════════════════════════════════════════════');
+  console.log('🚀 Vizyon Ulusal Forum Backend Başlatıldı');
+  console.log(`📍 URL: http://localhost:${PORT}`);
+  console.log(`⏰ Saat: ${new Date().toLocaleString('tr-TR')}`);
+  console.log('═══════════════════════════════════════════════════════════');
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('⚠️  SIGTERM alındı. Sunucu kapanıyor...');
+  server.close(() => {
+    console.log('✓ Sunucu başarıyla kapatıldı');
+    process.exit(0);
+  });
 });

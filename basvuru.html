@@ -305,22 +305,32 @@ document.getElementById('d_motivasyon').addEventListener('input', function() {
 });
 
 /* ════ HELPERS ════ */
+function esc(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
 function nextId(key) {
   const arr = JSON.parse(localStorage.getItem(key) || '[]');
   return arr.length ? Math.max(...arr.map(x => x.id)) + 1 : 1;
 }
+
 function now() {
   return new Date().toLocaleDateString('tr-TR') + ' ' + new Date().toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit'});
 }
+
 function save(key, obj) {
   const arr = JSON.parse(localStorage.getItem(key) || '[]');
   arr.unshift(obj);
   localStorage.setItem(key, JSON.stringify(arr));
 }
+
 function showModal(msg) {
   document.getElementById('modalMsg').textContent = msg;
   document.getElementById('modalOverlay').classList.remove('hidden');
 }
+
 function resetModal() {
   document.getElementById('modalOverlay').classList.add('hidden');
   // Only reset the currently visible form
