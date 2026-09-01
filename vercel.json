@@ -1,17 +1,6 @@
 {
-  "buildCommand": "echo 'Static site - no build needed'",
-  "devCommand": "python -m http.server 3000",
-  "outputDirectory": ".",
-  "public": true,
-  "github": {
-    "enabled": true,
-    "autoAlias": true
-  },
-  "env": {
-    "EMAIL_USER": "@vizyon-email-user",
-    "EMAIL_PASS": "@vizyon-email-pass",
-    "PORT": "3000"
-  },
+  "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "/basvuru",
@@ -21,7 +10,5 @@
       "source": "/ekibimiz",
       "destination": "/ekibimiz.html"
     }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false
+  ]
 }
