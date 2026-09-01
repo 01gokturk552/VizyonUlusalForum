@@ -555,27 +555,33 @@ function animateCounter(el) {
 
   /* ─── Default data (must match admin-panel defaults) ─── */
   const DEF_KOM = [
-    {num:'01',icon:'fas fa-dollar-sign',      name:'Ekonomi ve Kalkınma Komisyonu',            desc:'Ekonomik politikalar ve kalkınma stratejileri'},
-    {num:'02',icon:'fas fa-book-open',        name:'Eğitim Politikaları Komisyonu',            desc:'Eğitim reformu ve müfredat geliştirme'},
-    {num:'03',icon:'fas fa-running',          name:'Gençlik ve Spor Politikaları Komisyonu',   desc:'Gençlik katılımı, istihdam ve spor politikaları'},
-    {num:'04',icon:'fas fa-globe',            name:'Dış Politika Komisyonu',                   desc:'Uluslararası ilişkiler ve diplomatik stratejiler'},
-    {num:'05',icon:'fas fa-balance-scale',    name:'Hukuk ve Anayasa Komisyonu',               desc:'Hukuki reformlar ve anayasal düzenlemeler'},
-    {num:'06',icon:'fas fa-palette',          name:'Kültür Ve Sanat Komisyonu',                desc:'Kültür ve sanat politikaları, yaratıcı endüstri'},
-    {num:'07',icon:'fas fa-brain',            name:'Toplum ve Psikoloji Komisyonu',            desc:'Toplumsal konular ve psikolojik iyilik hali'},
-    {num:'08',icon:'fas fa-venus-mars',       name:'Toplumsal Cinsiyet Eşitliği Komisyonu',    desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm'},
-    {num:'09',icon:'fas fa-microchip',        name:'Dijitalleşme ve Teknoloji Politikaları Komisyonu',desc:'Teknoloji politikaları ve dijital dönüşüm'},
+    {num:'01',icon:'fas fa-shield-halved',name:'Savunma ve Askeri İşbirliği Komisyonu',desc:'Savunma politikaları, askeri işbirliği ve stratejik güvenlik'},
+    {num:'02',icon:'fas fa-globe',name:'Dış Politika Komisyonu',desc:'Uluslararası ilişkiler, diplomasi ve dış politika stratejileri'},
+    {num:'03',icon:'fas fa-microchip',name:'Teknoloji Komisyonu',desc:'Dijital dönüşüm, yapay zeka ve teknoloji politikaları'},
+    {num:'04',icon:'fas fa-balance-scale',name:'Hukuk ve Anayasa Komisyonu',desc:'Hukuki reformlar ve anayasal düzenlemeler'},
+    {num:'05',icon:'fas fa-running',name:'Gençlik ve Spor Komisyonu',desc:'Gençlik katılımı, istihdam ve spor politikaları'},
+    {num:'06',icon:'fas fa-venus-mars',name:'Toplumsal Cinsiyet Eşitliği Komisyonu',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm'},
+    {num:'07',icon:'fas fa-book-open',name:'Eğitim Politikaları Komisyonu',desc:'Eğitim reformu ve müfredat geliştirme'},
+    {num:'08',icon:'fas fa-user-shield',name:'İç Güvenlik ve Terörle Mücadele Komisyonu',desc:'İç güvenlik, terörle mücadele ve toplumsal huzur politikaları'},
+    {num:'09',icon:'fas fa-chart-line',name:'Ekonomi ve Finans Politikaları Komisyonu',desc:'Ekonomik istikrar, maliye ve finans politikaları'},
   ];
-  const DEF_SPONSOR = [
-    {name:'BIST MTAL Başakşehir',tier:'gold'},{name:'İstanbul Üniversitesi Hukuk Simülasyonları Kulübü',tier:'gold'},{name:'Biofin Kozmetik',tier:'gold'},
-    {name:'İKÜ Siyaset Bilimi ve Uluslararası İlişkiler Kulübü',tier:'silver'},{name:'Altınbaş Üniversitesi Siyaset & Diplomasi Kulübü',tier:'silver'},{name:'İKÜ Ekonomi Kulübü',tier:'silver'},{name:'İKÜ Uluslararası Hukuk Kulübü',tier:'silver'},{name:'Toybox Pidem',tier:'silver'},
-    {name:'Sun Brothers',tier:'bronze'},{name:'Vimex Global',tier:'bronze'},{name:'Wiwify Kozmetik',tier:'bronze'},{name:'Starfood Saadet Gıda',tier:'bronze'},
-  ];
+  const DEF_SPONSOR = [];
   const DEF_PROG = {
-    day1:[{time:'14:00',title:'Toplanma ve Kayıt İşlemleri',desc:'Katılımcı kayıtları ve hoş geldin ikramı'},{time:'14:45',title:'Açılış Konuşmaları',desc:'Departman Başkanlarının Açılış Konuşmaları'},{time:'15:15',title:'Akademik Konuşmalar',desc:'Alanında Uzman Akademisyenlerin Konuşmaları'},{time:'16:15',title:'Öğle Arası',desc:'Yemek Molası'},{time:'17:15',title:'1. Komisyon Oturumu',desc:'Tanışma Oturumu'}],
-    day2:[{time:'09:30',title:'2. Komisyon Oturumu',desc:'Yoğun müzakere ve araştırma çalışmaları'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'3. Komisyon Oturumu',desc:'Karar taslaklarının hazırlanması'},{time:'16:00',title:'Genel Kurul',desc:'Komisyon raporlarının sunumu'},{time:'19:00',title:'Resmi Gala Yemeği',desc:'Gala yemeği ve sosyal etkinlik'}],
-    day3:[{time:'09:00',title:'4. Komisyon Oturumu',desc:'Son müzakereler ve karar bildirgeleri'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'Kapanış Genel Kurulu',desc:'Tüm komisyonların ortak oturumu'},{time:'16:00',title:'Ödül Töreni & Kapanış',desc:'Sertifika dağıtımı ve kapanış konuşmaları'}],
+    day1:[{time:'13:30 – 14:00',title:'Toplanma ve Kayıt İşlemleri',desc:'Katılımcı kayıtları ve hoş geldin ikramı'},{time:'14:00 – 14:45',title:'Açılış Konuşmaları',desc:'Departman başkanlarının açılış konuşmaları'},{time:'14:45 – 15:15',title:'Akademik Konuşmalar',desc:'Alanında uzman akademisyenlerin konuşmaları'},{time:'15:15 – 16:15',title:'Öğle Arası',desc:'Yemek molası'},{time:'16:15 – 17:15',title:'1. Komisyon Oturumu',desc:'Tanışma oturumu'}],
+    day2:[{time:'08:30 – 09:30',title:'Kahvaltı',desc:'Güne başlangıç kahvaltısı'},{time:'09:30 – 10:45',title:'2. Komisyon Oturumu',desc:'Komisyon çalışmaları'},{time:'10:45 – 11:15',title:'Mola',desc:'Çay-kahve molası'},{time:'11:15 – 12:30',title:'3. Komisyon Oturumu',desc:'Komisyon çalışmalarının devamı'},{time:'12:30 – 13:30',title:'Öğle Arası',desc:'Yemek molası ve networking'},{time:'13:30 – 14:45',title:'4. Komisyon Oturumu',desc:'Komite çalışmaları ve sonuçlandırma'},{time:'14:45 – 15:15',title:'Mola',desc:'Çay-kahve molası'},{time:'15:15 – 17:00',title:'5. Komisyon Oturumu',desc:'Final komisyon çalışmaları'}],
+    day3:[{time:'08:30 – 09:30',title:'Kahvaltı',desc:'Güne başlangıç kahvaltısı'},{time:'09:30 – 10:50',title:'1. Genel Kurul Oturumu',desc:'Genel kurul toplantısı ve sunumlar'},{time:'10:50 – 11:15',title:'Mola',desc:'Çay-kahve molası'},{time:'11:15 – 12:35',title:'2. Genel Kurul Oturumu',desc:'Genel kurul çalışmalarının devamı'},{time:'12:35 – 13:35',title:'Öğle Arası',desc:'Yemek molası'},{time:'13:35 – 14:40',title:'3. Genel Kurul Oturumu',desc:'Genel kurul oturumu'},{time:'14:40 – 15:10',title:'Mola',desc:'Çay-kahve molası'},{time:'15:10 – 16:30',title:'4. Genel Kurul Oturumu',desc:'Son genel kurul oturumu'},{time:'16:30 – 17:00',title:'Mola',desc:'Son mola'},{time:'17:00 – 17:30',title:'Kapanış Konferansı',desc:'Departman başkanlarının kapanış konuşmaları'}],
   };
-  const DEF_STATS = {komisyon:9, sponsor:10, katilimci:340, gun:3};
+  const DEF_STATS = {komisyon:9, sponsor:0, katilimci:340, gun:3};
+
+  const CONTENT_VERSION = '2026-09-program-commissions-v1';
+  if (localStorage.getItem('vuf_content_version') !== CONTENT_VERSION) {
+    localStorage.setItem('vuf_komisyonlar', JSON.stringify(DEF_KOM));
+    localStorage.setItem('vuf_sponsorlar', JSON.stringify(DEF_SPONSOR));
+    localStorage.setItem('vuf_program', JSON.stringify(DEF_PROG));
+    const existingStats = ls('vuf_istatistikler', DEF_STATS);
+    localStorage.setItem('vuf_istatistikler', JSON.stringify({...existingStats, komisyon:9, sponsor:0, gun:3}));
+    localStorage.setItem('vuf_content_version', CONTENT_VERSION);
+  }
 
   /* ─── Komisyonlar ─── */
   const komisyonlar = ls('vuf_komisyonlar', DEF_KOM);
@@ -610,7 +616,7 @@ function animateCounter(el) {
         ${grouped[tier].map(s => `<div class="sponsor-logo-box ${cfg.box}">${cfg.iTag ? `<i class="${cfg.iTag}"></i>` : ''}${esc(s.name)}</div>`).join('')}
       </div>
     </div>`;
-  }).join('');
+  }).join('') || '<p class="sponsor-empty"><i class="fas fa-handshake"></i> Sponsorlarımız çok yakında duyurulacak.</p>';
 
   /* ─── Program Akışı ─── */
   const prog = ls('vuf_program', DEF_PROG);

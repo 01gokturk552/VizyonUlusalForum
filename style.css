@@ -665,6 +665,13 @@ button { font-family: inherit; }
 .sponsor-section { background: var(--off-white); }
 .sponsor-tier { margin-bottom: 3rem; }
 .sponsor-tier:last-child { margin-bottom: 0; }
+.sponsor-empty {
+  display: flex; align-items: center; justify-content: center; gap: .65rem;
+  min-height: 120px; margin: 0; padding: 2rem;
+  color: var(--text-muted); background: #fff; border: 1px dashed var(--border);
+  border-radius: var(--radius); font-weight: 600;
+}
+.sponsor-empty i { color: var(--accent); }
 .tier-label {
   display: flex; align-items: center; gap: .75rem; justify-content: center;
   margin-bottom: 1.5rem;

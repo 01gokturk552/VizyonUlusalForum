@@ -200,17 +200,27 @@ if (window.location.hash === '#delegasyon') switchTab('delegasyon');
 
 /* ════ DYNAMIC KOMİSYON DROPDOWN ════ */
 (function loadKomisyonlar() {
-  const DEF = ['Ekonomi','Eğitim','Gençlik & Spor','Dış Politika','Hukuk & Anayasa','Kültür & Sanat','Toplum & Psikoloji','Toplumsal Cinsiyet Eşitliği','Dijitalleşme & Teknoloji'];
+  const DEF = [
+    'Savunma ve Askeri İşbirliği Komisyonu',
+    'Dış Politika Komisyonu',
+    'Teknoloji Komisyonu',
+    'Hukuk ve Anayasa Komisyonu',
+    'Gençlik ve Spor Komisyonu',
+    'Toplumsal Cinsiyet Eşitliği Komisyonu',
+    'Eğitim Politikaları Komisyonu',
+    'İç Güvenlik ve Terörle Mücadele Komisyonu',
+    'Ekonomi ve Finans Politikaları Komisyonu'
+  ];
   let names = DEF;
   try {
     const stored = JSON.parse(localStorage.getItem('vuf_komisyonlar') || 'null');
-    if (stored && stored.length) names = stored.map(k => k.name);
+    if (stored && stored.length && localStorage.getItem('vuf_content_version') === '2026-09-program-commissions-v1') names = stored.map(k => k.name);
   } catch {}
   const sel = document.getElementById('d_komisyon');
   names.forEach(name => {
     const opt = document.createElement('option');
-    opt.value = name + ' Komisyonu';
-    opt.textContent = name + ' Komisyonu';
+    opt.value = name;
+    opt.textContent = name;
     sel.appendChild(opt);
   });
 })();

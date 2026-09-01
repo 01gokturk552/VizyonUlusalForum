@@ -559,15 +559,15 @@ function logout(){sessionStorage.removeItem('vuf_admin_auth');window.location.hr
    DEFAULT DATA
 ════════════════════════════════════ */
 const DEF_KOMISYON=[
-  {id:1,num:'01',icon:'fas fa-dollar-sign',name:'Ekonomi ve Kalkınma Komisyonu',desc:'Ekonomik politikalar ve kalkınma stratejileri',baskan:''},
-  {id:2,num:'02',icon:'fas fa-book-open',name:'Eğitim Politikaları Komisyonu',desc:'Eğitim reformu ve müfredat geliştirme',baskan:''},
-  {id:3,num:'03',icon:'fas fa-running',name:'Gençlik ve Spor Politikaları Komisyonu',desc:'Gençlik katılımı, istihdam ve spor politikaları',baskan:''},
-  {id:4,num:'04',icon:'fas fa-globe',name:'Dış Politika Komisyonu',desc:'Uluslararası ilişkiler ve diplomatik stratejiler',baskan:''},
-  {id:5,num:'05',icon:'fas fa-balance-scale',name:'Hukuk ve Anayasa Komisyonu',desc:'Hukuki reformlar ve anayasal düzenlemeler',baskan:''},
-  {id:6,num:'06',icon:'fas fa-palette',name:'Kültür Ve Sanat Komisyonu',desc:'Kültür ve sanat politikaları, yaratıcı endüstri',baskan:''},
-  {id:7,num:'07',icon:'fas fa-brain',name:'Toplum ve Psikoloji Komisyonu',desc:'Toplumsal konular ve psikolojik iyilik hali',baskan:''},
-  {id:8,num:'08',icon:'fas fa-venus-mars',name:'Toplumsal Cinsiyet Eşitliği Komisyonu',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm',baskan:''},
-  {id:9,num:'09',icon:'fas fa-microchip',name:'Dijitalleşme ve Teknoloji Politikaları Komisyonu',desc:'Teknoloji politikaları ve dijital dönüşüm',baskan:''},
+  {id:1,num:'01',icon:'fas fa-shield-halved',name:'Savunma ve Askeri İşbirliği Komisyonu',desc:'Savunma politikaları, askeri işbirliği ve stratejik güvenlik',baskan:''},
+  {id:2,num:'02',icon:'fas fa-globe',name:'Dış Politika Komisyonu',desc:'Uluslararası ilişkiler, diplomasi ve dış politika stratejileri',baskan:''},
+  {id:3,num:'03',icon:'fas fa-microchip',name:'Teknoloji Komisyonu',desc:'Dijital dönüşüm, yapay zeka ve teknoloji politikaları',baskan:''},
+  {id:4,num:'04',icon:'fas fa-balance-scale',name:'Hukuk ve Anayasa Komisyonu',desc:'Hukuki reformlar ve anayasal düzenlemeler',baskan:''},
+  {id:5,num:'05',icon:'fas fa-running',name:'Gençlik ve Spor Komisyonu',desc:'Gençlik katılımı, istihdam ve spor politikaları',baskan:''},
+  {id:6,num:'06',icon:'fas fa-venus-mars',name:'Toplumsal Cinsiyet Eşitliği Komisyonu',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm',baskan:''},
+  {id:7,num:'07',icon:'fas fa-book-open',name:'Eğitim Politikaları Komisyonu',desc:'Eğitim reformu ve müfredat geliştirme',baskan:''},
+  {id:8,num:'08',icon:'fas fa-user-shield',name:'İç Güvenlik ve Terörle Mücadele Komisyonu',desc:'İç güvenlik, terörle mücadele ve toplumsal huzur politikaları',baskan:''},
+  {id:9,num:'09',icon:'fas fa-chart-line',name:'Ekonomi ve Finans Politikaları Komisyonu',desc:'Ekonomik istikrar, maliye ve finans politikaları',baskan:''},
 ];
 const DEF_EKIP=[
   {id:1,initials:'GK',role:'Genel Koordinatör',name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu',instagram:'',photo:''},
@@ -581,17 +581,13 @@ const DEF_EKIP=[
   {id:9,initials:'GB',role:'Güvenlik Başkanı',name:'',desc:'Güvenlik ve emniyetten sorumlu',instagram:'',photo:''},
   {id:10,initials:'İKB',role:'İnsan Kaynakları Başkanı',name:'',desc:'İnsan kaynakları ve personel yönetiminden sorumlu',instagram:'',photo:''},
 ];
-const DEF_SPONSOR=[
-  {id:1,name:'BIST MTAL Başakşehir',tier:'gold'},{id:2,name:'İstanbul Üniversitesi Hukuk Simülasyonları Kulübü',tier:'gold'},{id:3,name:'Biofin Kozmetik',tier:'gold'},
-  {id:4,name:'İKÜ Siyaset Bilimi ve Uluslararası İlişkiler Kulübü',tier:'silver'},{id:5,name:'Altınbaş Üniversitesi Siyaset & Diplomasi Kulübü',tier:'silver'},{id:6,name:'İKÜ Ekonomi Kulübü',tier:'silver'},{id:7,name:'İKÜ Uluslararası Hukuk Kulübü',tier:'silver'},{id:8,name:'Toybox Pidem',tier:'silver'},
-  {id:9,name:'Sun Brothers',tier:'bronze'},{id:10,name:'Vimex Global',tier:'bronze'},{id:11,name:'Wiwify Kozmetik',tier:'bronze'},{id:12,name:'Starfood Saadet Gıda',tier:'bronze'},
-];
+const DEF_SPONSOR=[];
 const DEF_PROGRAM={
-  day1:[{id:1,time:'14:00',title:'Toplanma ve Kayıt İşlemleri',desc:'Katılımcı kayıtları ve hoş geldin ikramı'},{id:2,time:'14:45',title:'Açılış Konuşmaları',desc:'Departman Başkanlarının Açılış Konuşmaları'},{id:3,time:'15:15',title:'Akademik Konuşmalar',desc:'Alanında Uzman Akademisyenlerin Konuşmaları'},{id:4,time:'16:15',title:'Öğle Arası',desc:'Yemek Molası'},{id:5,time:'17:15',title:'1. Komisyon Oturumu',desc:'Tanışma Oturumu'}],
-  day2:[{id:1,time:'09:30',title:'2. Komisyon Oturumu',desc:'Yoğun müzakere ve araştırma çalışmaları'},{id:2,time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{id:3,time:'13:30',title:'3. Komisyon Oturumu',desc:'Karar taslaklarının hazırlanması'},{id:4,time:'16:00',title:'Genel Kurul',desc:'Komisyon raporlarının sunumu'},{id:5,time:'19:00',title:'Resmi Gala Yemeği',desc:'Gala yemeği ve sosyal etkinlik'}],
-  day3:[{id:1,time:'09:00',title:'4. Komisyon Oturumu',desc:'Son müzakereler ve karar bildirgeleri'},{id:2,time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{id:3,time:'13:30',title:'Kapanış Genel Kurulu',desc:'Tüm komisyonların ortak oturumu'},{id:4,time:'16:00',title:'Ödül Töreni & Kapanış',desc:'Sertifika dağıtımı ve kapanış konuşmaları'}],
+  day1:[{id:1,time:'13:30 – 14:00',title:'Toplanma ve Kayıt İşlemleri',desc:'Katılımcı kayıtları ve hoş geldin ikramı'},{id:2,time:'14:00 – 14:45',title:'Açılış Konuşmaları',desc:'Departman başkanlarının açılış konuşmaları'},{id:3,time:'14:45 – 15:15',title:'Akademik Konuşmalar',desc:'Alanında uzman akademisyenlerin konuşmaları'},{id:4,time:'15:15 – 16:15',title:'Öğle Arası',desc:'Yemek molası'},{id:5,time:'16:15 – 17:15',title:'1. Komisyon Oturumu',desc:'Tanışma oturumu'}],
+  day2:[{id:1,time:'08:30 – 09:30',title:'Kahvaltı',desc:'Güne başlangıç kahvaltısı'},{id:2,time:'09:30 – 10:45',title:'2. Komisyon Oturumu',desc:'Komisyon çalışmaları'},{id:3,time:'10:45 – 11:15',title:'Mola',desc:'Çay-kahve molası'},{id:4,time:'11:15 – 12:30',title:'3. Komisyon Oturumu',desc:'Komisyon çalışmalarının devamı'},{id:5,time:'12:30 – 13:30',title:'Öğle Arası',desc:'Yemek molası ve networking'},{id:6,time:'13:30 – 14:45',title:'4. Komisyon Oturumu',desc:'Komite çalışmaları ve sonuçlandırma'},{id:7,time:'14:45 – 15:15',title:'Mola',desc:'Çay-kahve molası'},{id:8,time:'15:15 – 17:00',title:'5. Komisyon Oturumu',desc:'Final komisyon çalışmaları'}],
+  day3:[{id:1,time:'08:30 – 09:30',title:'Kahvaltı',desc:'Güne başlangıç kahvaltısı'},{id:2,time:'09:30 – 10:50',title:'1. Genel Kurul Oturumu',desc:'Genel kurul toplantısı ve sunumlar'},{id:3,time:'10:50 – 11:15',title:'Mola',desc:'Çay-kahve molası'},{id:4,time:'11:15 – 12:35',title:'2. Genel Kurul Oturumu',desc:'Genel kurul çalışmalarının devamı'},{id:5,time:'12:35 – 13:35',title:'Öğle Arası',desc:'Yemek molası'},{id:6,time:'13:35 – 14:40',title:'3. Genel Kurul Oturumu',desc:'Genel kurul oturumu'},{id:7,time:'14:40 – 15:10',title:'Mola',desc:'Çay-kahve molası'},{id:8,time:'15:10 – 16:30',title:'4. Genel Kurul Oturumu',desc:'Son genel kurul oturumu'},{id:9,time:'16:30 – 17:00',title:'Mola',desc:'Son mola'},{id:10,time:'17:00 – 17:30',title:'Kapanış Konferansı',desc:'Departman başkanlarının kapanış konuşmaları'}],
 };
-const DEF_STATS={komisyon:9,katilimci:340,sponsor:10,gun:3};
+const DEF_STATS={komisyon:9,katilimci:340,sponsor:0,gun:3};
 
 /* ════════════════════════════════════
    DATA HELPERS
@@ -599,6 +595,14 @@ const DEF_STATS={komisyon:9,katilimci:340,sponsor:10,gun:3};
 const get=(k,def)=>{const v=localStorage.getItem(k);return v?JSON.parse(v):def};
 const set=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 function initData(){
+  const CONTENT_VERSION='2026-09-program-commissions-v1';
+  if(localStorage.getItem('vuf_content_version')!==CONTENT_VERSION){
+    set('vuf_komisyonlar',DEF_KOMISYON);
+    set('vuf_sponsorlar',DEF_SPONSOR);
+    set('vuf_program',DEF_PROGRAM);
+    set('vuf_istatistikler',{...get('vuf_istatistikler',DEF_STATS),komisyon:9,sponsor:0,gun:3});
+    localStorage.setItem('vuf_content_version',CONTENT_VERSION);
+  }
   if(!localStorage.getItem('vuf_komisyonlar'))set('vuf_komisyonlar',DEF_KOMISYON);
   if(!localStorage.getItem('vuf_ekip'))set('vuf_ekip',DEF_EKIP);
   if(!localStorage.getItem('vuf_sponsorlar'))set('vuf_sponsorlar',DEF_SPONSOR);
