@@ -634,6 +634,26 @@ function renderSection(sec){
   else if(sec==='istatistik')renderIstatistik();
 }
 
+function renderAyarlar(){
+  const ayarlar=get('vuf_ayarlar',{});
+  document.getElementById('ay-mekan').value=ayarlar.mekan||'';
+  document.getElementById('ay-event-date').value=ayarlar.eventDate||'';
+  document.getElementById('ay-koordinator1-ad').value=ayarlar.koordinator1Ad||'';
+  document.getElementById('ay-koordinator1-tel').value=ayarlar.koordinator1Tel||'';
+  document.getElementById('ay-koordinator2-ad').value=ayarlar.koordinator2Ad||'';
+  document.getElementById('ay-koordinator2-tel').value=ayarlar.koordinator2Tel||'';
+  document.getElementById('ay-countdown').value=ayarlar.countdown!==undefined ? String(ayarlar.countdown) : 'true';
+  document.getElementById('ay-instagram').value=ayarlar.instagram||'';
+}
+
+function loadBasvuruFormu(){
+  currentFormType = document.getElementById('formTypeSelect') ? document.getElementById('formTypeSelect').value : currentFormType;
+  const stored = JSON.parse(localStorage.getItem('vuf_form_builder') || '{}');
+  formData.delege = stored.delege && stored.delege.length ? stored.delege : JSON.parse(JSON.stringify(defaultFormData.delege));
+  formData.delegasyon = stored.delegasyon && stored.delegasyon.length ? stored.delegasyon : JSON.parse(JSON.stringify(defaultFormData.delegasyon));
+  renderFormBuilder();
+}
+
 /* ════════════════════════════════════
    DASHBOARD
 ════════════════════════════════════ */
@@ -1843,23 +1863,20 @@ function saveModal(){
     };
     if(!obj.name){toast('Komisyon adı boş olamaz','error');return}
     if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
-    set('vuf_komisyonlar',data);renderKomisyonlar();toast('Komisyon kaydedildi!','success');
+    set('vuf_komisyonlar',data);renderKomisyonlar();renderDashboard();toast('Komisyon kaydedildi!','success');
   }
   else if(modalType==='ekip'){
     const data=get('vuf_ekip',DEF_EKIP);
     const role=document.getElementById('mf-role').value.trim();
     const roles=['Genel Koordinatör','Organizasyon Başkanı','Akademi Başkanı','PR Başkanı','Finans Başkanı','Saha Başkanı','Press Başkanı','Tasarım Başkanı','Güvenlik Başkanı','İnsan Kaynakları Başkanı'];
-    const roleIndex=roles.indexOf(role);
     const initials=role.split(' ').map(w=>w[0]).join('').toUpperCase().substring(0,3);
-    
-    // Fotoğraf yükleme
     const photoInput=document.getElementById('mf-photo');
     let photo='';
     if(modalId){
       const existing=data.find(x=>x.id===modalId);
-      photo=existing.photo||'';
+      photo=existing?existing.photo||'':'';
     }
-    if(photoInput.files[0]){
+    if(photoInput && photoInput.files && photoInput.files[0]){
       const reader=new FileReader();
       reader.onload=function(e){
         const obj={
@@ -1872,20 +1889,13 @@ function saveModal(){
           photo:e.target.result,
         };
         if(!obj.role){toast('Rol boş olamaz','error');return}
-        if(modalId){
-          const i=data.findIndex(x=>x.id===modalId);
-          data[i]=obj;
-        }else{
-          data.push(obj);
-        }
-        // Rol sıralaması
+        if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
         data.sort((a,b)=>roles.indexOf(a.role)-roles.indexOf(b.role));
-        set('vuf_ekip',data);renderEkip();toast('Ekip üyesi kaydedildi!','success');closeModal();
+        set('vuf_ekip',data);renderEkip();renderDashboard();toast('Ekip üyesi kaydedildi!','success');closeModal();
       };
       reader.readAsDataURL(photoInput.files[0]);
       return;
     }
-    
     const obj={
       id:modalId||nextId(data),
       initials:initials,
@@ -1897,9 +1907,8 @@ function saveModal(){
     };
     if(!obj.role){toast('Rol boş olamaz','error');return}
     if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
-    // Rol sıralaması
     data.sort((a,b)=>roles.indexOf(a.role)-roles.indexOf(b.role));
-    set('vuf_ekip',data);renderEkip();toast('Ekip üyesi kaydedildi!','success');
+    set('vuf_ekip',data);renderEkip();renderDashboard();toast('Ekip üyesi kaydedildi!','success');
   }
   else if(modalType==='sponsor'){
     const data=get('vuf_sponsorlar',DEF_SPONSOR);
@@ -1910,7 +1919,7 @@ function saveModal(){
     };
     if(!obj.name){toast('Sponsor adı boş olamaz','error');return}
     if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
-    set('vuf_sponsorlar',data);renderSponsorlar();toast('Sponsor kaydedildi!','success');
+    set('vuf_sponsorlar',data);renderSponsorlar();renderDashboard();toast('Sponsor kaydedildi!','success');
   }
   else if(modalType==='program'){
     const prog=get('vuf_program',DEF_PROGRAM);
@@ -1925,19 +1934,17 @@ function saveModal(){
     if(!obj.title){toast('Başlık boş olamaz','error');return}
     if(modalId){
       if(newDay===oldDay){
-        // Aynı gün — yerinde güncelle
         const i=prog[oldDay].findIndex(x=>x.id===modalId);
         if(i>-1){prog[oldDay][i]={...obj,id:modalId};}
         else{prog[oldDay].push({...obj,id:modalId});}
       } else {
-        // Gün değişti — eskisinden sil, yenisine yeni ID ile ekle
         prog[oldDay]=(prog[oldDay]||[]).filter(x=>x.id!==modalId);
         prog[newDay].push({...obj,id:nextId(prog[newDay])});
       }
     } else {
       prog[newDay].push({...obj,id:nextId(prog[newDay])});
     }
-    set('vuf_program',prog);renderProgram();toast('Program maddesi kaydedildi!','success');
+    set('vuf_program',prog);renderProgram();renderDashboard();toast('Program maddesi kaydedildi!','success');
   }
   closeModal();
 }
@@ -1947,14 +1954,14 @@ function saveModal(){
 ════════════════════════════════════ */
 function deleteItem(type,id){
   if(!confirm('Bu öğeyi silmek istediğinizden emin misiniz?'))return;
-  if(type==='komisyon'){const d=get('vuf_komisyonlar',DEF_KOMISYON).filter(x=>x.id!==id);set('vuf_komisyonlar',d);renderKomisyonlar();toast('Komisyon silindi','info');}
-  else if(type==='ekip'){const d=get('vuf_ekip',DEF_EKIP).filter(x=>x.id!==id);set('vuf_ekip',d);renderEkip();toast('Üye silindi','info');}
-  else if(type==='sponsor'){const d=get('vuf_sponsorlar',DEF_SPONSOR).filter(x=>x.id!==id);set('vuf_sponsorlar',d);renderSponsorlar();toast('Sponsor silindi','info');}
+  if(type==='komisyon'){const d=get('vuf_komisyonlar',DEF_KOMISYON).filter(x=>x.id!==id);set('vuf_komisyonlar',d);renderKomisyonlar();renderDashboard();toast('Komisyon silindi','info');}
+  else if(type==='ekip'){const d=get('vuf_ekip',DEF_EKIP).filter(x=>x.id!==id);set('vuf_ekip',d);renderEkip();renderDashboard();toast('Üye silindi','info');}
+  else if(type==='sponsor'){const d=get('vuf_sponsorlar',DEF_SPONSOR).filter(x=>x.id!==id);set('vuf_sponsorlar',d);renderSponsorlar();renderDashboard();toast('Sponsor silindi','info');}
   else if(type==='program'){
     const prog=get('vuf_program',DEF_PROGRAM);
     const day='day'+currentProgDay;
     prog[day]=(prog[day]||[]).filter(x=>x.id!==id);
-    set('vuf_program',prog);renderProgram();toast('Program maddesi silindi','info');
+    set('vuf_program',prog);renderProgram();renderDashboard();toast('Program maddesi silindi','info');
   }
 }
 

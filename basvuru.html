@@ -57,18 +57,43 @@
 <!-- ══ FORM CONTAINER ══ -->
 <div class="basvuru-container">
 
-  <!-- Tab Switcher -->
-  <div class="tab-switcher">
-    <button class="tab-btn active" id="tabDelege" onclick="switchTab('delege')">
-      <i class="fas fa-user"></i> Delege Başvurusu
-    </button>
-    <button class="tab-btn" id="tabDelegasyon" onclick="switchTab('delegasyon')">
-      <i class="fas fa-users"></i> Delegasyon Başvurusu
-    </button>
-  </div>
+    <div class="basvuru-shell">
+    <aside class="basvuru-sidebar">
+      <div class="summary-card">
+        <span class="summary-kicker">Başvuru Süreci</span>
+        <h3>Kolay, net ve hızlı</h3>
+        <ul>
+          <li><span class="step-no">1</span> Kişisel bilgileri doldurun.</li>
+          <li><span class="step-no">2</span> Tercihleri seçin.</li>
+          <li><span class="step-no">3</span> Başvuruyu gönderin.</li>
+        </ul>
+      </div>
+      <div class="summary-card alt">
+        <span class="summary-kicker">İletişim</span>
+        <h3>Ekibimiz yanınızda</h3>
+        <div class="mini-contact">
+          <strong id="contact1Name">Yiğit Efe SEVİR</strong>
+          <a href="tel:05469262010" id="contact1Tel"><i class="fas fa-phone"></i> 0546 926 2010</a>
+        </div>
+        <div class="mini-contact">
+          <strong id="contact2Name">Ada Nehir ŞAHİN</strong>
+          <a href="tel:05010125860" id="contact2Tel"><i class="fas fa-phone"></i> 0501 012 58 60</a>
+        </div>
+      </div>
+    </aside>
 
-  <!-- ── Delege Formu ── -->
-  <div class="form-panel" id="panelDelege">
+    <div class="basvuru-main">
+      <div class="tab-switcher">
+        <button class="tab-btn active" id="tabDelege" onclick="switchTab('delege')">
+          <i class="fas fa-user"></i> Delege Başvurusu
+        </button>
+        <button class="tab-btn" id="tabDelegasyon" onclick="switchTab('delegasyon')">
+          <i class="fas fa-users"></i> Delegasyon Başvurusu
+        </button>
+      </div>
+
+      <!-- ── Delege Formu ── -->
+      <div class="form-panel" id="panelDelege">
     <div class="form-info-box">
       <i class="fas fa-info-circle"></i>
       <div>
@@ -97,8 +122,8 @@
     </form>
   </div>
 
-  <!-- ── Delegasyon Formu ── -->
-  <div class="form-panel hidden" id="panelDelegasyon">
+      <!-- ── Delegasyon Formu ── -->
+      <div class="form-panel hidden" id="panelDelegasyon">
     <div class="form-info-box">
       <i class="fas fa-info-circle"></i>
       <div>
@@ -127,18 +152,20 @@
     </form>
   </div>
 
-  <!-- ══ İLETİŞİM BİLGİLERİ ══ -->
-  <div class="contact-section">
-    <div class="contact-box">
-      <h3><i class="fas fa-phone-alt"></i> İletişim İçin</h3>
-      <div class="contact-items">
-        <div class="contact-item">
-          <strong>Genel Koordinatör:</strong> <span id="contact1Name">Yiğit Efe SEVİR</span>
-          <a href="tel:05469262010" class="contact-link" id="contact1Tel"><i class="fas fa-phone"></i> 0546 926 2010</a>
-        </div>
-        <div class="contact-item">
-          <strong>Genel Koordinatör:</strong> <span id="contact2Name">Ada Nehir ŞAHİN</span>
-          <a href="tel:05010125860" class="contact-link" id="contact2Tel"><i class="fas fa-phone"></i> 0501 012 58 60</a>
+      <!-- ══ İLETİŞİM BİLGİLERİ ══ -->
+      <div class="contact-section">
+        <div class="contact-box">
+          <h3><i class="fas fa-phone-alt"></i> İletişim İçin</h3>
+          <div class="contact-items">
+            <div class="contact-item">
+              <strong>Genel Koordinatör:</strong> <span id="contact1NameAlt">Yiğit Efe SEVİR</span>
+              <a href="tel:05469262010" class="contact-link" id="contact1TelAlt"><i class="fas fa-phone"></i> 0546 926 2010</a>
+            </div>
+            <div class="contact-item">
+              <strong>Genel Koordinatör:</strong> <span id="contact2NameAlt">Ada Nehir ŞAHİN</span>
+              <a href="tel:05010125860" class="contact-link" id="contact2TelAlt"><i class="fas fa-phone"></i> 0501 012 58 60</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
