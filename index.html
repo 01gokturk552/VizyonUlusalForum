@@ -150,8 +150,8 @@
       <!-- Left: text & value props -->
       <div class="about-text-col">
         <div class="sec-eyebrow"><i class="fas fa-info-circle"></i> Hakkımızda</div>
-        <h2>Türkiye'nin gençleri için <em>bir araya geliyoruz</em></h2>
-        <p>Vizyon Ulusal Forum, Türkiye'nin dört bir yanındaki lise öğrencilerini bir çatı altında buluşturan, tamamen bağımsız ve gönüllü bir gençlik platformudur. Akademik müzakere, araştırma ve liderlik becerilerini gerçek bir forum atmosferinde deneyimleme fırsatı sunuyoruz.</p>
+        <h2>Türkiye'nin en büyük <em>bağımsız forum etkinliği</em></h2>
+        <p>Vizyon Ulusal Forum 2026, Türkiye'nin birçok ilinden gelen liseli öğrenciler tarafından düzenlenen ulusal forum etkinliğidir. İstanbul Üniversitesi Hukuk Simülasyonları Kulübü işbirliği ile 13-14-15 Şubat 2026 tarihlerinde İÜ Beyazıt Kampüsü'nde gerçekleşecek olan forum, gençlerin akademik müzakere, araştırma ve liderlik becerilerini gerçek bir forum atmosferinde deneyimlemesine fırsat sunuyor.</p>
         <a href="basvuru.html" class="btn-navy">Başvuru Yap <i class="fas fa-arrow-right"></i></a>
 
         <div class="value-props stagger">
@@ -299,8 +299,8 @@
       <div class="footer-col">
         <h5>Etkinlik</h5>
         <ul>
-          <li class="meta"><i class="fas fa-calendar-alt"></i> Tarih Yakında Açıklanacak</li>
-          <li class="meta"><i class="fas fa-map-pin"></i> Mekan Yakında Açıklanacak</li>
+          <li class="meta"><i class="fas fa-calendar-alt"></i> 13-14-15 Şubat 2026</li>
+          <li class="meta"><i class="fas fa-map-pin"></i> İÜ Beyazıt Kampüsü, İstanbul</li>
           <li class="meta"><i class="fas fa-layer-group"></i> <span id="footerKomisyon">9 Komisyon</span></li>
         </ul>
       </div>
@@ -308,8 +308,8 @@
       <div class="footer-col">
         <h5>İletişim</h5>
         <ul>
-          <li class="meta"><i class="fas fa-envelope"></i> vizyon@ulusalforum.com</li>
-          <li class="meta"><i class="fas fa-phone"></i> +90 XXX XXX XX XX</li>
+          <li class="meta"><i class="fas fa-envelope"></i> vizyonulusalforumu@gmail.com</li>
+          <li class="meta"><i class="fas fa-map-pin"></i> İÜ Beyazıt Kampüsü, İstanbul</li>
         </ul>
         <div style="margin-top:1.5rem">
           <a href="basvuru.html" class="btn-gold-solid" style="font-size:.82rem;padding:.55rem 1.25rem;border-radius:8px">
@@ -453,8 +453,8 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h
   function getAyarlar() {
     try {
       const v = localStorage.getItem('vuf_ayarlar');
-      return v ? JSON.parse(v) : { countdown: true, instagram: '', eventDate: '2026-09-19T09:00' };
-    } catch { return { countdown: true, instagram: '', eventDate: '2026-09-19T09:00' }; }
+      return v ? JSON.parse(v) : { countdown: true, instagram: 'vizyonulusalforum', eventDate: '2026-02-13T13:30', mekan: 'İÜ Beyazıt Kampüsü, İstanbul' };
+    } catch { return { countdown: true, instagram: 'vizyonulusalforum', eventDate: '2026-02-13T13:30', mekan: 'İÜ Beyazıt Kampüsü, İstanbul' }; }
   }
 
   function tick() {
@@ -555,27 +555,27 @@ function animateCounter(el) {
 
   /* ─── Default data (must match admin-panel defaults) ─── */
   const DEF_KOM = [
-    {num:'01',icon:'fas fa-shield-halved',name:'Savunma ve Askeri İşbirliği Komisyonu',desc:'Milli savunma politikaları ve askeri işbirlikleri'},
-    {num:'02',icon:'fas fa-globe',        name:'Dış Politika Komisyonu',              desc:'Uluslararası ilişkiler ve diplomatik stratejiler'},
-    {num:'03',icon:'fas fa-microchip',    name:'Teknoloji Komisyonu',                 desc:'Teknoloji politikaları ve dijital dönüşüm'},
-    {num:'04',icon:'fas fa-balance-scale',name:'Hukuk ve Anayasa Komisyonu',          desc:'Hukuki reformlar ve anayasal düzenlemeler'},
-    {num:'05',icon:'fas fa-running',      name:'Gençlik ve Spor Komisyonu',            desc:'Gençlik katılımı, istihdam ve spor politikaları'},
-    {num:'06',icon:'fas fa-venus-mars',   name:'Toplumsal Cinsiyet Eşitliği Komisyonu',desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm'},
-    {num:'07',icon:'fas fa-book-open',    name:'Eğitim Politikaları Komisyonu',       desc:'Eğitim reformu, müfredat geliştirme'},
-    {num:'08',icon:'fas fa-shield-alt',   name:'İç Güvenlik ve Terörle Mücadele Komisyonu',desc:'İç güvenlik politikaları ve terörle mücadele'},
-    {num:'09',icon:'fas fa-chart-line',  name:'Ekonomi ve Finans Politikaları Komisyonu',desc:'Ekonomik kalkınma ve finans politikaları'},
+    {num:'01',icon:'fas fa-dollar-sign',      name:'Ekonomi ve Kalkınma Komisyonu',            desc:'Ekonomik politikalar ve kalkınma stratejileri'},
+    {num:'02',icon:'fas fa-book-open',        name:'Eğitim Politikaları Komisyonu',            desc:'Eğitim reformu ve müfredat geliştirme'},
+    {num:'03',icon:'fas fa-running',          name:'Gençlik ve Spor Politikaları Komisyonu',   desc:'Gençlik katılımı, istihdam ve spor politikaları'},
+    {num:'04',icon:'fas fa-globe',            name:'Dış Politika Komisyonu',                   desc:'Uluslararası ilişkiler ve diplomatik stratejiler'},
+    {num:'05',icon:'fas fa-balance-scale',    name:'Hukuk ve Anayasa Komisyonu',               desc:'Hukuki reformlar ve anayasal düzenlemeler'},
+    {num:'06',icon:'fas fa-palette',          name:'Kültür Ve Sanat Komisyonu',                desc:'Kültür ve sanat politikaları, yaratıcı endüstri'},
+    {num:'07',icon:'fas fa-brain',            name:'Toplum ve Psikoloji Komisyonu',            desc:'Toplumsal konular ve psikolojik iyilik hali'},
+    {num:'08',icon:'fas fa-venus-mars',       name:'Toplumsal Cinsiyet Eşitliği Komisyonu',    desc:'Eşit haklar, fırsat eşitliği ve toplumsal dönüşüm'},
+    {num:'09',icon:'fas fa-microchip',        name:'Dijitalleşme ve Teknoloji Politikaları Komisyonu',desc:'Teknoloji politikaları ve dijital dönüşüm'},
   ];
   const DEF_SPONSOR = [
-    {name:'Sponsor Adı',tier:'gold'},{name:'Sponsor Adı',tier:'gold'},
-    {name:'Sponsor Adı',tier:'silver'},{name:'Sponsor Adı',tier:'silver'},{name:'Sponsor Adı',tier:'silver'},
-    {name:'Sponsor',tier:'bronze'},{name:'Sponsor',tier:'bronze'},{name:'Sponsor',tier:'bronze'},
+    {name:'BIST MTAL Başakşehir',tier:'gold'},{name:'İstanbul Üniversitesi Hukuk Simülasyonları Kulübü',tier:'gold'},{name:'Biofin Kozmetik',tier:'gold'},
+    {name:'İKÜ Siyaset Bilimi ve Uluslararası İlişkiler Kulübü',tier:'silver'},{name:'Altınbaş Üniversitesi Siyaset & Diplomasi Kulübü',tier:'silver'},{name:'İKÜ Ekonomi Kulübü',tier:'silver'},{name:'İKÜ Uluslararası Hukuk Kulübü',tier:'silver'},{name:'Toybox Pidem',tier:'silver'},
+    {name:'Sun Brothers',tier:'bronze'},{name:'Vimex Global',tier:'bronze'},{name:'Wiwify Kozmetik',tier:'bronze'},{name:'Starfood Saadet Gıda',tier:'bronze'},
   ];
   const DEF_PROG = {
-    day1:[{time:'08:30',title:'Kayıt & Akreditasyon',desc:'Delegelerin kayıt işlemleri ve kimlik doğrulama'},{time:'10:00',title:'Açılış Töreni',desc:'Genel Kurul Salonu — açılış konuşmaları ve resmi başlangıç'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'1. Komisyon Oturumu',desc:'Tüm komisyonlar eş zamanlı çalışmaya başlar'},{time:'16:00',title:'Akademik Konuşma',desc:'Davetli konuşmacı semineri'},{time:'17:30',title:'Sosyal Etkinlik',desc:'Icebreaker & Networking gecesi'}],
-    day2:[{time:'09:00',title:'2. Komisyon Oturumu',desc:'Yoğun müzakere ve araştırma çalışmaları'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'3. Komisyon Oturumu',desc:'Karar taslaklarının hazırlanması'},{time:'16:00',title:'Genel Kurul',desc:'Komisyon raporlarının sunumu'},{time:'19:00',title:'Resmi Gala Yemeği',desc:'Gala yemeği ve sosyal etkinlik'}],
+    day1:[{time:'14:00',title:'Toplanma ve Kayıt İşlemleri',desc:'Katılımcı kayıtları ve hoş geldin ikramı'},{time:'14:45',title:'Açılış Konuşmaları',desc:'Departman Başkanlarının Açılış Konuşmaları'},{time:'15:15',title:'Akademik Konuşmalar',desc:'Alanında Uzman Akademisyenlerin Konuşmaları'},{time:'16:15',title:'Öğle Arası',desc:'Yemek Molası'},{time:'17:15',title:'1. Komisyon Oturumu',desc:'Tanışma Oturumu'}],
+    day2:[{time:'09:30',title:'2. Komisyon Oturumu',desc:'Yoğun müzakere ve araştırma çalışmaları'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'3. Komisyon Oturumu',desc:'Karar taslaklarının hazırlanması'},{time:'16:00',title:'Genel Kurul',desc:'Komisyon raporlarının sunumu'},{time:'19:00',title:'Resmi Gala Yemeği',desc:'Gala yemeği ve sosyal etkinlik'}],
     day3:[{time:'09:00',title:'4. Komisyon Oturumu',desc:'Son müzakereler ve karar bildirgeleri'},{time:'12:00',title:'Öğle Arası',desc:'Yemekhane'},{time:'13:30',title:'Kapanış Genel Kurulu',desc:'Tüm komisyonların ortak oturumu'},{time:'16:00',title:'Ödül Töreni & Kapanış',desc:'Sertifika dağıtımı ve kapanış konuşmaları'}],
   };
-  const DEF_STATS = {komisyon:9, sponsor:10, gun:3};
+  const DEF_STATS = {komisyon:9, sponsor:10, katilimci:340, gun:3};
 
   /* ─── Komisyonlar ─── */
   const komisyonlar = ls('vuf_komisyonlar', DEF_KOM);
@@ -633,6 +633,7 @@ function animateCounter(el) {
   const stats = ls('vuf_istatistikler', DEF_STATS);
   document.getElementById('statsCol').innerHTML = [
     {k:'komisyon',  l:'Komisyon'},
+    {k:'katilimci', l:'Katılımcı'},
     {k:'sponsor',   l:'Sponsor'},
     {k:'gun',       l:'Gün'},
   ].map(s => `<div class="stat-tile fade-up"><span class="st-num" data-target="${stats[s.k]||0}">0</span><span class="st-label">${s.l}</span></div>`).join('');
