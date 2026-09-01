@@ -151,7 +151,7 @@
       <div class="about-text-col">
         <div class="sec-eyebrow"><i class="fas fa-info-circle"></i> Hakkımızda</div>
         <h2>Türkiye'nin en büyük <em>bağımsız forum etkinliği</em></h2>
-        <p>Vizyon Ulusal Forum 2026, Türkiye'nin birçok ilinden gelen liseli öğrenciler tarafından düzenlenen ulusal forum etkinliğidir. İstanbul Üniversitesi Hukuk Simülasyonları Kulübü işbirliği ile 13-14-15 Şubat 2026 tarihlerinde İÜ Beyazıt Kampüsü'nde gerçekleşecek olan forum, gençlerin akademik müzakere, araştırma ve liderlik becerilerini gerçek bir forum atmosferinde deneyimlemesine fırsat sunuyor.</p>
+        <p>Vizyon Ulusal Forum 2026, Türkiye'nin birçok ilinden gelen liseli öğrenciler tarafından düzenlenen ulusal forum etkinliğidir. 19–20 Eylül 2026 tarihlerinde gerçekleşecek forum; gençlerin akademik müzakere, araştırma ve liderlik becerilerini gerçek bir forum atmosferinde deneyimlemesine fırsat sunar.</p>
         <a href="basvuru.html" class="btn-navy">Başvuru Yap <i class="fas fa-arrow-right"></i></a>
 
         <div class="value-props stagger">
@@ -291,7 +291,7 @@
           <li><a href="#hakkimizda"><i class="fas fa-chevron-right"></i>Hakkımızda</a></li>
           <li><a href="#akis"><i class="fas fa-chevron-right"></i>Program</a></li>
           <li><a href="#komisyonlar"><i class="fas fa-chevron-right"></i>Komisyonlar</a></li>
-          <li><a href="#ekibimiz"><i class="fas fa-chevron-right"></i>Ekibimiz</a></li>
+          <li><a href="ekibimiz.html"><i class="fas fa-chevron-right"></i>Ekibimiz</a></li>
           <li><a href="#sponsorlar"><i class="fas fa-chevron-right"></i>Sponsorlar</a></li>
         </ul>
       </div>
@@ -299,8 +299,8 @@
       <div class="footer-col">
         <h5>Etkinlik</h5>
         <ul>
-          <li class="meta"><i class="fas fa-calendar-alt"></i> 13-14-15 Şubat 2026</li>
-          <li class="meta"><i class="fas fa-map-pin"></i> İÜ Beyazıt Kampüsü, İstanbul</li>
+          <li class="meta"><i class="fas fa-calendar-alt"></i> <span id="footerTarih">19–20 Eylül 2026</span></li>
+          <li class="meta"><i class="fas fa-map-pin"></i> <span id="footerMekan">Mekan yakında açıklanacak</span></li>
           <li class="meta"><i class="fas fa-layer-group"></i> <span id="footerKomisyon">9 Komisyon</span></li>
         </ul>
       </div>
@@ -309,7 +309,7 @@
         <h5>İletişim</h5>
         <ul>
           <li class="meta"><i class="fas fa-envelope"></i> vizyonulusalforumu@gmail.com</li>
-          <li class="meta"><i class="fas fa-map-pin"></i> İÜ Beyazıt Kampüsü, İstanbul</li>
+          <li class="meta"><i class="fas fa-map-pin"></i> <span id="footerIletisimMekan">Mekan yakında açıklanacak</span></li>
         </ul>
         <div style="margin-top:1.5rem">
           <a href="basvuru.html" class="btn-gold-solid" style="font-size:.82rem;padding:.55rem 1.25rem;border-radius:8px">
@@ -453,8 +453,11 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h
   function getAyarlar() {
     try {
       const v = localStorage.getItem('vuf_ayarlar');
-      return v ? JSON.parse(v) : { countdown: true, instagram: 'vizyonulusalforum', eventDate: '2026-02-13T13:30', mekan: 'İÜ Beyazıt Kampüsü, İstanbul' };
-    } catch { return { countdown: true, instagram: 'vizyonulusalforum', eventDate: '2026-02-13T13:30', mekan: 'İÜ Beyazıt Kampüsü, İstanbul' }; }
+      const ayarlar = v ? JSON.parse(v) : {};
+      if (ayarlar.mekan === 'İÜ Beyazıt Kampüsü, İstanbul' || ayarlar.mekan === 'İstanbul Üniversitesi') ayarlar.mekan = '';
+      if (!ayarlar.eventDate || ayarlar.eventDate === '2026-02-13T13:30') ayarlar.eventDate = '2026-09-19T09:00';
+      return { countdown: true, instagram: 'vizyonulusalforum', mekan: '', ...ayarlar };
+    } catch { return { countdown: true, instagram: 'vizyonulusalforum', eventDate: '2026-09-19T09:00', mekan: '' }; }
   }
 
   function tick() {
@@ -648,10 +651,16 @@ function animateCounter(el) {
   document.getElementById('heroPillKomisyon').textContent  = stats.komisyon || 9;
   
   /* ─── Etkinlik bilgileri (localStorage'dan) ─── */
-  const ayarlar = JSON.parse(localStorage.getItem('vuf_ayarlar') || '{}');
+  let ayarlar = {};
+  try { ayarlar = JSON.parse(localStorage.getItem('vuf_ayarlar') || '{}'); } catch {}
+  if (ayarlar.mekan === 'İÜ Beyazıt Kampüsü, İstanbul' || ayarlar.mekan === 'İstanbul Üniversitesi') ayarlar.mekan = '';
+  if (!ayarlar.eventDate || ayarlar.eventDate === '2026-02-13T13:30') ayarlar.eventDate = '2026-09-19T09:00';
   const heroPillTarih = document.getElementById('heroPillTarih');
   const heroPillMekan = document.getElementById('heroPillMekan');
   const heroEventDate = document.getElementById('heroEventDate');
+  const footerTarih = document.getElementById('footerTarih');
+  const footerMekan = document.getElementById('footerMekan');
+  const footerIletisimMekan = document.getElementById('footerIletisimMekan');
   
   if (ayarlar.eventDate) {
     const eventDate = new Date(ayarlar.eventDate);
@@ -660,11 +669,13 @@ function animateCounter(el) {
     const dateStr = `${formattedDate} - ${formattedTime}`;
     heroPillTarih.textContent = dateStr;
     heroEventDate.textContent = dateStr;
+    footerTarih.textContent = formattedDate;
   }
   
-  if (ayarlar.mekan) {
-    heroPillMekan.textContent = ayarlar.mekan;
-  }
+  const mekanMetni = ayarlar.mekan || 'Mekan yakında açıklanacak';
+  heroPillMekan.textContent = mekanMetni;
+  footerMekan.textContent = mekanMetni;
+  footerIletisimMekan.textContent = mekanMetni;
 
   /* ─── Footer meta (dinamik) ─── */
   const fKomisyon  = document.getElementById('footerKomisyon');

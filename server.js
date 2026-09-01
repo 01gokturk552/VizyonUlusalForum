@@ -107,11 +107,7 @@ const emailTemplates = {
           
           <p style="color: #333; line-height: 1.6;">Başvurunuzun detaylı değerlendirilmesi yapılmış olup, gelecekteki etkinliklerimiz için tekrar başvuruda bulunabilirsiniz.</p>
           
-          <p style="color: #333; line-height: 1.6;">Herhangi bir sorunuz için bize ulaşabilirsiniz:</p>
-          <ul style="color: #333; line-height: 1.8;">
-            <li>Yiğit Efe SEVİR: 0546 926 2010</li>
-            <li>Ada Nehir ŞAHİN: 0501 012 58 60</li>
-          </ul>
+          <p style="color: #333; line-height: 1.6;">Sorularınız için Vizyon Ulusal Forum iletişim kanallarından bizimle iletişime geçebilirsiniz.</p>
           
           <div style="text-align: center; margin: 30px 0;">
             <a href="https://vizyonulusalforum.com" style="background: linear-gradient(135deg, #6B7A99, #5A6A8A); color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 8px; font-weight: bold;">Web Sitemizi Ziyaret Edin</a>

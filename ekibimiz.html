@@ -213,19 +213,29 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   const ls  = (k, def) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch { return def; } };
 
   const DEF_EKIP = [
-    {initials:'GK',role:'Genel Koordinatör',          name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu', instagram:'',badge:'fas fa-star'},
-    {initials:'OB',role:'Organizasyon Başkanı',      name:'',desc:'Organizasyon süreçlerinden sorumlu', instagram:'',badge:'fas fa-cog'},
-    {initials:'AB',role:'Akademi Başkanı',           name:'',desc:'Akademik içerik ve komisyon yönetiminden sorumlu', instagram:'',badge:'fas fa-graduation-cap'},
-    {initials:'PB',role:'PR Başkanı',                name:'',desc:'Halkla ilişkiler ve iletişimden sorumlu', instagram:'',badge:'fas fa-bullhorn'},
-    {initials:'FB',role:'Finans Başkanı',            name:'',desc:'Finans yönetimi ve sponsor ilişkilerinden sorumlu', instagram:'',badge:'fas fa-coins'},
-    {initials:'SB',role:'Saha Başkanı',              name:'',desc:'Saha organizasyonu ve operasyondan sorumlu', instagram:'',badge:'fas fa-map-marker-alt'},
-    {initials:'PRB',role:'Press Başkanı',            name:'',desc:'Basın ilişkileri ve medya yönetiminden sorumlu', instagram:'',badge:'fas fa-newspaper'},
-    {initials:'TB',role:'Tasarım Başkanı',           name:'',desc:'Grafik tasarım ve görsel yönetimden sorumlu', instagram:'',badge:'fas fa-palette'},
-    {initials:'GB',role:'Güvenlik Başkanı',          name:'',desc:'Güvenlik ve emniyetten sorumlu', instagram:'',badge:'fas fa-shield-alt'},
-    {initials:'İKB',role:'İnsan Kaynakları Başkanı', name:'',desc:'İnsan kaynakları ve personel yönetiminden sorumlu', instagram:'',badge:'fas fa-user-check'},
+    {initials:'OB',role:'Onursal Başkan',name:'',desc:'Forumun vizyonu ve kurumsal temsilinden sorumlu',instagram:'',badge:'fas fa-award'},
+    {initials:'GK',role:'Genel Koordinatör',name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu',instagram:'',badge:'fas fa-star'},
+    {initials:'GS',role:'Genel Sekreter',name:'',desc:'Yazışma, planlama ve idari süreçlerden sorumlu',instagram:'',badge:'fas fa-file-signature'},
+    {initials:'OB',role:'Organizasyon Başkanı',name:'',desc:'Organizasyon süreçleri ve etkinlik planlamasından sorumlu',instagram:'',badge:'fas fa-cog'},
+    {initials:'PR',role:'PR Başkanı',name:'',desc:'Halkla ilişkiler ve iletişimden sorumlu',instagram:'',badge:'fas fa-bullhorn'},
+    {initials:'SB',role:'Saha Başkanı',name:'',desc:'Saha organizasyonu ve operasyondan sorumlu',instagram:'',badge:'fas fa-map-marker-alt'},
+    {initials:'LB',role:'Lojistik Başkanı',name:'',desc:'Lojistik planlama ve kaynak yönetiminden sorumlu',instagram:'',badge:'fas fa-truck'},
+    {initials:'KB',role:'Kriz Başkanı',name:'',desc:'Risk analizi ve kriz yönetiminden sorumlu',instagram:'',badge:'fas fa-triangle-exclamation'},
+    {initials:'FB',role:'Finans Başkanı',name:'',desc:'Bütçe, finans ve sponsor süreçlerinden sorumlu',instagram:'',badge:'fas fa-coins'},
+    {initials:'IT',role:'IT Başkanı',name:'',desc:'Dijital altyapı ve teknik sistemlerden sorumlu',instagram:'',badge:'fas fa-laptop-code'},
+    {initials:'AB',role:'Akademi Başkanı',name:'',desc:'Akademik içerik ve komisyon yönetiminden sorumlu',instagram:'',badge:'fas fa-graduation-cap'},
   ];
 
-  const ekip = ls('vuf_ekip', DEF_EKIP);
+  const TEAM_VERSION = '2026-09-team-roles-v1';
+  let ekip = ls('vuf_ekip', DEF_EKIP);
+  if (localStorage.getItem('vuf_team_roles_version') !== TEAM_VERSION) {
+    ekip = DEF_EKIP.map((role, index) => {
+      const existing = ekip[index] || {};
+      return {...role, name:existing.name||'', instagram:existing.instagram||'', photo:existing.photo||''};
+    });
+    localStorage.setItem('vuf_ekip', JSON.stringify(ekip));
+    localStorage.setItem('vuf_team_roles_version', TEAM_VERSION);
+  }
   document.getElementById('ekipGrid').innerHTML = ekip.map(e => `
     <div class="ekip-card fade-up">
       <div class="ekip-avatar-wrap">

@@ -334,42 +334,18 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
     <div class="section-view" id="sec-ayarlar">
       <div class="sec-top"><h2><i class="fas fa-cog"></i> Genel Ayarlar</h2></div>
       <div class="stat-form">
-        <p style="font-size:.85rem;color:#6B7A99;margin-bottom:1.5rem">Ana sayfadaki bilgileri buradan yönetebilirsiniz.</p>
+        <p style="font-size:.85rem;color:#6B7A99;margin-bottom:1.5rem">Ana sayfada görünen etkinlik bilgilerini buradan güncelleyebilirsiniz.</p>
         
         <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
-          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-map-marker-alt" style="color:#7c3aed"></i> Etkinlik Bilgileri</h3>
+          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-calendar-alt" style="color:#2563EB"></i> Etkinlik Bilgileri</h3>
           <div class="stat-field"><label><i class="fas fa-map"></i> Mekan</label>
-            <input type="text" id="ay-mekan" placeholder="İstanbul Üniversitesi">
-            <small>Etkinlik yapılacak mekan</small>
+            <input type="text" id="ay-mekan" placeholder="Mekan bilgisini girin">
+            <small>Boş bırakırsanız sitede “Mekan yakında açıklanacak” yazısı görünür.</small>
           </div>
           <div class="stat-field"><label><i class="fas fa-calendar-alt"></i> Etkinlik Tarihi</label>
             <input type="datetime-local" id="ay-event-date">
             <small>Etkinlik başlangıç tarihi ve saati</small>
           </div>
-        </div>
-
-        <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
-          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-phone" style="color:#7c3aed"></i> İletişim Bilgileri</h3>
-          <div class="stat-field"><label><i class="fas fa-user"></i> Koordinatör 1 Ad Soyad</label>
-            <input type="text" id="ay-koordinator1-ad" placeholder="Yiğit Efe SEVİR">
-            <small>Birinci koordinatör adı</small>
-          </div>
-          <div class="stat-field"><label><i class="fas fa-phone"></i> Koordinatör 1 Telefon</label>
-            <input type="text" id="ay-koordinator1-tel" placeholder="0546 926 2010">
-            <small>Birinci koordinatör telefonu</small>
-          </div>
-          <div class="stat-field"><label><i class="fas fa-user"></i> Koordinatör 2 Ad Soyad</label>
-            <input type="text" id="ay-koordinator2-ad" placeholder="Ada Nehir ŞAHİN">
-            <small>İkinci koordinatör adı</small>
-          </div>
-          <div class="stat-field"><label><i class="fas fa-phone"></i> Koordinatör 2 Telefon</label>
-            <input type="text" id="ay-koordinator2-tel" placeholder="0501 012 58 60">
-            <small>İkinci koordinatör telefonu</small>
-          </div>
-        </div>
-
-        <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
-          <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-cog" style="color:#7c3aed"></i> Diğer Ayarlar</h3>
           <div class="stat-field"><label><i class="fas fa-clock"></i> Geri Sayım Göster</label>
             <select id="ay-countdown">
               <option value="true">Açık</option>
@@ -570,16 +546,17 @@ const DEF_KOMISYON=[
   {id:9,num:'09',icon:'fas fa-chart-line',name:'Ekonomi ve Finans Politikaları Komisyonu',desc:'Ekonomik istikrar, maliye ve finans politikaları',baskan:''},
 ];
 const DEF_EKIP=[
-  {id:1,initials:'GK',role:'Genel Koordinatör',name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu',instagram:'',photo:''},
-  {id:2,initials:'OB',role:'Organizasyon Başkanı',name:'',desc:'Organizasyon süreçlerinden sorumlu',instagram:'',photo:''},
-  {id:3,initials:'AB',role:'Akademi Başkanı',name:'',desc:'Akademik içerik ve komisyon yönetiminden sorumlu',instagram:'',photo:''},
-  {id:4,initials:'PB',role:'PR Başkanı',name:'',desc:'Halkla ilişkiler ve iletişimden sorumlu',instagram:'',photo:''},
-  {id:5,initials:'FB',role:'Finans Başkanı',name:'',desc:'Finans yönetimi ve sponsor ilişkilerinden sorumlu',instagram:'',photo:''},
+  {id:1,initials:'OB',role:'Onursal Başkan',name:'',desc:'Forumun vizyonu ve kurumsal temsilinden sorumlu',instagram:'',photo:''},
+  {id:2,initials:'GK',role:'Genel Koordinatör',name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu',instagram:'',photo:''},
+  {id:3,initials:'GS',role:'Genel Sekreter',name:'',desc:'Yazışma, planlama ve idari süreçlerden sorumlu',instagram:'',photo:''},
+  {id:4,initials:'OB',role:'Organizasyon Başkanı',name:'',desc:'Organizasyon süreçleri ve etkinlik planlamasından sorumlu',instagram:'',photo:''},
+  {id:5,initials:'PR',role:'PR Başkanı',name:'',desc:'Halkla ilişkiler ve iletişimden sorumlu',instagram:'',photo:''},
   {id:6,initials:'SB',role:'Saha Başkanı',name:'',desc:'Saha organizasyonu ve operasyondan sorumlu',instagram:'',photo:''},
-  {id:7,initials:'PRB',role:'Press Başkanı',name:'',desc:'Basın ilişkileri ve medya yönetiminden sorumlu',instagram:'',photo:''},
-  {id:8,initials:'TB',role:'Tasarım Başkanı',name:'',desc:'Grafik tasarım ve görsel yönetimden sorumlu',instagram:'',photo:''},
-  {id:9,initials:'GB',role:'Güvenlik Başkanı',name:'',desc:'Güvenlik ve emniyetten sorumlu',instagram:'',photo:''},
-  {id:10,initials:'İKB',role:'İnsan Kaynakları Başkanı',name:'',desc:'İnsan kaynakları ve personel yönetiminden sorumlu',instagram:'',photo:''},
+  {id:7,initials:'LB',role:'Lojistik Başkanı',name:'',desc:'Lojistik planlama ve kaynak yönetiminden sorumlu',instagram:'',photo:''},
+  {id:8,initials:'KB',role:'Kriz Başkanı',name:'',desc:'Risk analizi ve kriz yönetiminden sorumlu',instagram:'',photo:''},
+  {id:9,initials:'FB',role:'Finans Başkanı',name:'',desc:'Bütçe, finans ve sponsor süreçlerinden sorumlu',instagram:'',photo:''},
+  {id:10,initials:'IT',role:'IT Başkanı',name:'',desc:'Dijital altyapı ve teknik sistemlerden sorumlu',instagram:'',photo:''},
+  {id:11,initials:'AB',role:'Akademi Başkanı',name:'',desc:'Akademik içerik ve komisyon yönetiminden sorumlu',instagram:'',photo:''},
 ];
 const DEF_SPONSOR=[];
 const DEF_PROGRAM={
@@ -605,6 +582,16 @@ function initData(){
   }
   if(!localStorage.getItem('vuf_komisyonlar'))set('vuf_komisyonlar',DEF_KOMISYON);
   if(!localStorage.getItem('vuf_ekip'))set('vuf_ekip',DEF_EKIP);
+  const TEAM_VERSION='2026-09-team-roles-v1';
+  if(localStorage.getItem('vuf_team_roles_version')!==TEAM_VERSION){
+    const currentTeam=get('vuf_ekip',[]);
+    const updatedTeam=DEF_EKIP.map((role,index)=>{
+      const existing=currentTeam[index]||{};
+      return {...role,name:existing.name||'',instagram:existing.instagram||'',photo:existing.photo||''};
+    });
+    set('vuf_ekip',updatedTeam);
+    localStorage.setItem('vuf_team_roles_version',TEAM_VERSION);
+  }
   if(!localStorage.getItem('vuf_sponsorlar'))set('vuf_sponsorlar',DEF_SPONSOR);
   if(!localStorage.getItem('vuf_program'))set('vuf_program',DEF_PROGRAM);
   if(!localStorage.getItem('vuf_istatistikler'))set('vuf_istatistikler',DEF_STATS);
@@ -640,12 +627,8 @@ function renderSection(sec){
 
 function renderAyarlar(){
   const ayarlar=get('vuf_ayarlar',{});
-  document.getElementById('ay-mekan').value=ayarlar.mekan||'';
-  document.getElementById('ay-event-date').value=ayarlar.eventDate||'';
-  document.getElementById('ay-koordinator1-ad').value=ayarlar.koordinator1Ad||'';
-  document.getElementById('ay-koordinator1-tel').value=ayarlar.koordinator1Tel||'';
-  document.getElementById('ay-koordinator2-ad').value=ayarlar.koordinator2Ad||'';
-  document.getElementById('ay-koordinator2-tel').value=ayarlar.koordinator2Tel||'';
+  document.getElementById('ay-mekan').value=['İÜ Beyazıt Kampüsü, İstanbul','İstanbul Üniversitesi'].includes(ayarlar.mekan)?'':(ayarlar.mekan||'');
+  document.getElementById('ay-event-date').value=ayarlar.eventDate||'2026-09-19T09:00';
   document.getElementById('ay-countdown').value=ayarlar.countdown!==undefined ? String(ayarlar.countdown) : 'true';
   document.getElementById('ay-instagram').value=ayarlar.instagram||'';
 }
@@ -800,12 +783,8 @@ function saveStats(){
 ════════════════════════════════════ */
 function loadAyarlar(){
   const ayarlar=get('vuf_ayarlar',{});
-  document.getElementById('ay-mekan').value=ayarlar.mekan||'';
-  document.getElementById('ay-event-date').value=ayarlar.eventDate||'';
-  document.getElementById('ay-koordinator1-ad').value=ayarlar.koordinator1Ad||'';
-  document.getElementById('ay-koordinator1-tel').value=ayarlar.koordinator1Tel||'';
-  document.getElementById('ay-koordinator2-ad').value=ayarlar.koordinator2Ad||'';
-  document.getElementById('ay-koordinator2-tel').value=ayarlar.koordinator2Tel||'';
+  document.getElementById('ay-mekan').value=['İÜ Beyazıt Kampüsü, İstanbul','İstanbul Üniversitesi'].includes(ayarlar.mekan)?'':(ayarlar.mekan||'');
+  document.getElementById('ay-event-date').value=ayarlar.eventDate||'2026-09-19T09:00';
   document.getElementById('ay-countdown').value=ayarlar.countdown!==undefined?ayarlar.countdown:true;
   document.getElementById('ay-instagram').value=ayarlar.instagram||'';
 }
@@ -813,10 +792,6 @@ function saveAyarlar(){
   set('vuf_ayarlar',{
     eventDate:document.getElementById('ay-event-date').value,
     mekan:document.getElementById('ay-mekan').value,
-    koordinator1Ad:document.getElementById('ay-koordinator1-ad').value,
-    koordinator1Tel:document.getElementById('ay-koordinator1-tel').value,
-    koordinator2Ad:document.getElementById('ay-koordinator2-ad').value,
-    koordinator2Tel:document.getElementById('ay-koordinator2-tel').value,
     countdown:document.getElementById('ay-countdown').value==='true',
     instagram:document.getElementById('ay-instagram').value.trim()
   });
@@ -1789,18 +1764,7 @@ function openModal(type,id=null){
     const data=get('vuf_ekip',DEF_EKIP);
     const item=id?data.find(x=>x.id===id):{};
     title.textContent=id?'Üye Düzenle':'Yeni Ekip Üyesi';
-    const roles=[
-      'Genel Koordinatör',
-      'Organizasyon Başkanı',
-      'Akademi Başkanı',
-      'PR Başkanı',
-      'Finans Başkanı',
-      'Saha Başkanı',
-      'Press Başkanı',
-      'Tasarım Başkanı',
-      'Güvenlik Başkanı',
-      'İnsan Kaynakları Başkanı'
-    ];
+    const roles=['Onursal Başkan','Genel Koordinatör','Genel Sekreter','Organizasyon Başkanı','PR Başkanı','Saha Başkanı','Lojistik Başkanı','Kriz Başkanı','Finans Başkanı','IT Başkanı','Akademi Başkanı'];
     const roleOptions=roles.map(r=>`<option value="${r}" ${item.role===r?'selected':''}>${r}</option>`).join('');
     body.innerHTML=`
       <div class="mf-group"><label>Rol / Pozisyon</label>
@@ -1872,7 +1836,7 @@ function saveModal(){
   else if(modalType==='ekip'){
     const data=get('vuf_ekip',DEF_EKIP);
     const role=document.getElementById('mf-role').value.trim();
-    const roles=['Genel Koordinatör','Organizasyon Başkanı','Akademi Başkanı','PR Başkanı','Finans Başkanı','Saha Başkanı','Press Başkanı','Tasarım Başkanı','Güvenlik Başkanı','İnsan Kaynakları Başkanı'];
+    const roles=['Onursal Başkan','Genel Koordinatör','Genel Sekreter','Organizasyon Başkanı','PR Başkanı','Saha Başkanı','Lojistik Başkanı','Kriz Başkanı','Finans Başkanı','IT Başkanı','Akademi Başkanı'];
     const initials=role.split(' ').map(w=>w[0]).join('').toUpperCase().substring(0,3);
     const photoInput=document.getElementById('mf-photo');
     let photo='';
