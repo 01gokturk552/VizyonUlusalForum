@@ -1820,7 +1820,8 @@ function openModal(type,id=null){
       </div>
       <div class="mf-group"><label>Komisyon Adı</label><input id="mf-name" value="${esc(item.name||'')}"></div>
       <div class="mf-group"><label>Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>
-      <div class="mf-group"><label>Başkan / Yönetici Adı</label><input id="mf-baskan" value="${esc(item.baskan||'')}" placeholder="İsim girmediyseniz boş bırakın"></div>`;
+      <div class="mf-group"><label>Başkan / Yönetici Adı</label><input id="mf-baskan" value="${esc(item.baskan||'')}" placeholder="İsim girmediyseniz boş bırakın"></div>
+      <div class="mf-group"><label>Rehber Linki</label><input id="mf-rehber-link" value="${esc(item.rehberLink||'')}" placeholder="PDF veya DOC linki"></div>`;
   }
   else if(type==='ekip'){
     const data=get('vuf_ekip',DEF_EKIP);
@@ -1890,6 +1891,7 @@ function saveModal(){
       name:document.getElementById('mf-name').value.trim(),
       desc:document.getElementById('mf-desc').value.trim(),
       baskan:document.getElementById('mf-baskan').value.trim(),
+      rehberLink:document.getElementById('mf-rehber-link').value.trim(),
     };
     if(!obj.name){toast('Komisyon adı boş olamaz','error');return}
     if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);

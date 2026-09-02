@@ -182,7 +182,6 @@
       <!-- Right: stats & sponsors -->
       <div class="about-stats-col stagger">
         <div id="statsCol"></div>
-        <div id="aboutSponsors" style="margin-top: 2rem;"></div>
       </div>
 
     </div>
@@ -653,23 +652,6 @@ function animateCounter(el) {
     </div>`;
   }).join('') || '<p class="sponsor-empty"><i class="fas fa-handshake"></i> Sponsorlarımız çok yakında duyurulacak.</p>';
 
-  /* ─── Hakkımızda Sponsorları ─── */
-  const aboutSponsors = ls('vuf_sponsorlar', DEF_SPONSOR);
-  if (aboutSponsors.length > 0) {
-    document.getElementById('aboutSponsors').innerHTML = `
-      <div style="background:#f8fafc;border-radius:12px;padding:1.5rem;border:1px solid #e2e8f0">
-        <h4 style="margin:0 0 1rem 0;font-size:.9rem;font-weight:700;color:#1e293b"><i class="fas fa-handshake" style="margin-right:.5rem;color:#3b82f6"></i>Sponsorlarımız</h4>
-        <div style="display:flex;flex-wrap:wrap;gap:.75rem">
-          ${aboutSponsors.map(s => `
-            <div style="background:#fff;border-radius:8px;padding:.5rem 1rem;font-size:.8rem;font-weight:600;color:#475569;border:1px solid #e2e8f0">
-              ${esc(s.name)}
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
-
   /* ─── Program Akışı ─── */
   const prog = ls('vuf_program', DEF_PROG);
   [1,2,3].forEach(d => {
@@ -731,18 +713,24 @@ function animateCounter(el) {
   }
   
   function downloadKomisyonRehber(id) {
-    // Admin panelde rehber alanı eklendiğinde buradan PDF/DOC indirilecek
-    alert('Komisyon rehberi indiriliyor... (Admin panelde rehber alanı eklendiğinde aktif olacak)');
+    const komisyonlar = ls('vuf_komisyonlar', DEF_KOM);
+    const komisyon = komisyonlar.find(k => k.id === id);
+    if (!komisyon || !komisyon.rehberLink) {
+      alert('Bu komisyon için rehber linki bulunmuyor.');
+      return;
+    }
+    window.open(komisyon.rehberLink, '_blank');
   }
 
   /* ─── İstatistikler ─── */
   const stats = ls('vuf_istatistikler', DEF_STATS);
+  const actualSponsorCount = sponsorlar.length;
   document.getElementById('statsCol').innerHTML = [
     {k:'komisyon',  l:'Komisyon'},
     {k:'katilimci', l:'Katılımcı'},
-    {k:'sponsor',   l:'Sponsor'},
+    {k:'sponsor',   l:'Sponsor', v:actualSponsorCount},
     {k:'gun',       l:'Gün'},
-  ].map(s => `<div class="stat-tile fade-up"><span class="st-num" data-target="${stats[s.k]||0}">0</span><span class="st-label">${s.l}</span></div>`).join('');
+  ].map(s => `<div class="stat-tile fade-up"><span class="st-num" data-target="${s.v !== undefined ? s.v : (stats[s.k]||0)}">0</span><span class="st-label">${s.l}</span></div>`).join('');
 
   /* ─── Hero meta pills (dinamik) ─── */
   document.getElementById('heroPillKomisyon').textContent  = stats.komisyon || 9;
