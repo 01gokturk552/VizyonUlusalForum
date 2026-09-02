@@ -634,10 +634,21 @@ function renderAyarlar(){
 }
 
 function loadBasvuruFormu(){
-  currentFormType = document.getElementById('formTypeSelect') ? document.getElementById('formTypeSelect').value : currentFormType;
+  // Varsayılan form tipi
+  currentFormType = 'delege';
+  
   const stored = JSON.parse(localStorage.getItem('vuf_form_builder') || '{}');
   formData.delege = stored.delege && stored.delege.length ? stored.delege : JSON.parse(JSON.stringify(defaultFormData.delege));
   formData.delegasyon = stored.delegasyon && stored.delegasyon.length ? stored.delegasyon : JSON.parse(JSON.stringify(defaultFormData.delegasyon));
+  
+  // Form tipi seçicisini güncelle
+  setTimeout(() => {
+    const select = document.getElementById('formTypeSelect');
+    if (select) {
+      select.value = currentFormType;
+    }
+  }, 100);
+  
   renderFormBuilder();
 }
 
