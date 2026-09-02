@@ -179,8 +179,11 @@
         </div>
       </div>
 
-      <!-- Right: stats -->
-      <div class="about-stats-col stagger" id="statsCol"></div>
+      <!-- Right: stats & sponsors -->
+      <div class="about-stats-col stagger">
+        <div id="statsCol"></div>
+        <div id="aboutSponsors" style="margin-top: 2rem;"></div>
+      </div>
 
     </div>
   </div>
@@ -421,6 +424,35 @@
 </div>
 
 <!-- ══════════════════════════════════════════
+     KOMİSYON MODAL
+══════════════════════════════════════════ -->
+<div id="komisyonModal" class="hidden" style="
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(6,15,30,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;padding:1.5rem;
+">
+  <div style="
+    background:#fff;border-radius:24px;padding:2.5rem 2rem;
+    max-width:600px;width:100%;
+    box-shadow:0 24px 64px rgba(11,31,58,.28);
+    animation:pmIn .3s cubic-bezier(.34,1.56,.64,1) both;
+    position:relative;
+  ">
+    <button onclick="closeKomisyonModal()" style="
+      position:absolute;top:1.5rem;right:1.5rem;
+      width:36px;height:36px;border-radius:50%;
+      background:#f1f5f9;border:none;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      color:#64748b;transition:all .2s;
+    " onmouseover="this.style.background='#e2e8f0';this.style.color='#0f172a'" onmouseout="this.style.background='#f1f5f9';this.style.color='#64748b'">
+      <i class="fas fa-times"></i>
+    </button>
+    
+    <div id="komisyonModalContent"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
      SCRIPTS
 ══════════════════════════════════════════ -->
 <script>
@@ -589,7 +621,7 @@ function animateCounter(el) {
   /* ─── Komisyonlar ─── */
   const komisyonlar = ls('vuf_komisyonlar', DEF_KOM);
   document.getElementById('komisyonGrid').innerHTML = komisyonlar.map(k => `
-    <div class="komisyon-card fade-up">
+    <div class="komisyon-card fade-up" onclick="openKomisyonModal(${k.id})" style="cursor:pointer">
       <span class="k-num">${esc(k.num)}</span>
       <div class="k-icon-wrap"><i class="${esc(k.icon)}"></i></div>
       <h3>${esc(k.name)}</h3>
@@ -621,6 +653,23 @@ function animateCounter(el) {
     </div>`;
   }).join('') || '<p class="sponsor-empty"><i class="fas fa-handshake"></i> Sponsorlarımız çok yakında duyurulacak.</p>';
 
+  /* ─── Hakkımızda Sponsorları ─── */
+  const aboutSponsors = ls('vuf_sponsorlar', DEF_SPONSOR);
+  if (aboutSponsors.length > 0) {
+    document.getElementById('aboutSponsors').innerHTML = `
+      <div style="background:#f8fafc;border-radius:12px;padding:1.5rem;border:1px solid #e2e8f0">
+        <h4 style="margin:0 0 1rem 0;font-size:.9rem;font-weight:700;color:#1e293b"><i class="fas fa-handshake" style="margin-right:.5rem;color:#3b82f6"></i>Sponsorlarımız</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem">
+          ${aboutSponsors.map(s => `
+            <div style="background:#fff;border-radius:8px;padding:.5rem 1rem;font-size:.8rem;font-weight:600;color:#475569;border:1px solid #e2e8f0">
+              ${esc(s.name)}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
   /* ─── Program Akışı ─── */
   const prog = ls('vuf_program', DEF_PROG);
   [1,2,3].forEach(d => {
@@ -637,6 +686,54 @@ function animateCounter(el) {
   
   // 1. günü varsayılan olarak aktif yap
   document.getElementById('day1').classList.add('active');
+
+  /* ─── Komisyon Modal ─── */
+  function openKomisyonModal(id) {
+    const komisyonlar = ls('vuf_komisyonlar', DEF_KOM);
+    const komisyon = komisyonlar.find(k => k.id === id);
+    if (!komisyon) return;
+    
+    document.getElementById('komisyonModalContent').innerHTML = `
+      <div style="text-align:center;margin-bottom:1.5rem">
+        <div style="width:64px;height:64px;background:linear-gradient(135deg,#0B1F3A,#1e4080);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
+          <i class="${esc(komisyon.icon)}" style="color:#60a5fa;font-size:1.5rem"></i>
+        </div>
+        <h2 style="font-size:1.5rem;font-weight:800;color:#0B1F3A;margin-bottom:.5rem">${esc(komisyon.name)}</h2>
+        <p style="color:#64748b;font-size:.9rem">${esc(komisyon.desc)}</p>
+        ${komisyon.baskan ? `<p style="margin-top:.5rem;font-size:.85rem;font-weight:600;color:#3b82f6"><i class="fas fa-user-tie" style="margin-right:.3rem"></i>${esc(komisyon.baskan)}</p>` : ''}
+      </div>
+      
+      <div style="background:#f8fafc;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem">
+        <h4 style="margin:0 0 1rem 0;font-size:.95rem;font-weight:700;color:#1e293b"><i class="fas fa-book" style="margin-right:.5rem;color:#3b82f6"></i>Komisyon Rehberi</h4>
+        <p style="margin:0 0 1rem 0;font-size:.85rem;color:#64748b;line-height:1.6">Bu komisyon hakkında detaylı bilgi ve çalışma rehberini aşağıdan indirebilirsiniz.</p>
+        <a href="#" onclick="downloadKomisyonRehber(${id});return false" style="
+          display:inline-flex;align-items:center;gap:.5rem;
+          background:#3b82f6;color:#fff;
+          padding:.75rem 1.5rem;border-radius:8px;
+          text-decoration:none;font-size:.85rem;font-weight:600;
+          transition:all .2s;
+        " onmouseover="this.style.background='#2563EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#3b82f6';this.style.transform='none'">
+          <i class="fas fa-download"></i> Rehberi İndir
+        </a>
+      </div>
+      
+      <div style="background:#eff6ff;border-radius:12px;padding:1.5rem;border:1px solid #dbeafe">
+        <h4 style="margin:0 0 .75rem 0;font-size:.9rem;font-weight:700;color:#1e40af"><i class="fas fa-info-circle" style="margin-right:.5rem"></i>Bilgi</h4>
+        <p style="margin:0;font-size:.8rem;color:#1e40af;line-height:1.5">Rehberi indirmeden önce komisyon çalışma prensiplerini okumanız önerilir.</p>
+      </div>
+    `;
+    
+    document.getElementById('komisyonModal').classList.remove('hidden');
+  }
+  
+  function closeKomisyonModal() {
+    document.getElementById('komisyonModal').classList.add('hidden');
+  }
+  
+  function downloadKomisyonRehber(id) {
+    // Admin panelde rehber alanı eklendiğinde buradan PDF/DOC indirilecek
+    alert('Komisyon rehberi indiriliyor... (Admin panelde rehber alanı eklendiğinde aktif olacak)');
+  }
 
   /* ─── İstatistikler ─── */
   const stats = ls('vuf_istatistikler', DEF_STATS);
