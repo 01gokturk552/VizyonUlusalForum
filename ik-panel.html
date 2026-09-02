@@ -620,6 +620,24 @@ async function saveStatus() {
     const basvuruAyarlar = JSON.parse(localStorage.getItem('vuf_basvuru_ayarlar') || '{}');
     const ucret = currentView === 'delege' ? (basvuruAyarlar.delegeUcret || 650) : (basvuruAyarlar.delegasyonUcret || 600);
     
+    // Taslak mesajı al ve değişkenleri değiştir
+    let emailTemplate = '';
+    if (newStatus === 'Başvuru Onaylandı') {
+      emailTemplate = basvuruAyarlar.onayMail || 'Sayın {isim}, başvurunuz onaylanmıştır. Seçtiğiniz komisyon: {komisyon}';
+    } else {
+      emailTemplate = basvuruAyarlar.redMail || 'Sayın {isim}, başvurunuz maalesef reddedilmiştir.';
+    }
+    
+    // Değişkenleri değiştir
+    const komisyonlar = JSON.parse(localStorage.getItem('vuf_komisyonlar') || '[]');
+    const komisyon = currentView === 'delege' ? (komisyonlar.find(k => k.id === applicant.komisyon)?.name || applicant.komisyon) : '';
+    
+    let emailBody = emailTemplate
+      .replace(/{isim}/g, currentView === 'delege' ? applicant.ad_soyad : applicant.ogretmen)
+      .replace(/{komisyon}/g, komisyon)
+      .replace(/{okul}/g, applicant.okul)
+      .replace(/{ucret}/g, ucret + ' TL');
+    
     const emailData = {
       to: applicant.eposta,
       type: newStatus === 'Başvuru Onaylandı' ? 'approve' : 'reject',
@@ -627,11 +645,12 @@ async function saveStatus() {
         name: currentView === 'delege' ? applicant.ad_soyad : applicant.ogretmen,
         type: currentView === 'delege' ? 'Delege Başvurusu' : 'Delegasyon Başvurusu',
         school: currentView === 'delege' ? applicant.okul : applicant.okul,
-        commission: currentView === 'delege' ? applicant.komisyon : null,
+        commission: komisyon,
         fee: ucret,
         dekontEmail: basvuruAyarlar.dekontEmail || 'vizyonulusalforumik@gmail.com',
         paymentName: basvuruAyarlar.odemeAd || 'Rabia Karabaş',
-        iban: basvuruAyarlar.iban || 'TR640020500009820452500002'
+        iban: basvuruAyarlar.iban || 'TR640020500009820452500002',
+        customMessage: emailBody
       }
     };
     
