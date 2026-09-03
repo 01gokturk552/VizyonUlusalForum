@@ -252,6 +252,7 @@ body {
   </div>
 </div>
 
+<script src="access-control.js"></script>
 <script>
 const USERS = [
   { username: 'VUF_IK2026', password: 'iK!R3cr#Vz26@Panel', role: 'hr' }
@@ -305,8 +306,11 @@ function hideWarn() {
 }
 
 /* ── Submit ── */
-document.getElementById('loginForm').addEventListener('submit', function(e) {
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
   e.preventDefault();
+
+  const access = await window.VUF_ACCESS_CHECK?.();
+  if (access && !access.allowed) { showError(access.message); return; }
 
   /* Locked? */
   if (checkLock()) {
@@ -330,7 +334,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     if (user) {
       clearLock();
       sessionStorage.setItem('vuf_ik_auth', JSON.stringify({ username: u, role: user.role }));
-      fetch('/api/auth-logs', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({role:'ik',username:u}), keepalive:true }).catch(() => {});
+      fetch('/api/auth-logs', { method:'POST', headers:{'Content-Type':'application/json',...(window.VUF_ACCESS_HEADERS||{})}, body:JSON.stringify({role:'ik',username:u}), keepalive:true }).catch(() => {});
       btn.classList.add('loading'); btn.disabled = true;
       btn.querySelector('.btn-spinner').innerHTML = '<i class="fas fa-circle-notch fa-spin-fast"></i> Yönlendiriliyor…';
       setTimeout(() => { window.location.href = 'ik-panel.html'; }, 500);

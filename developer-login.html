@@ -27,13 +27,14 @@
     </form>
     <a href="index.html" class="back"><i class="fas fa-arrow-left"></i> Ana sayfaya dön</a>
   </main>
+  <script src="access-control.js"></script>
   <script>
     const errorBox=document.getElementById('error');
-    fetch('/api/developer/session').then(r=>r.json()).then(v=>{if(v.authenticated)location.href='developer-panel.html'}).catch(()=>{});
+    fetch('/api/developer/session',{headers:window.VUF_ACCESS_HEADERS||{}}).then(r=>r.json()).then(v=>{if(v.authenticated)location.href='developer-panel.html'}).catch(()=>{});
     document.getElementById('loginForm').addEventListener('submit',async event=>{
       event.preventDefault();errorBox.classList.remove('show');
       const button=document.getElementById('submitBtn');button.disabled=true;button.innerHTML='<i class="fas fa-circle-notch fa-spin"></i> Doğrulanıyor…';
-      try{const response=await fetch('/api/developer/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:document.getElementById('password').value})});const result=await response.json();if(!response.ok)throw new Error(result.error||'Giriş yapılamadı');location.href='developer-panel.html'}catch(error){errorBox.textContent=error.message;errorBox.classList.add('show');document.getElementById('password').value='';document.getElementById('password').focus()}finally{button.disabled=false;button.innerHTML='<i class="fas fa-shield-halved"></i> Güvenli Giriş'}});
+      try{const response=await fetch('/api/developer/login',{method:'POST',headers:{'Content-Type':'application/json',...(window.VUF_ACCESS_HEADERS||{})},body:JSON.stringify({password:document.getElementById('password').value})});const result=await response.json();if(!response.ok)throw new Error(result.error||'Giriş yapılamadı');location.href='developer-panel.html'}catch(error){errorBox.textContent=error.message;errorBox.classList.add('show');document.getElementById('password').value='';document.getElementById('password').focus()}finally{button.disabled=false;button.innerHTML='<i class="fas fa-shield-halved"></i> Güvenli Giriş'}});
   </script>
 </body>
 </html>

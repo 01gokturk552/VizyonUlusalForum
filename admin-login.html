@@ -118,7 +118,9 @@ body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;min-heigh
   </div>
 </div>
 
+<script src="access-control.js"></script>
 <script>
+/* access-control.js bu betikten önce yüklenir. */
 const ADMINS=[{username:'VUF_SysAdmin',password:'Vz!F2026@SysAdm#'}];
 const MAX=5,LOCK=10,LK='vuf_adm_lock',AT='vuf_adm_att';
 const getLock=()=>JSON.parse(localStorage.getItem(LK)||'null');
@@ -133,8 +135,10 @@ document.getElementById('eyeBtn').addEventListener('click',()=>{
 });
 function showErr(m){const b=document.getElementById('errBanner');document.getElementById('errText').textContent=m;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),5000)}
 function showWarn(m){const w=document.getElementById('warnBanner');document.getElementById('warnText').textContent=m;w.classList.add('show')}
-document.getElementById('loginForm').addEventListener('submit',function(e){
+document.getElementById('loginForm').addEventListener('submit',async function(e){
   e.preventDefault();
+  const access=await window.VUF_ACCESS_CHECK?.();
+  if(access && !access.allowed){showErr(access.message);return;}
   if(chkLock()){const l=getLock();showErr(`Hesap kilitli. ${Math.ceil((l.until-Date.now())/60000)} dakika sonra tekrar deneyin.`);return}
   const btn=document.getElementById('submitBtn');
   btn.classList.add('loading');btn.disabled=true;
@@ -144,7 +148,7 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
     const ok=ADMINS.find(x=>x.username===u&&x.password===p);
     if(ok){
       clearLock();sessionStorage.setItem('vuf_admin_auth',JSON.stringify({username:u}));
-      fetch('/api/auth-logs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'admin',username:u}),keepalive:true}).catch(()=>{});
+      fetch('/api/auth-logs',{method:'POST',headers:{'Content-Type':'application/json',...(window.VUF_ACCESS_HEADERS||{})},body:JSON.stringify({role:'admin',username:u}),keepalive:true}).catch(()=>{});
       window.location.href='admin-panel.html';
     }
     else{

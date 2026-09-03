@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="data-sync.js"></script>
+<script src="access-control.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:#F0F3F9;color:#1A2540;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
@@ -590,6 +591,7 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
 const auth = JSON.parse(sessionStorage.getItem('vuf_admin_auth')||'null');
 if(!auth){window.location.href='admin-login.html';}
 else{document.getElementById('topUser').textContent=auth.username;}
+window.VUF_ACCESS_CHECK?.().then(access=>{if(!access.allowed){sessionStorage.removeItem('vuf_admin_auth');alert(access.message);window.location.href='admin-login.html';}});
 function logout(){sessionStorage.removeItem('vuf_admin_auth');window.location.href='admin-login.html';}
 
 /* ════════════════════════════════════

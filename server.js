@@ -27,7 +27,7 @@ const validateEmail = (email) => {
 // Middleware
 app.use(cors({
   origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
-  methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
   maxAge: 600
 }));
@@ -36,6 +36,7 @@ app.use(express.json({ limit: '1mb' }));
 const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, 'data', 'site-data.json');
 const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, 'data', 'uploads');
 const AUTH_LOG_FILE = process.env.AUTH_LOG_FILE || path.join(__dirname, 'data', 'auth-log.json');
+const ACCESS_BAN_FILE = process.env.ACCESS_BAN_FILE || path.join(__dirname, 'data', 'access-bans.json');
 const DEVELOPER_PASSWORD = process.env.DEVELOPER_PASSWORD || '';
 const DEVELOPER_SESSION_SECRET = process.env.DEVELOPER_SESSION_SECRET || crypto.randomBytes(32).toString('hex');
 const SYNC_KEYS = new Set([
@@ -60,6 +61,14 @@ function readAuthLogs() {
   try { return JSON.parse(fs.readFileSync(AUTH_LOG_FILE, 'utf8')); }
   catch { return []; }
 }
+function readAccessBans() {
+  try { return JSON.parse(fs.readFileSync(ACCESS_BAN_FILE, 'utf8')); }
+  catch { return []; }
+}
+function writeAccessBans(bans) {
+  fs.mkdirSync(path.dirname(ACCESS_BAN_FILE), { recursive: true });
+  fs.writeFileSync(ACCESS_BAN_FILE, JSON.stringify(bans, null, 2), 'utf8');
+}
 function writeAuthLogs(logs) {
   fs.mkdirSync(path.dirname(AUTH_LOG_FILE), { recursive: true });
   fs.writeFileSync(AUTH_LOG_FILE, JSON.stringify(logs.slice(0, 1000), null, 2), 'utf8');
@@ -68,9 +77,22 @@ function clientIp(req) {
   const forwarded = req.headers['x-forwarded-for'];
   return String(Array.isArray(forwarded) ? forwarded[0] : forwarded || req.socket.remoteAddress || 'Bilinmiyor').split(',')[0].trim();
 }
+function deviceId(req) {
+  const value = String(req.headers['x-vuf-device'] || '');
+  return /^[a-zA-Z0-9-]{8,100}$/.test(value) ? value : 'Bilinmiyor';
+}
+function blockedAccess(req) {
+  const ip = clientIp(req), device = deviceId(req);
+  return readAccessBans().find(ban => (ban.type === 'ip' && ban.value === ip) || (ban.type === 'device' && device !== 'Bilinmiyor' && ban.value === device));
+}
+function requireAllowedAccess(req, res, next) {
+  const ban = blockedAccess(req);
+  if (ban) return res.status(403).json({ success:false, allowed:false, message:'Bu bağlantının panele erişimi engellenmiştir.' });
+  next();
+}
 function addAuthLog(req, role, username, result = 'Başarılı') {
   const logs = readAuthLogs();
-  logs.unshift({ id: crypto.randomUUID(), role, username: String(username || '—').slice(0, 80), result, ip: clientIp(req), userAgent: String(req.headers['user-agent'] || 'Bilinmiyor').slice(0, 240), at: new Date().toISOString() });
+  logs.unshift({ id: crypto.randomUUID(), role, username: String(username || '—').slice(0, 80), result, ip: clientIp(req), deviceId: deviceId(req), userAgent: String(req.headers['user-agent'] || 'Bilinmiyor').slice(0, 240), at: new Date().toISOString() });
   writeAuthLogs(logs);
 }
 function readCookies(req) {
@@ -93,6 +115,8 @@ function hasDeveloperSession(req) {
   try { return JSON.parse(Buffer.from(payload, 'base64url').toString()).exp > Date.now(); } catch { return false; }
 }
 function requireDeveloper(req, res, next) {
+  const ban = blockedAccess(req);
+  if (ban) return res.status(403).json({ success: false, error: 'Bu bağlantının panele erişimi engellenmiştir.' });
   if (!hasDeveloperSession(req)) return res.status(401).json({ success: false, error: 'Yetkisiz erişim' });
   next();
 }
@@ -122,14 +146,16 @@ app.put('/api/site-data', (req, res) => {
 });
 
 // Admin ve İK girişleri tarayıcıda doğrulandıktan sonra başarı kaydı bırakır.
-app.post('/api/auth-logs', (req, res) => {
+app.post('/api/access/check', requireAllowedAccess, (req, res) => res.json({ success:true, allowed:true }));
+
+app.post('/api/auth-logs', requireAllowedAccess, (req, res) => {
   const { role, username } = req.body || {};
   if (!['admin', 'ik'].includes(role)) return res.status(400).json({ success: false, error: 'Geçersiz rol' });
   addAuthLog(req, role, username);
   res.status(201).json({ success: true });
 });
 
-app.post('/api/developer/login', (req, res) => {
+app.post('/api/developer/login', requireAllowedAccess, (req, res) => {
   const password = String((req.body || {}).password || '');
   if (!DEVELOPER_PASSWORD) return res.status(503).json({ success: false, error: 'Geliştirici erişimi henüz yapılandırılmadı.' });
   const expected = Buffer.from(DEVELOPER_PASSWORD);
@@ -146,8 +172,27 @@ app.post('/api/developer/logout', requireDeveloper, (req, res) => {
   res.setHeader('Set-Cookie', 'vuf_developer_session=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0');
   res.json({ success: true });
 });
-app.get('/api/developer/session', (req, res) => res.json({ authenticated: hasDeveloperSession(req) }));
+app.get('/api/developer/session', requireAllowedAccess, (req, res) => res.json({ authenticated: hasDeveloperSession(req) }));
 app.get('/api/developer/auth-logs', requireDeveloper, (req, res) => res.json({ success: true, logs: readAuthLogs().slice(0, 250) }));
+app.get('/api/developer/bans', requireDeveloper, (req, res) => res.json({ success:true, bans:readAccessBans() }));
+app.post('/api/developer/ban', requireDeveloper, (req, res) => {
+  const { type, value, reason } = req.body || {};
+  if (!['ip','device'].includes(type) || typeof value !== 'string' || value.length < 3 || value.length > 120) return res.status(400).json({ success:false, error:'Geçersiz engelleme bilgisi.' });
+  if ((type === 'ip' && value === clientIp(req)) || (type === 'device' && value === deviceId(req))) return res.status(400).json({ success:false, error:'Kendi aktif bağlantınızı engelleyemezsiniz.' });
+  const bans = readAccessBans();
+  if (!bans.some(ban => ban.type === type && ban.value === value)) {
+    bans.unshift({ id:crypto.randomUUID(), type, value, reason:String(reason || '').slice(0,160), createdAt:new Date().toISOString() });
+    writeAccessBans(bans);
+    addAuthLog(req, 'developer', 'Geliştirici', `${type === 'ip' ? 'IP' : 'Tarayıcı'} engellendi`);
+  }
+  res.status(201).json({ success:true });
+});
+app.post('/api/developer/unban', requireDeveloper, (req, res) => {
+  const id = String((req.body || {}).id || '');
+  writeAccessBans(readAccessBans().filter(ban => ban.id !== id));
+  addAuthLog(req, 'developer', 'Geliştirici', 'Engel kaldırıldı');
+  res.json({ success:true });
+});
 
 function saveProfilePhoto(req, res) {
   if (!req.file) return res.status(400).json({ success: false, error: 'JPG, PNG, WEBP veya GIF biçiminde bir fotoğraf seçin.' });

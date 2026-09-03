@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="data-sync.js"></script>
+<script src="access-control.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; background: #f0f2f8; color: #1a1a2e; min-height: 100vh; }
@@ -333,6 +334,7 @@ tbody td { padding: 0.85rem 1rem; vertical-align: middle; }
 const auth = JSON.parse(sessionStorage.getItem('vuf_ik_auth') || 'null');
 if (!auth) { window.location.href = 'ik-login.html'; }
 else { document.getElementById('topUsername').textContent = auth.username; }
+window.VUF_ACCESS_CHECK?.().then(access => { if (!access.allowed) { sessionStorage.removeItem('vuf_ik_auth'); alert(access.message); window.location.href = 'ik-login.html'; } });
 
 function logout() {
   sessionStorage.removeItem('vuf_ik_auth');
