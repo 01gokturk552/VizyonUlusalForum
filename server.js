@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const multer = require('multer');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
@@ -32,6 +34,7 @@ app.use(cors({
 app.use(express.json({ limit: '1mb' }));
 
 const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, 'data', 'site-data.json');
+const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, 'data', 'uploads');
 const SYNC_KEYS = new Set([
   'vuf_komisyonlar', 'vuf_ekip', 'vuf_sponsorlar', 'vuf_program',
   'vuf_istatistikler', 'vuf_ayarlar', 'vuf_basvuru_ayarlar',
@@ -50,6 +53,19 @@ function writeSiteData(payload) {
   fs.renameSync(temporary, DATA_FILE);
 }
 
+fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+const imageUpload = multer({
+  storage: multer.diskStorage({
+    destination: (_, __, done) => done(null, UPLOAD_DIR),
+    filename: (_, file, done) => {
+      const extension = ({'image/jpeg':'.jpg','image/png':'.png','image/webp':'.webp','image/gif':'.gif'})[file.mimetype] || '.jpg';
+      done(null, `ekip-${Date.now()}-${crypto.randomBytes(8).toString('hex')}${extension}`);
+    }
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (_, file, done) => done(null, ['image/jpeg','image/png','image/webp','image/gif'].includes(file.mimetype))
+});
+
 app.get('/api/site-data', (req, res) => res.json(readSiteData()));
 app.put('/api/site-data', (req, res) => {
   const { key, value } = req.body || {};
@@ -60,6 +76,13 @@ app.put('/api/site-data', (req, res) => {
   writeSiteData(payload);
   res.json({ success: true, updatedAt: payload.updatedAt });
 });
+
+app.post('/api/uploads/team-photo', imageUpload.single('photo'), (req, res) => {
+  if (!req.file) return res.status(400).json({ success: false, error: 'JPG, PNG, WEBP veya GIF biçiminde bir fotoğraf seçin.' });
+  res.status(201).json({ success: true, url: `/uploads/${req.file.filename}` });
+});
+
+app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '7d', immutable: true }));
 
 // Canlı sitede HTML, CSS ve görselleri aynı alan adından sunar.
 app.use(express.static(__dirname, { index: 'index.html' }));

@@ -1847,9 +1847,10 @@ function openModal(type,id=null){
       <div class="mf-group"><label>Ad Soyad</label><input id="mf-name" value="${esc(item.name||'')}" placeholder="Boş bırakılabilir"></div>
       <div class="mf-group"><label>Instagram Kullanıcı Adı</label><input id="mf-instagram" value="${esc(item.instagram||'')}" placeholder="@olmadan yazın"></div>
       <div class="mf-group"><label>Profil Fotoğrafı</label>
-        <input type="file" id="mf-photo" accept="image/*" ${item.photo?'':'placeholder="Fotoğraf seçin"'}>
+        <input type="file" id="mf-photo" accept="image/jpeg,image/png,image/webp,image/gif" ${item.photo?'':'placeholder="Fotoğraf seçin"'}>
         ${item.photo?`<div style="margin-top:.5rem"><img src="${item.photo}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #DDE3F0"></div>`:''}
-        <div class="mf-hint">Fotoğraf seçilmezse avatar kullanılır</div>
+        ${item.photo?'<label style="display:flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:600;color:#dc2626;margin-top:.3rem"><input type="checkbox" id="mf-remove-photo" style="width:auto"> Mevcut fotoğrafı kaldır</label>':''}
+        <div class="mf-hint">JPG, PNG, WEBP veya GIF · En fazla 5 MB. Kaydedildiğinde kalıcı olarak sunucuya yüklenir.</div>
       </div>
       <div class="mf-group"><label>Kısa Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>
       <div class="mf-group"><label>Üyenin Mesajı</label><textarea id="mf-message" placeholder="Üye kartına basıldığında gösterilecek kişisel mesaj">${esc(item.message||'')}</textarea><div class="mf-hint">Ziyaretçiler ekip üyesinin kartına bastığında bu mesajı okur.</div></div>`;
@@ -1892,7 +1893,7 @@ function openModal(type,id=null){
 function closeModal(){document.getElementById('modalOverlay').classList.add('hidden');}
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
-function saveModal(){
+async function saveModal(){
   if(modalType==='komisyon'){
     const data=get('vuf_komisyonlar',DEF_KOMISYON);
     const obj={
@@ -1920,26 +1921,20 @@ function saveModal(){
       const existing=data.find(x=>x.id===modalId);
       photo=existing?existing.photo||'':'';
     }
+    if(document.getElementById('mf-remove-photo')?.checked) photo='';
     if(photoInput && photoInput.files && photoInput.files[0]){
-      const reader=new FileReader();
-      reader.onload=function(e){
-        const obj={
-          id:modalId||nextId(data),
-          initials:initials,
-          role:role,
-          name:document.getElementById('mf-name').value.trim(),
-          desc:document.getElementById('mf-desc').value.trim(),
-          instagram:document.getElementById('mf-instagram').value.trim(),
-          message:document.getElementById('mf-message').value.trim(),
-          photo:e.target.result,
-        };
-        if(!obj.role){toast('Rol boş olamaz','error');return}
-        if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
-        data.sort((a,b)=>roles.indexOf(a.role)-roles.indexOf(b.role));
-        set('vuf_ekip',data);renderEkip();renderDashboard();toast('Ekip üyesi kaydedildi!','success');closeModal();
-      };
-      reader.readAsDataURL(photoInput.files[0]);
-      return;
+      const button=document.getElementById('modalSaveBtn');
+      button.disabled=true;button.innerHTML='<i class="fas fa-circle-notch fa-spin"></i> Fotoğraf yükleniyor…';
+      try{
+        const formData=new FormData();formData.append('photo',photoInput.files[0]);
+        const response=await fetch('/api/uploads/team-photo',{method:'POST',body:formData});
+        const result=await response.json();
+        if(!response.ok || !result.url) throw new Error(result.error||'Fotoğraf yüklenemedi');
+        photo=result.url;
+      }catch(error){
+        button.disabled=false;button.innerHTML='<i class="fas fa-save"></i> Kaydet';
+        toast(error.message||'Fotoğraf yüklenemedi. Lütfen tekrar deneyin.','error');return;
+      }
     }
     const obj={
       id:modalId||nextId(data),
@@ -1954,7 +1949,10 @@ function saveModal(){
     if(!obj.role){toast('Rol boş olamaz','error');return}
     if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
     data.sort((a,b)=>roles.indexOf(a.role)-roles.indexOf(b.role));
-    set('vuf_ekip',data);renderEkip();renderDashboard();toast('Ekip üyesi kaydedildi!','success');
+    set('vuf_ekip',data);
+    try { if(window.VUF_SYNC_FLUSH) await window.VUF_SYNC_FLUSH(); }
+    catch { toast('Bilgiler sunucuya kaydedilemedi. İnternet bağlantınızı kontrol edin.','error');return; }
+    renderEkip();renderDashboard();toast('Ekip üyesi kaydedildi!','success');
   }
   else if(modalType==='sponsor'){
     const data=get('vuf_sponsorlar',DEF_SPONSOR);

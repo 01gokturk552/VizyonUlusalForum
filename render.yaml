@@ -11,6 +11,8 @@ services:
         value: production
       - key: DATA_FILE
         value: /var/data/site-data.json
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
       - key: ALLOWED_ORIGINS
         value: https://vizyonulusalforum.com,https://www.vizyonulusalforum.com
       - key: EMAIL_USER

@@ -12,6 +12,7 @@
   ]);
   const nativeSetItem = Storage.prototype.setItem;
   let hydrating = false;
+  let pendingSave = Promise.resolve();
 
   function request(method, url, body) {
     try {
@@ -39,16 +40,25 @@
     } catch { hydrating = false; }
   }
 
+  function saveRemotely(key, value) {
+    if (location.protocol === 'file:') return Promise.resolve(false);
+    return fetch('/api/site-data', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, value })
+    }).then(response => {
+      if (!response.ok) throw new Error('Sunucuya kaydedilemedi');
+      return true;
+    });
+  }
+
+  window.VUF_SYNC_FLUSH = () => pendingSave;
   Storage.prototype.setItem = function (key, value) {
     nativeSetItem.call(this, key, value);
     if (hydrating || !KEYS.has(key) || location.protocol === 'file:') return;
     try {
-      fetch('/api/site-data', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key, value: JSON.parse(value) }),
-        keepalive: true
-      }).catch(() => {});
+      const parsed = JSON.parse(value);
+      pendingSave = pendingSave.catch(() => false).then(() => saveRemotely(key, parsed));
     } catch {}
   };
 })();
