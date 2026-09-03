@@ -608,19 +608,7 @@ const DEF_KOMISYON=[
   {id:8,num:'08',icon:'fas fa-user-shield',name:'İç Güvenlik ve Terörle Mücadele Komisyonu',desc:'İç güvenlik, terörle mücadele ve toplumsal huzur politikaları',baskan:''},
   {id:9,num:'09',icon:'fas fa-chart-line',name:'Ekonomi ve Finans Politikaları Komisyonu',desc:'Ekonomik istikrar, maliye ve finans politikaları',baskan:''},
 ];
-const DEF_EKIP=[
-  {id:1,initials:'OB',role:'Onursal Başkan',name:'',desc:'Forumun vizyonu ve kurumsal temsilinden sorumlu',instagram:'',photo:''},
-  {id:2,initials:'GK',role:'Genel Koordinatör',name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu',instagram:'',photo:''},
-  {id:3,initials:'GS',role:'Genel Sekreter',name:'',desc:'Yazışma, planlama ve idari süreçlerden sorumlu',instagram:'',photo:''},
-  {id:4,initials:'OB',role:'Organizasyon Başkanı',name:'',desc:'Organizasyon süreçleri ve etkinlik planlamasından sorumlu',instagram:'',photo:''},
-  {id:5,initials:'PR',role:'PR Başkanı',name:'',desc:'Halkla ilişkiler ve iletişimden sorumlu',instagram:'',photo:''},
-  {id:6,initials:'SB',role:'Saha Başkanı',name:'',desc:'Saha organizasyonu ve operasyondan sorumlu',instagram:'',photo:''},
-  {id:7,initials:'LB',role:'Lojistik Başkanı',name:'',desc:'Lojistik planlama ve kaynak yönetiminden sorumlu',instagram:'',photo:''},
-  {id:8,initials:'KB',role:'Kriz Başkanı',name:'',desc:'Risk analizi ve kriz yönetiminden sorumlu',instagram:'',photo:''},
-  {id:9,initials:'FB',role:'Finans Başkanı',name:'',desc:'Bütçe, finans ve sponsor süreçlerinden sorumlu',instagram:'',photo:''},
-  {id:10,initials:'IT',role:'IT Başkanı',name:'',desc:'Dijital altyapı ve teknik sistemlerden sorumlu',instagram:'',photo:''},
-  {id:11,initials:'AB',role:'Akademi Başkanı',name:'',desc:'Akademik içerik ve komisyon yönetiminden sorumlu',instagram:'',photo:''},
-];
+const DEF_EKIP=[];
 const DEF_SPONSOR=[];
 const DEF_PROGRAM={
   day1:[{id:1,time:'13:30 – 14:00',title:'Toplanma ve Kayıt İşlemleri',desc:'Katılımcı kayıtları ve hoş geldin ikramı'},{id:2,time:'14:00 – 14:45',title:'Açılış Konuşmaları',desc:'Departman başkanlarının açılış konuşmaları'},{id:3,time:'14:45 – 15:15',title:'Akademik Konuşmalar',desc:'Alanında uzman akademisyenlerin konuşmaları'},{id:4,time:'15:15 – 16:15',title:'Öğle Arası',desc:'Yemek molası'},{id:5,time:'16:15 – 17:15',title:'1. Komisyon Oturumu',desc:'Tanışma oturumu'}],
@@ -645,14 +633,10 @@ function initData(){
   }
   if(!localStorage.getItem('vuf_komisyonlar'))set('vuf_komisyonlar',DEF_KOMISYON);
   if(!localStorage.getItem('vuf_ekip'))set('vuf_ekip',DEF_EKIP);
-  const TEAM_VERSION='2026-09-team-roles-v1';
+  const TEAM_VERSION='2026-09-team-roles-v2';
   if(localStorage.getItem('vuf_team_roles_version')!==TEAM_VERSION){
     const currentTeam=get('vuf_ekip',[]);
-    const updatedTeam=DEF_EKIP.map((role,index)=>{
-      const existing=currentTeam[index]||{};
-      return {...role,name:existing.name||'',instagram:existing.instagram||'',photo:existing.photo||'',message:existing.message||''};
-    });
-    set('vuf_ekip',updatedTeam);
+    set('vuf_ekip',currentTeam);
     localStorage.setItem('vuf_team_roles_version',TEAM_VERSION);
   }
   if(!localStorage.getItem('vuf_sponsorlar'))set('vuf_sponsorlar',DEF_SPONSOR);
@@ -780,7 +764,7 @@ function renderKomisyonlar(){
 function renderEkip(){
   const data=get('vuf_ekip',DEF_EKIP);
   const grid=document.getElementById('ekipGrid');
-  if(!data.length){grid.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>Henüz ekip üyesi yok.</p></div>';return}
+  if(!data.length){grid.innerHTML='<div class="empty-state"><i class="fas fa-users"></i><p>Ekip üyelerimiz yakında duyurulacak.</p></div>';return}
   grid.innerHTML=data.map(e=>`
     <div class="ekip-card-admin">
       <div class="ekip-photo-wrap">
@@ -1870,7 +1854,7 @@ function openModal(type,id=null){
     const data=get('vuf_ekip',DEF_EKIP);
     const item=id?data.find(x=>x.id===id):{};
     title.textContent=id?'Üye Düzenle':'Yeni Ekip Üyesi';
-    const roles=['Onursal Başkan','Genel Koordinatör','Genel Sekreter','Organizasyon Başkanı','PR Başkanı','Saha Başkanı','Lojistik Başkanı','Kriz Başkanı','Finans Başkanı','IT Başkanı','Akademi Başkanı'];
+    const roles=['Onursal Başkan','Genel Koordinatör','Genel Sekreter','Organizasyon Başkanı','PR Başkanı','Press Başkanı','Saha Başkanı','Lojistik Başkanı','Kriz Başkanı','Finans Başkanı','IT Başkanı','Akademi Başkanı'];
     const roleOptions=roles.map(r=>`<option value="${r}" ${item.role===r?'selected':''}>${r}</option>`).join('');
     body.innerHTML=`
       <div class="mf-group"><label>Rol / Pozisyon</label>
@@ -1967,7 +1951,7 @@ async function saveModal(){
   else if(modalType==='ekip'){
     const data=get('vuf_ekip',DEF_EKIP);
     const role=document.getElementById('mf-role').value.trim();
-    const roles=['Onursal Başkan','Genel Koordinatör','Genel Sekreter','Organizasyon Başkanı','PR Başkanı','Saha Başkanı','Lojistik Başkanı','Kriz Başkanı','Finans Başkanı','IT Başkanı','Akademi Başkanı'];
+    const roles=['Onursal Başkan','Genel Koordinatör','Genel Sekreter','Organizasyon Başkanı','PR Başkanı','Press Başkanı','Saha Başkanı','Lojistik Başkanı','Kriz Başkanı','Finans Başkanı','IT Başkanı','Akademi Başkanı'];
     const initials=role.split(' ').map(w=>w[0]).join('').toUpperCase().substring(0,3);
     const photoInput=document.getElementById('mf-photo');
     let photo='';

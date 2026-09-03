@@ -240,32 +240,16 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const ls  = (k, def) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch { return def; } };
 
-  const DEF_EKIP = [
-    {initials:'OB',role:'Onursal Başkan',name:'',desc:'Forumun vizyonu ve kurumsal temsilinden sorumlu',instagram:'',badge:'fas fa-award'},
-    {initials:'GK',role:'Genel Koordinatör',name:'',desc:'Organizasyonun genel koordinasyonundan sorumlu',instagram:'',badge:'fas fa-star'},
-    {initials:'GS',role:'Genel Sekreter',name:'',desc:'Yazışma, planlama ve idari süreçlerden sorumlu',instagram:'',badge:'fas fa-file-signature'},
-    {initials:'OB',role:'Organizasyon Başkanı',name:'',desc:'Organizasyon süreçleri ve etkinlik planlamasından sorumlu',instagram:'',badge:'fas fa-cog'},
-    {initials:'PR',role:'PR Başkanı',name:'',desc:'Halkla ilişkiler ve iletişimden sorumlu',instagram:'',badge:'fas fa-bullhorn'},
-    {initials:'SB',role:'Saha Başkanı',name:'',desc:'Saha organizasyonu ve operasyondan sorumlu',instagram:'',badge:'fas fa-map-marker-alt'},
-    {initials:'LB',role:'Lojistik Başkanı',name:'',desc:'Lojistik planlama ve kaynak yönetiminden sorumlu',instagram:'',badge:'fas fa-truck'},
-    {initials:'KB',role:'Kriz Başkanı',name:'',desc:'Risk analizi ve kriz yönetiminden sorumlu',instagram:'',badge:'fas fa-triangle-exclamation'},
-    {initials:'FB',role:'Finans Başkanı',name:'',desc:'Bütçe, finans ve sponsor süreçlerinden sorumlu',instagram:'',badge:'fas fa-coins'},
-    {initials:'IT',role:'IT Başkanı',name:'',desc:'Dijital altyapı ve teknik sistemlerden sorumlu',instagram:'',badge:'fas fa-laptop-code'},
-    {initials:'AB',role:'Akademi Başkanı',name:'',desc:'Akademik içerik ve komisyon yönetiminden sorumlu',instagram:'',badge:'fas fa-graduation-cap'},
-  ];
+  const DEF_EKIP = [];
 
-  const TEAM_VERSION = '2026-09-team-roles-v1';
+  const TEAM_VERSION = '2026-09-team-roles-v2';
   let ekip = ls('vuf_ekip', DEF_EKIP);
   if (localStorage.getItem('vuf_team_roles_version') !== TEAM_VERSION) {
-    ekip = DEF_EKIP.map((role, index) => {
-      const existing = ekip[index] || {};
-      return {...role, name:existing.name||'', instagram:existing.instagram||'', photo:existing.photo||'', message:existing.message||''};
-    });
     localStorage.setItem('vuf_ekip', JSON.stringify(ekip));
     localStorage.setItem('vuf_team_roles_version', TEAM_VERSION);
   }
   window.VUF_TEAM = ekip;
-  document.getElementById('ekipGrid').innerHTML = ekip.map((e, index) => `
+  document.getElementById('ekipGrid').innerHTML = ekip.length ? ekip.map((e, index) => `
     <button type="button" class="ekip-card fade-up" onclick="openEkipModalByIndex(${index})" style="cursor:pointer;text-align:inherit;font:inherit;border:none;width:100%">
       <div class="ekip-avatar-wrap">
         ${e.photo ? `<img src="${e.photo}" class="ekip-avatar-img" alt="${esc(e.role)}">` : `<div class="ekip-avatar">${esc(e.initials)}</div>`}
@@ -275,7 +259,7 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       <h4>${esc(e.role)}</h4>
       <p>${esc(e.desc)}</p>
       ${e.instagram ? `<a href="https://instagram.com/${esc(e.instagram.replace('@',''))}" target="_blank" rel="noopener" class="e-insta"><i class="fab fa-instagram"></i>@${esc(e.instagram.replace('@',''))}</a>` : ''}
-    </button>`).join('');
+    </button>`).join('') : `<div style="grid-column:1 / -1;text-align:center;background:#fff;border:1px solid #dbe5f2;border-radius:20px;padding:3.5rem 1.5rem;color:#64748b"><div style="width:58px;height:58px;margin:0 auto 1rem;display:grid;place-items:center;border-radius:18px;background:#eff6ff;color:#2563eb;font-size:1.35rem"><i class="fas fa-users"></i></div><h2 style="margin:0 0 .55rem;color:#0B1F3A;font-size:1.2rem">Ekibimiz yakında duyurulacak</h2><p style="margin:0;font-size:.9rem">Organizasyon ekibimize ait bilgiler çok yakında burada yer alacak.</p></div>`;
 
   /* ── Scroll animations ── */
   const io = new IntersectionObserver((entries) => {
