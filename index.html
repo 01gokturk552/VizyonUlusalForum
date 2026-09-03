@@ -152,7 +152,7 @@
       <div class="about-text-col">
         <div class="sec-eyebrow"><i class="fas fa-info-circle"></i> Hakkımızda</div>
         <h2>Türkiye'nin en büyük <em>bağımsız forum etkinliği</em></h2>
-        <p>Vizyon Ulusal Forum 2026, Türkiye'nin birçok ilinden gelen liseli öğrenciler tarafından düzenlenen ulusal forum etkinliğidir. 19–20 Eylül 2026 tarihlerinde gerçekleşecek forum; gençlerin akademik müzakere, araştırma ve liderlik becerilerini gerçek bir forum atmosferinde deneyimlemesine fırsat sunar.</p>
+        <p>Vizyon Ulusal Forum 2026, Türkiye'nin birçok ilinden gelen liseli öğrenciler tarafından düzenlenen ulusal forum etkinliğidir. Forum; gençlerin akademik müzakere, araştırma ve liderlik becerilerini gerçek bir forum atmosferinde deneyimlemesine fırsat sunar.</p>
         <a href="basvuru.html" class="btn-navy">Başvuru Yap <i class="fas fa-arrow-right"></i></a>
 
         <div class="value-props stagger">
@@ -302,7 +302,7 @@
       <div class="footer-col">
         <h5>Etkinlik</h5>
         <ul>
-          <li class="meta"><i class="fas fa-calendar-alt"></i> <span id="footerTarih">19–20 Eylül 2026</span></li>
+          <li class="meta"><i class="fas fa-calendar-alt"></i> <span id="footerTarih">Tarih yakında açıklanacak</span></li>
           <li class="meta"><i class="fas fa-map-pin"></i> <span id="footerMekan">Mekan yakında açıklanacak</span></li>
           <li class="meta"><i class="fas fa-layer-group"></i> <span id="footerKomisyon">9 Komisyon</span></li>
         </ul>
@@ -487,28 +487,29 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h
       const v = localStorage.getItem('vuf_ayarlar');
       const ayarlar = v ? JSON.parse(v) : {};
       if (ayarlar.mekan === 'İÜ Beyazıt Kampüsü, İstanbul' || ayarlar.mekan === 'İstanbul Üniversitesi') ayarlar.mekan = '';
-      if (!ayarlar.eventDate || ayarlar.eventDate === '2026-02-13T13:30') ayarlar.eventDate = '2026-09-19T09:00';
+      if (ayarlar.dateVisible !== false && (!ayarlar.eventDate || ayarlar.eventDate === '2026-02-13T13:30')) ayarlar.eventDate = '2026-09-19T09:00';
       return { countdown: true, instagram: 'vizyonulusalforum', mekan: '', ...ayarlar };
     } catch { return { countdown: true, instagram: 'vizyonulusalforum', eventDate: '2026-09-19T09:00', mekan: '' }; }
   }
 
   function tick() {
     const ayarlar = getAyarlar();
-    const TARGET = new Date(ayarlar.eventDate || '2026-09-19T09:00');
     const now  = new Date();
-    const diff = TARGET - now;
     const countdownEl = document.getElementById('heroCountdown');
     const eventStartedEl = document.getElementById('heroEventStarted');
     const instagramEl = document.getElementById('heroInstagram');
     const instagramLink = document.getElementById('instagramLink');
     const instagramText = document.getElementById('instagramText');
 
-    // Geri sayım ayarı
-    if (!ayarlar.countdown) {
+    // Tarih duyurulmadıysa geri sayım gösterilmez.
+    if (ayarlar.dateVisible === false) {
       countdownEl.style.display = 'none';
-    } else {
-      countdownEl.style.display = 'flex';
+      eventStartedEl.style.display = 'none';
+      return;
     }
+    const TARGET = new Date(ayarlar.eventDate || '2026-09-19T09:00');
+    const diff = TARGET - now;
+    countdownEl.style.display = ayarlar.countdown ? 'flex' : 'none';
 
     // Geri sayım dolunca
     if (diff <= 0) {
@@ -736,7 +737,7 @@ function animateCounter(el) {
   let ayarlar = {};
   try { ayarlar = JSON.parse(localStorage.getItem('vuf_ayarlar') || '{}'); } catch {}
   if (ayarlar.mekan === 'İÜ Beyazıt Kampüsü, İstanbul' || ayarlar.mekan === 'İstanbul Üniversitesi') ayarlar.mekan = '';
-  if (!ayarlar.eventDate || ayarlar.eventDate === '2026-02-13T13:30') ayarlar.eventDate = '2026-09-19T09:00';
+  if (ayarlar.dateVisible !== false && (!ayarlar.eventDate || ayarlar.eventDate === '2026-02-13T13:30')) ayarlar.eventDate = '2026-09-19T09:00';
   const heroPillTarih = document.getElementById('heroPillTarih');
   const heroPillMekan = document.getElementById('heroPillMekan');
   const heroEventDate = document.getElementById('heroEventDate');
@@ -744,7 +745,7 @@ function animateCounter(el) {
   const footerMekan = document.getElementById('footerMekan');
   const footerIletisimMekan = document.getElementById('footerIletisimMekan');
   
-  if (ayarlar.eventDate) {
+  if (ayarlar.dateVisible !== false && ayarlar.eventDate) {
     const eventDate = new Date(ayarlar.eventDate);
     const formattedDate = eventDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
     const formattedTime = eventDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
@@ -752,6 +753,10 @@ function animateCounter(el) {
     heroPillTarih.textContent = dateStr;
     heroEventDate.textContent = dateStr;
     footerTarih.textContent = formattedDate;
+  } else {
+    heroPillTarih.textContent = 'Tarih yakında açıklanacak';
+    heroEventDate.textContent = 'Tarih yakında açıklanacak';
+    footerTarih.textContent = 'Tarih yakında açıklanacak';
   }
   
   const mekanMetni = ayarlar.mekan || 'Mekan yakında açıklanacak';

@@ -381,6 +381,13 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
             <small>Boş bırakırsanız sitede “Mekan yakında açıklanacak” yazısı görünür.</small>
           </div>
           <div class="stat-field"><label><i class="fas fa-calendar-alt"></i> Etkinlik Tarihi</label>
+            <select id="ay-date-visible" onchange="toggleDateSetting()">
+              <option value="true">Belirli tarih göster</option>
+              <option value="false">Tarih yakında açıklanacak</option>
+            </select>
+            <small>“Tarih yakında açıklanacak” seçildiğinde ana sayfa, ekip ve başvuru sayfalarında tarih yerine bu mesaj görünür.</small>
+          </div>
+          <div class="stat-field" id="ay-event-date-wrap"><label><i class="fas fa-calendar-day"></i> Tarih ve Saat</label>
             <input type="datetime-local" id="ay-event-date">
             <small>Etkinlik başlangıç tarihi ve saati</small>
           </div>
@@ -683,8 +690,21 @@ function renderAyarlar(){
   const ayarlar=get('vuf_ayarlar',{});
   document.getElementById('ay-mekan').value=['İÜ Beyazıt Kampüsü, İstanbul','İstanbul Üniversitesi'].includes(ayarlar.mekan)?'':(ayarlar.mekan||'');
   document.getElementById('ay-event-date').value=ayarlar.eventDate||'2026-09-19T09:00';
+  document.getElementById('ay-date-visible').value=ayarlar.dateVisible!==undefined ? String(ayarlar.dateVisible) : 'true';
   document.getElementById('ay-countdown').value=ayarlar.countdown!==undefined ? String(ayarlar.countdown) : 'true';
   document.getElementById('ay-instagram').value=ayarlar.instagram||'';
+  toggleDateSetting();
+}
+
+function toggleDateSetting(){
+  const showDate=document.getElementById('ay-date-visible').value==='true';
+  const dateWrap=document.getElementById('ay-event-date-wrap');
+  const dateInput=document.getElementById('ay-event-date');
+  const countdown=document.getElementById('ay-countdown');
+  dateWrap.style.opacity=showDate?'1':'.45';
+  dateInput.disabled=!showDate;
+  countdown.disabled=!showDate;
+  if(!showDate) countdown.value='false';
 }
 
 function loadBasvuruFormu(){
@@ -850,14 +870,18 @@ function loadAyarlar(){
   const ayarlar=get('vuf_ayarlar',{});
   document.getElementById('ay-mekan').value=['İÜ Beyazıt Kampüsü, İstanbul','İstanbul Üniversitesi'].includes(ayarlar.mekan)?'':(ayarlar.mekan||'');
   document.getElementById('ay-event-date').value=ayarlar.eventDate||'2026-09-19T09:00';
+  document.getElementById('ay-date-visible').value=ayarlar.dateVisible!==undefined?String(ayarlar.dateVisible):'true';
   document.getElementById('ay-countdown').value=ayarlar.countdown!==undefined?ayarlar.countdown:true;
   document.getElementById('ay-instagram').value=ayarlar.instagram||'';
+  toggleDateSetting();
 }
 function saveAyarlar(){
+  const dateVisible=document.getElementById('ay-date-visible').value==='true';
   set('vuf_ayarlar',{
     eventDate:document.getElementById('ay-event-date').value,
+    dateVisible,
     mekan:document.getElementById('ay-mekan').value,
-    countdown:document.getElementById('ay-countdown').value==='true',
+    countdown:dateVisible && document.getElementById('ay-countdown').value==='true',
     instagram:document.getElementById('ay-instagram').value.trim()
   });
   toast('Ayarlar kaydedildi!','success');

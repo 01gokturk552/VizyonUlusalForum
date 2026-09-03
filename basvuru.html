@@ -40,7 +40,7 @@
     <div class="basvuru-meta">
       <span><i class="fas fa-users"></i> 270+ Katılımcı</span>
       <span><i class="fas fa-layer-group"></i> 9 Komisyon</span>
-      <span><i class="fas fa-calendar-days"></i> 19 – 20 Eylül 2026</span>
+      <span><i class="fas fa-calendar-days"></i> <span id="basvuruTarih">Tarih yakında açıklanacak</span></span>
     </div>
   </div>
 </div>
@@ -170,6 +170,19 @@ function switchTab(tab) {
   window.scrollTo({ top: document.querySelector('.basvuru-container').offsetTop - 80, behavior: 'smooth' });
 }
 if (window.location.hash === '#delegasyon') switchTab('delegasyon');
+
+/* Genel Ayarlar'daki tarih görünürlüğünü başvuru sayfasına uygula. */
+(function renderApplicationDate(){
+  const target=document.getElementById('basvuruTarih');
+  try{
+    const ayarlar=JSON.parse(localStorage.getItem('vuf_ayarlar')||'{}');
+    if(ayarlar.dateVisible===false){target.textContent='Tarih yakında açıklanacak';return;}
+    if(ayarlar.eventDate){
+      const date=new Date(ayarlar.eventDate);
+      if(!Number.isNaN(date.getTime())) target.textContent=date.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'});
+    }
+  }catch{}
+})();
 
 /* ════ DYNAMIC KOMİSYON DROPDOWN ════ */
 (function loadKomisyonlar() {
