@@ -204,6 +204,7 @@
 
 /* Form grid */
 .form-grid { display: grid; gap: 1.25rem; }
+.dynamic-form-section { grid-column:1 / -1; background:#F0F3F9; border-radius:12px; padding:1.25rem; border:1px solid #DDE3F0; }
 .two-col { grid-template-columns: 1fr 1fr; }
 .form-group { display: flex; flex-direction: column; gap: .45rem; }
 .form-group.full-col { grid-column: 1 / -1; }

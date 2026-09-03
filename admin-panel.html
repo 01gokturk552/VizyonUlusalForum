@@ -7,6 +7,7 @@
 <title>Admin Panel – VUF 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="data-sync.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:#F0F3F9;color:#1A2540;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
@@ -180,23 +181,31 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
-  .sidebar{display:none}
-  .main{padding:1rem}
+  body{background:#f8fafc}
+  .layout{display:block;overflow:visible}
+  .sidebar{display:flex;position:static;width:100%;height:auto;max-height:none;flex-direction:row;overflow-x:auto;overflow-y:hidden;border-right:none;border-bottom:1px solid #DDE3F0;padding:.55rem .6rem;gap:.35rem;scrollbar-width:none}
+  .sidebar::-webkit-scrollbar{display:none}
+  .sidebar-section{display:contents;margin:0;padding:0}
+  .sidebar-label,.sidebar-divider{display:none}
+  .nav-item{flex:0 0 auto;width:auto;white-space:nowrap;padding:.55rem .75rem;border:1px solid transparent;font-size:.78rem}
+  .nav-item.active{border-color:rgba(124,58,237,.22)}
+  .main{padding:1rem;overflow:visible}
   .dash-stats{grid-template-columns:repeat(2,1fr)}
   .mf-row{grid-template-columns:1fr}
   .dash-cards{grid-template-columns:1fr}
   .table-card{overflow-x:auto}
   .table-scroll{min-width:600px}
-  .topbar{padding:0 1rem}
+  .topbar{height:54px;padding:0 .8rem}
   .tb-logo img{height:32px}
-  .tb-title{font-size:.85rem}
+  .tb-divider,.tb-title,.tb-user{display:none}
   .tb-ik-btn{display:none}
   .sec-top{flex-direction:column;align-items:flex-start;gap:1rem}
   .sec-top h2{font-size:1.2rem}
   .add-btn{width:100%;justify-content:center}
   .modal-box{margin:1rem;max-width:calc(100% - 2rem)}
   .form-builder-container{grid-template-columns:1fr}
-  .form-builder-sidebar{display:none}
+  .form-builder-sidebar{display:block;position:static;order:-1;margin-bottom:1rem}
+  .form-builder-content{max-height:none}
   .ekip-grid{grid-template-columns:repeat(2,1fr)}
   .stat-form{padding:1rem}
   .stat-field{flex-direction:column}
@@ -618,7 +627,7 @@ const get=(k,def)=>{const v=localStorage.getItem(k);return v?JSON.parse(v):def};
 const set=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 function initData(){
   const CONTENT_VERSION='2026-09-program-commissions-v1';
-  if(localStorage.getItem('vuf_content_version')!==CONTENT_VERSION){
+  if(localStorage.getItem('vuf_content_version')!==CONTENT_VERSION && !window.VUF_REMOTE_SYNC){
     set('vuf_komisyonlar',DEF_KOMISYON);
     set('vuf_sponsorlar',DEF_SPONSOR);
     set('vuf_program',DEF_PROGRAM);
@@ -632,7 +641,7 @@ function initData(){
     const currentTeam=get('vuf_ekip',[]);
     const updatedTeam=DEF_EKIP.map((role,index)=>{
       const existing=currentTeam[index]||{};
-      return {...role,name:existing.name||'',instagram:existing.instagram||'',photo:existing.photo||''};
+      return {...role,name:existing.name||'',instagram:existing.instagram||'',photo:existing.photo||'',message:existing.message||''};
     });
     set('vuf_ekip',updatedTeam);
     localStorage.setItem('vuf_team_roles_version',TEAM_VERSION);
@@ -1548,7 +1557,7 @@ function renderItem(item, sIndex, iIndex) {
         <div class="form-item-actions">
           <button onclick="moveItem(${sIndex}, ${iIndex}, -1)" ${iIndex === 0 ? 'disabled' : ''}><i class="fas fa-arrow-up"></i></button>
           <button onclick="moveItem(${sIndex}, ${iIndex}, 1)" ${iIndex === formData[currentFormType][sIndex].items.length - 1 ? 'disabled' : ''}><i class="fas fa-arrow-down"></i></button>
-          <button onclick="deleteItem(${sIndex}, ${iIndex})" class="delete"><i class="fas fa-trash"></i></button>
+          <button type="button" onclick="deleteFormItem(${sIndex}, ${iIndex})" class="delete" title="Bu alanı sil"><i class="fas fa-trash"></i></button>
         </div>
       </div>
       <div class="form-item-preview">${preview}</div>
@@ -1634,7 +1643,7 @@ function moveItem(sIndex, iIndex, direction) {
   renderFormBuilder();
 }
 
-function deleteItem(sIndex, iIndex) {
+function deleteFormItem(sIndex, iIndex) {
   if (confirm('Bu öğeyi silmek istediğinize emin misiniz?')) {
     formData[currentFormType][sIndex].items.splice(iIndex, 1);
     renderFormBuilder();
@@ -1709,7 +1718,7 @@ function moveItem(sIndex, iIndex, direction) {
   renderFormBuilder();
 }
 
-function deleteItem(sIndex, iIndex) {
+function deleteFormItem(sIndex, iIndex) {
   if (confirm('Bu öğeyi silmek istediğinize emin misiniz?')) {
     formData[currentFormType][sIndex].items.splice(iIndex, 1);
     renderFormBuilder();
@@ -1821,7 +1830,8 @@ function openModal(type,id=null){
       <div class="mf-group"><label>Komisyon Adı</label><input id="mf-name" value="${esc(item.name||'')}"></div>
       <div class="mf-group"><label>Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>
       <div class="mf-group"><label>Başkan / Yönetici Adı</label><input id="mf-baskan" value="${esc(item.baskan||'')}" placeholder="İsim girmediyseniz boş bırakın"></div>
-      <div class="mf-group"><label>Rehber Linki</label><input id="mf-rehber-link" value="${esc(item.rehberLink||'')}" placeholder="PDF veya DOC linki"></div>`;
+      <div class="mf-group"><label>Rehber Metni</label><textarea id="mf-rehber-metin" placeholder="Ziyaretçilerin komisyon kartına bastığında okuyacağı rehber metni">${esc(item.rehberMetni||'')}</textarea><div class="mf-hint">Boş bırakılırsa genel komisyon açıklaması gösterilir.</div></div>
+      <div class="mf-group"><label>Rehber İndirme Linki</label><input id="mf-rehber-link" value="${esc(item.rehberLink||'')}" placeholder="PDF, DOC veya Google Drive bağlantısı"><div class="mf-hint">Bağlantı girilirse “Rehberi indir” düğmesi görünür.</div></div>`;
   }
   else if(type==='ekip'){
     const data=get('vuf_ekip',DEF_EKIP);
@@ -1841,7 +1851,8 @@ function openModal(type,id=null){
         ${item.photo?`<div style="margin-top:.5rem"><img src="${item.photo}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #DDE3F0"></div>`:''}
         <div class="mf-hint">Fotoğraf seçilmezse avatar kullanılır</div>
       </div>
-      <div class="mf-group"><label>Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>`;
+      <div class="mf-group"><label>Kısa Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>
+      <div class="mf-group"><label>Üyenin Mesajı</label><textarea id="mf-message" placeholder="Üye kartına basıldığında gösterilecek kişisel mesaj">${esc(item.message||'')}</textarea><div class="mf-hint">Ziyaretçiler ekip üyesinin kartına bastığında bu mesajı okur.</div></div>`;
   }
   else if(type==='sponsor'){
     const data=get('vuf_sponsorlar',DEF_SPONSOR);
@@ -1891,6 +1902,7 @@ function saveModal(){
       name:document.getElementById('mf-name').value.trim(),
       desc:document.getElementById('mf-desc').value.trim(),
       baskan:document.getElementById('mf-baskan').value.trim(),
+      rehberMetni:document.getElementById('mf-rehber-metin').value.trim(),
       rehberLink:document.getElementById('mf-rehber-link').value.trim(),
     };
     if(!obj.name){toast('Komisyon adı boş olamaz','error');return}
@@ -1918,6 +1930,7 @@ function saveModal(){
           name:document.getElementById('mf-name').value.trim(),
           desc:document.getElementById('mf-desc').value.trim(),
           instagram:document.getElementById('mf-instagram').value.trim(),
+          message:document.getElementById('mf-message').value.trim(),
           photo:e.target.result,
         };
         if(!obj.role){toast('Rol boş olamaz','error');return}
@@ -1935,6 +1948,7 @@ function saveModal(){
       name:document.getElementById('mf-name').value.trim(),
       desc:document.getElementById('mf-desc').value.trim(),
       instagram:document.getElementById('mf-instagram').value.trim(),
+      message:document.getElementById('mf-message').value.trim(),
       photo:photo,
     };
     if(!obj.role){toast('Rol boş olamaz','error');return}

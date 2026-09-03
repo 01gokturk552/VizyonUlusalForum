@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="basvuru.css">
+<script src="data-sync.js"></script>
 </head>
 <body class="basvuru-body">
 
@@ -67,18 +68,6 @@
           <li><span class="step-no">2</span> Tercihleri seçin.</li>
           <li><span class="step-no">3</span> Başvuruyu gönderin.</li>
         </ul>
-      </div>
-      <div class="summary-card alt">
-        <span class="summary-kicker">İletişim</span>
-        <h3>Ekibimiz yanınızda</h3>
-        <div class="mini-contact">
-          <strong id="contact1Name">Yiğit Efe SEVİR</strong>
-          <a href="tel:05469262010" id="contact1Tel"><i class="fas fa-phone"></i> 0546 926 2010</a>
-        </div>
-        <div class="mini-contact">
-          <strong id="contact2Name">Ada Nehir ŞAHİN</strong>
-          <a href="tel:05010125860" id="contact2Tel"><i class="fas fa-phone"></i> 0501 012 58 60</a>
-        </div>
       </div>
     </aside>
 
@@ -152,22 +141,6 @@
     </form>
   </div>
 
-      <!-- ══ İLETİŞİM BİLGİLERİ ══ -->
-      <div class="contact-section">
-        <div class="contact-box">
-          <h3><i class="fas fa-phone-alt"></i> İletişim İçin</h3>
-          <div class="contact-items">
-            <div class="contact-item">
-              <strong>Genel Koordinatör:</strong> <span id="contact1NameAlt">Yiğit Efe SEVİR</span>
-              <a href="tel:05469262010" class="contact-link" id="contact1TelAlt"><i class="fas fa-phone"></i> 0546 926 2010</a>
-            </div>
-            <div class="contact-item">
-              <strong>Genel Koordinatör:</strong> <span id="contact2NameAlt">Ada Nehir ŞAHİN</span>
-              <a href="tel:05010125860" class="contact-link" id="contact2TelAlt"><i class="fas fa-phone"></i> 0501 012 58 60</a>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -217,6 +190,7 @@ if (window.location.hash === '#delegasyon') switchTab('delegasyon');
     if (stored && stored.length && localStorage.getItem('vuf_content_version') === '2026-09-program-commissions-v1') names = stored.map(k => k.name);
   } catch {}
   const sel = document.getElementById('d_komisyon');
+  if (!sel) return;
   names.forEach(name => {
     const opt = document.createElement('option');
     opt.value = name;
@@ -227,11 +201,39 @@ if (window.location.hash === '#delegasyon') switchTab('delegasyon');
 
 /* ════ DYNAMIC FORM RENDERER ════ */
 let currentTab = 'delege';
+let activeFormData = { delege: [], delegasyon: [] };
+const DEFAULT_FORM_DATA = {
+  delege: [
+    { title:'Kişisel Bilgiler', items:[
+      {type:'text',label:'Ad Soyad',required:true,placeholder:'Adınız Soyadınız'},
+      {type:'select',label:'Sınıf',required:true,options:['9. Sınıf','10. Sınıf','11. Sınıf','12. Sınıf','Hazırlık','Mezun'],placeholder:'Sınıfınızı seçin'},
+      {type:'email',label:'E-posta',required:true,placeholder:'ornek@email.com'},
+      {type:'tel',label:'Telefon',required:true,placeholder:'05XX XXX XX XX'}]},
+    { title:'Okul ve Komisyon', items:[
+      {type:'text',label:'Okul Adı',required:true,placeholder:'Okulunuzun adı'},
+      {type:'select',label:'Şehir',required:true,options:['İstanbul','Ankara','İzmir','Bursa','Antalya','Diğer'],placeholder:'Şehrinizi seçin'},
+      {type:'select',label:'Komisyon Tercihi',required:true,options:[],placeholder:'Komisyon seçin'},
+      {type:'textarea',label:'Motivasyon Mektubu',required:true,placeholder:'Foruma neden katılmak istediğinizi yazın...'}]}
+  ],
+  delegasyon: [
+    { title:'Okul ve Koordinatör Bilgileri', items:[
+      {type:'text',label:'Okul Adı',required:true,placeholder:'Okulunuzun tam adı'},
+      {type:'text',label:'Koordinatör Adı Soyad',required:true,placeholder:'Ad Soyad'},
+      {type:'text',label:'Unvan / Branş',required:false,placeholder:'Örn. öğretmen'},
+      {type:'email',label:'E-posta',required:true,placeholder:'ornek@okul.edu.tr'},
+      {type:'tel',label:'Telefon',required:true,placeholder:'05XX XXX XX XX'},
+      {type:'select',label:'Şehir',required:true,options:['İstanbul','Ankara','İzmir','Bursa','Antalya','Diğer'],placeholder:'Şehrinizi seçin'},
+      {type:'number',label:'Tahmini Katılımcı Sayısı',required:true,placeholder:'Örn. 12'},
+      {type:'textarea',label:'Ek Notlar',required:false,placeholder:'Ek notlarınızı yazın...'}]}
+  ]
+};
 
 function loadFormData() {
-  const stored = JSON.parse(localStorage.getItem('vuf_form_builder') || '{}');
-  const delegeData = stored.delege || [];
-  const delegasyonData = stored.delegasyon || [];
+  let stored = {};
+  try { stored = JSON.parse(localStorage.getItem('vuf_form_builder') || '{}') || {}; } catch {}
+  const delegeData = stored.delege && stored.delege.length ? stored.delege : DEFAULT_FORM_DATA.delege;
+  const delegasyonData = stored.delegasyon && stored.delegasyon.length ? stored.delegasyon : DEFAULT_FORM_DATA.delegasyon;
+  activeFormData = { delege: delegeData, delegasyon: delegasyonData };
   
   renderDynamicForm('delege', delegeData);
   renderDynamicForm('delegasyon', delegasyonData);
@@ -246,10 +248,10 @@ function renderDynamicForm(tip, sections) {
   }
   
   container.innerHTML = sections.map((section, sIndex) => `
-    <div style="background:#F0F3F9;border-radius:8px;padding:1.25rem;margin-bottom:1rem;border:1px solid #DDE3F0">
+    <section class="dynamic-form-section">
       <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem">${esc(section.title)}</h3>
-      ${section.items.map((item, iIndex) => renderFormItem(item, tip, sIndex, iIndex)).join('')}
-    </div>
+      <div class="form-grid two-col">${section.items.map((item, iIndex) => renderFormItem(item, tip, sIndex, iIndex)).join('')}</div>
+    </section>
   `).join('');
 }
 
@@ -278,10 +280,11 @@ function renderFormItem(item, tip, sIndex, iIndex) {
       </div>
     `).join('');
   } else if (item.type === 'select') {
+    const options = item.label === 'Komisyon Tercihi' ? getKomisyonlar() : (item.options || []);
     inputHTML = `
       <select id="${fieldId}" ${item.required ? 'required' : ''}>
         <option value="">${item.placeholder || 'Seçin'}</option>
-        ${(item.options || []).map(o => `<option value="${esc(o)}">${esc(o)}</option>`).join('')}
+        ${options.map(o => `<option value="${esc(o)}">${esc(o)}</option>`).join('')}
       </select>
     `;
   } else if (item.type === 'image') {
@@ -306,40 +309,16 @@ function renderFormItem(item, tip, sIndex, iIndex) {
   `;
 }
 
+function getKomisyonlar() {
+  try {
+    const list = JSON.parse(localStorage.getItem('vuf_komisyonlar') || '[]');
+    if (list.length) return list.map(item => item.name);
+  } catch {}
+  return ['Savunma ve Askeri İşbirliği Komisyonu','Dış Politika Komisyonu','Teknoloji Komisyonu','Hukuk ve Anayasa Komisyonu','Gençlik ve Spor Komisyonu','Toplumsal Cinsiyet Eşitliği Komisyonu','Eğitim Politikaları Komisyonu','İç Güvenlik ve Terörle Mücadele Komisyonu','Ekonomi ve Finans Politikaları Komisyonu'];
+}
+
 // Form verilerini yükle
 loadFormData();
-
-/* ════ İLETİŞİM BİLGİLERİ (localStorage'dan) ════ */
-(function loadContactInfo() {
-  const ayarlar = JSON.parse(localStorage.getItem('vuf_ayarlar') || '{}');
-  const contact1Name = document.getElementById('contact1Name');
-  const contact1Tel = document.getElementById('contact1Tel');
-  const contact2Name = document.getElementById('contact2Name');
-  const contact2Tel = document.getElementById('contact2Tel');
-  
-  if (ayarlar.koordinator1Ad) {
-    contact1Name.textContent = ayarlar.koordinator1Ad;
-  }
-  if (ayarlar.koordinator1Tel) {
-    contact1Tel.innerHTML = `<i class="fas fa-phone"></i> ${ayarlar.koordinator1Tel}`;
-    contact1Tel.href = `tel:${ayarlar.koordinator1Tel.replace(/\s/g, '')}`;
-  }
-  if (ayarlar.koordinator2Ad) {
-    contact2Name.textContent = ayarlar.koordinator2Ad;
-  }
-  if (ayarlar.koordinator2Tel) {
-    contact2Tel.innerHTML = `<i class="fas fa-phone"></i> ${ayarlar.koordinator2Tel}`;
-    contact2Tel.href = `tel:${ayarlar.koordinator2Tel.replace(/\s/g, '')}`;
-  }
-})();
-
-/* ════ CHAR COUNTER ════ */
-document.getElementById('d_motivasyon').addEventListener('input', function() {
-  const n = this.value.length;
-  const el = document.getElementById('d_charCount');
-  el.textContent = n + ' / 500';
-  el.style.color = n > 500 ? '#D94F4F' : '#B8C4D8';
-});
 
 /* ════ HELPERS ════ */
 function esc(str) {
@@ -373,95 +352,68 @@ function resetModal() {
   // Only reset the currently visible form
   const activePanel = document.getElementById('panelDelege').classList.contains('hidden') ? 'formDelegasyon' : 'formDelege';
   document.getElementById(activePanel).reset();
-  document.getElementById('d_charCount').textContent = '0 / 500';
   document.getElementById('d_kvkkErr').classList.add('hidden');
   document.getElementById('dg_kvkkErr').classList.add('hidden');
 }
 
-/* ════ DELEGE FORM SUBMIT ════ */
-document.getElementById('formDelege').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  // KVKK check (inline)
-  const kvkk = document.getElementById('d_kvkk');
-  const kvkkErr = document.getElementById('d_kvkkErr');
-  if (!kvkk.checked) {
-    kvkkErr.classList.remove('hidden');
-    kvkk.closest('.form-check').scrollIntoView({ behavior:'smooth', block:'center' });
-    return;
-  }
+/* ════ DİNAMİK FORM GÖNDERİMİ ════ */
+function fieldValue(values, labels) {
+  const key = labels.find(label => Object.prototype.hasOwnProperty.call(values, label));
+  return key ? values[key] : '';
+}
+function collectFormValues(tip) {
+  const values = {};
+  (activeFormData[tip] || []).forEach((section, sIndex) => (section.items || []).forEach((item, iIndex) => {
+    if (item.type === 'image' || item.type === 'description') return;
+    const id = `${tip}_${sIndex}_${iIndex}`;
+    let value = '';
+    if (item.type === 'radio') {
+      const selected = document.querySelector(`input[name="${id}"]:checked`);
+      value = selected ? selected.value : '';
+    } else if (item.type === 'checkbox') {
+      value = Array.from(document.querySelectorAll(`input[name="${id}"]:checked`)).map(input => input.value).join(', ');
+    } else {
+      const input = document.getElementById(id);
+      value = input ? input.value.trim() : '';
+    }
+    values[item.label] = value;
+  }));
+  return values;
+}
+function submitApplication(tip, event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const prefix = tip === 'delege' ? 'd' : 'dg';
+  const kvkk = document.getElementById(`${prefix}_kvkk`);
+  const kvkkErr = document.getElementById(`${prefix}_kvkkErr`);
+  if (!kvkk.checked) { kvkkErr.classList.remove('hidden'); kvkk.closest('.form-check').scrollIntoView({behavior:'smooth',block:'center'}); return; }
   kvkkErr.classList.add('hidden');
-
-  // HTML5 validity
-  if (!this.checkValidity()) { this.reportValidity(); return; }
-
-  const mot = document.getElementById('d_motivasyon').value;
-
-  // Disable button
-  const btn = document.getElementById('d_submitBtn');
-  btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Gönderiliyor…';
-
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+  const values = collectFormValues(tip);
+  const button = document.getElementById(`${prefix}_submitBtn`);
+  button.disabled = true; button.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Gönderiliyor…';
   setTimeout(() => {
-    save('vuf_delegeler', {
-      id:         nextId('vuf_delegeler'),
-      ad_soyad:   document.getElementById('d_ad').value.trim(),
-      eposta:     document.getElementById('d_eposta').value.trim(),
-      telefon:    document.getElementById('d_tel').value.trim(),
-      okul:       document.getElementById('d_okul').value.trim(),
-      sinif:      document.getElementById('d_sinif').value,
-      sehir:      document.getElementById('d_sehir').value,
-      komisyon:   document.getElementById('d_komisyon').value,
-      motivasyon: mot.trim(),
-      durum: 'Başvuru Beklemede', tarih: now(), tip: 'delege'
-    });
-    btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Başvurumu Gönder';
-    showModal('Delege başvurunuz alındı. İK ekibimiz başvurunuzu inceleyecek ve en kısa sürede e-posta ile bilgilendirileceksiniz.');
-    this.reset();
-    document.getElementById('d_charCount').textContent = '0 / 500';
-  }, 700);
-});
-
-/* ════ DELEGASYON FORM SUBMIT ════ */
-document.getElementById('formDelegasyon').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  // KVKK check (inline)
-  const kvkk = document.getElementById('dg_kvkk');
-  const kvkkErr = document.getElementById('dg_kvkkErr');
-  if (!kvkk.checked) {
-    kvkkErr.classList.remove('hidden');
-    kvkk.closest('.form-check').scrollIntoView({ behavior:'smooth', block:'center' });
-    return;
-  }
-  kvkkErr.classList.add('hidden');
-
-  if (!this.checkValidity()) { this.reportValidity(); return; }
-
-  const sayi = parseInt(document.getElementById('dg_sayi').value);
-  if (isNaN(sayi) || sayi < 2) { document.getElementById('dg_sayi').setCustomValidity('En az 2 katılımcı giriniz.'); this.reportValidity(); return; }
-  document.getElementById('dg_sayi').setCustomValidity('');
-
-  const btn = document.getElementById('dg_submitBtn');
-  btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Gönderiliyor…';
-
-  setTimeout(() => {
-    save('vuf_delegasyonlar', {
-      id:               nextId('vuf_delegasyonlar'),
-      okul:             document.getElementById('dg_okul').value.trim(),
-      ogretmen:         document.getElementById('dg_ogretmen').value.trim(),
-      unvan:            document.getElementById('dg_unvan').value.trim(),
-      eposta:           document.getElementById('dg_eposta').value.trim(),
-      telefon:          document.getElementById('dg_tel').value.trim(),
-      sehir:            document.getElementById('dg_sehir').value,
-      katilimci_sayisi: document.getElementById('dg_sayi').value,
-      not:              document.getElementById('dg_not').value.trim(),
-      durum: 'Başvuru Beklemede', tarih: now(), tip: 'delegasyon'
-    });
-    btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Başvurumu Gönder';
-    showModal('Delegasyon başvurunuz alındı. Başvurunuz onaylandıktan sonra ödeme ve katılım detayları e-posta ile iletilecektir.');
-    this.reset();
-  }, 700);
-});
+    const common = { id: nextId(tip === 'delege' ? 'vuf_delegeler' : 'vuf_delegasyonlar'), durum:'Başvuru Beklemede', tarih:now(), tip, yanitlar:values };
+    if (tip === 'delege') {
+      save('vuf_delegeler', {...common,
+        ad_soyad:fieldValue(values,['Ad Soyad','Adı Soyadı']), eposta:fieldValue(values,['E-posta Adresi','E-posta']), telefon:fieldValue(values,['Telefon Numarası','Telefon']),
+        okul:fieldValue(values,['Okul','Okul Adı']), sinif:fieldValue(values,['Sınıf','Sınıf / Kademe']), sehir:fieldValue(values,['Şehir','İl']),
+        komisyon:fieldValue(values,['Komisyon Tercihi','Komisyon']), motivasyon:fieldValue(values,['Motivasyonunuz','Neden katılmak istiyorsunuz?'])
+      });
+    } else {
+      save('vuf_delegasyonlar', {...common,
+        okul:fieldValue(values,['Okul','Okul Adı']), ogretmen:fieldValue(values,['Danışman Öğretmen','Danışman Öğretmen Ad Soyad','Koordinatör Adı Soyad']), unvan:fieldValue(values,['Unvan','Unvan / Branş']),
+        eposta:fieldValue(values,['E-posta Adresi','E-posta']), telefon:fieldValue(values,['Telefon Numarası','Telefon']), sehir:fieldValue(values,['Şehir','İl']),
+        katilimci_sayisi:fieldValue(values,['Katılımcı Sayısı','Delege Sayısı']), not:fieldValue(values,['Ek Notlar','Not'])
+      });
+    }
+    button.disabled=false; button.innerHTML='<i class="fas fa-paper-plane"></i> Başvurumu Gönder';
+    showModal(tip==='delege' ? 'Delege başvurunuz alındı. İK ekibimiz başvurunuzu inceleyecek ve e-posta ile bilgilendirileceksiniz.' : 'Delegasyon başvurunuz alındı. Başvurunuz onaylandıktan sonra detaylar e-posta ile iletilecektir.');
+    form.reset();
+  }, 450);
+}
+document.getElementById('formDelege').addEventListener('submit', event => submitApplication('delege', event));
+document.getElementById('formDelegasyon').addEventListener('submit', event => submitApplication('delegasyon', event));
 
 /* ════ KVKK error hide on check ════ */
 document.getElementById('d_kvkk').addEventListener('change', () => { if (document.getElementById('d_kvkk').checked) document.getElementById('d_kvkkErr').classList.add('hidden'); });

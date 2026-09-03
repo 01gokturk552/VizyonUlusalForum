@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
+<script src="data-sync.js"></script>
 </head>
 <body>
 
@@ -585,6 +586,12 @@ function animateCounter(el) {
 ════════════════════════════════════════════ */
 (function () {
   const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const safeUrl = value => {
+    try {
+      const url = new URL(String(value || ''), window.location.href);
+      return ['http:', 'https:'].includes(url.protocol) ? esc(url.href).replace(/"/g, '&quot;') : '#';
+    } catch { return '#'; }
+  };
   const ls  = (k, def) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch { return def; } };
 
   /* ─── Default data (must match admin-panel defaults) ─── */
@@ -608,7 +615,7 @@ function animateCounter(el) {
   const DEF_STATS = {komisyon:9, sponsor:0, katilimci:340, gun:3};
 
   const CONTENT_VERSION = '2026-09-program-commissions-v1';
-  if (localStorage.getItem('vuf_content_version') !== CONTENT_VERSION) {
+  if (localStorage.getItem('vuf_content_version') !== CONTENT_VERSION && !window.VUF_REMOTE_SYNC) {
     localStorage.setItem('vuf_komisyonlar', JSON.stringify(DEF_KOM));
     localStorage.setItem('vuf_sponsorlar', JSON.stringify(DEF_SPONSOR));
     localStorage.setItem('vuf_program', JSON.stringify(DEF_PROG));
@@ -687,8 +694,8 @@ function animateCounter(el) {
       
       <div style="background:#f8fafc;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem">
         <h4 style="margin:0 0 1rem 0;font-size:.95rem;font-weight:700;color:#1e293b"><i class="fas fa-book" style="margin-right:.5rem;color:#3b82f6"></i>Komisyon Rehberi</h4>
-        <p style="margin:0 0 1rem 0;font-size:.85rem;color:#64748b;line-height:1.6">Bu komisyon hakkında detaylı bilgi ve çalışma rehberini aşağıdan indirebilirsiniz.</p>
-        <a href="#" onclick="downloadKomisyonRehber(${id});return false" style="
+        <p style="margin:0 0 1rem 0;font-size:.85rem;color:#64748b;line-height:1.7;white-space:pre-line">${esc(komisyon.rehberMetni || komisyon.desc || 'Bu komisyonun rehber içeriği yakında paylaşılacaktır.')}</p>
+        ${komisyon.rehberLink ? `<a href="${safeUrl(komisyon.rehberLink)}" target="_blank" rel="noopener noreferrer" style="
           display:inline-flex;align-items:center;gap:.5rem;
           background:#3b82f6;color:#fff;
           padding:.75rem 1.5rem;border-radius:8px;
@@ -696,7 +703,7 @@ function animateCounter(el) {
           transition:all .2s;
         " onmouseover="this.style.background='#2563EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#3b82f6';this.style.transform='none'">
           <i class="fas fa-download"></i> Rehberi İndir
-        </a>
+        </a>` : '<span style="font-size:.8rem;color:#64748b"><i class="fas fa-clock" style="margin-right:.35rem"></i>İndirilebilir rehber yakında eklenecek.</span>'}
       </div>
       
       <div style="background:#eff6ff;border-radius:12px;padding:1.5rem;border:1px solid #dbeafe">
@@ -712,16 +719,6 @@ function animateCounter(el) {
     document.getElementById('komisyonModal').classList.add('hidden');
   }
   
-  function downloadKomisyonRehber(id) {
-    const komisyonlar = ls('vuf_komisyonlar', DEF_KOM);
-    const komisyon = komisyonlar.find(k => k.id === id);
-    if (!komisyon || !komisyon.rehberLink) {
-      alert('Bu komisyon için rehber linki bulunmuyor.');
-      return;
-    }
-    window.open(komisyon.rehberLink, '_blank');
-  }
-
   /* ─── İstatistikler ─── */
   const stats = ls('vuf_istatistikler', DEF_STATS);
   const actualSponsorCount = sponsorlar.length;

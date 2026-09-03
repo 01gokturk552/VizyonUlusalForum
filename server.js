@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,9 +13,7 @@ const requiredEnvVars = ['EMAIL_USER', 'EMAIL_PASS'];
 const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
 
 if (missingEnvVars.length > 0) {
-  console.error('❌ HATA: Gerekli ortam değişkenleri eksik:', missingEnvVars.join(', '));
-  console.error('Lütfen .env dosyasını düzenleyin ve şu değişkenleri ayarlayın:', missingEnvVars.join(', '));
-  process.exit(1);
+  console.warn('⚠️ E-posta ayarları eksik. Site çalışmaya devam edecek, e-posta gönderimi devre dışı kalacak:', missingEnvVars.join(', '));
 }
 
 // Utility function for email validation
@@ -25,11 +25,44 @@ const validateEmail = (email) => {
 // Middleware
 app.use(cors({
   origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
   credentials: true,
   maxAge: 600
 }));
 app.use(express.json({ limit: '1mb' }));
+
+const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, 'data', 'site-data.json');
+const SYNC_KEYS = new Set([
+  'vuf_komisyonlar', 'vuf_ekip', 'vuf_sponsorlar', 'vuf_program',
+  'vuf_istatistikler', 'vuf_ayarlar', 'vuf_basvuru_ayarlar',
+  'vuf_form_builder', 'vuf_delegeler', 'vuf_delegasyonlar',
+  'vuf_content_version', 'vuf_team_roles_version'
+]);
+
+function readSiteData() {
+  try { return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); }
+  catch { return { updatedAt: 0, data: {} }; }
+}
+function writeSiteData(payload) {
+  fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+  const temporary = `${DATA_FILE}.tmp`;
+  fs.writeFileSync(temporary, JSON.stringify(payload, null, 2), 'utf8');
+  fs.renameSync(temporary, DATA_FILE);
+}
+
+app.get('/api/site-data', (req, res) => res.json(readSiteData()));
+app.put('/api/site-data', (req, res) => {
+  const { key, value } = req.body || {};
+  if (!SYNC_KEYS.has(key)) return res.status(400).json({ success: false, error: 'Geçersiz veri anahtarı' });
+  const payload = readSiteData();
+  payload.data[key] = value;
+  payload.updatedAt = Date.now();
+  writeSiteData(payload);
+  res.json({ success: true, updatedAt: payload.updatedAt });
+});
+
+// Canlı sitede HTML, CSS ve görselleri aynı alan adından sunar.
+app.use(express.static(__dirname, { index: 'index.html' }));
 
 // Request logging middleware
 app.use((req, res, next) => {
@@ -47,6 +80,13 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+function escapeHtml(value) {
+  return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+function customMessage(data, fallback) {
+  return `<p style="color:#333;line-height:1.75;white-space:normal">${escapeHtml(data.customMessage || fallback).replace(/\n/g, '<br>')}</p>`;
+}
+
 // E-posta şablonları
 const emailTemplates = {
   approve: (data) => ({
@@ -58,8 +98,8 @@ const emailTemplates = {
           <p style="color: #60a5fa; margin: 10px 0 0;">Başvurunuz Onaylandı!</p>
         </div>
         <div style="background: #fff; padding: 30px; border-radius: 0 0 10px 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-          <p style="color: #333; line-height: 1.6;">Sayın Katılımcımız,</p>
-          <p style="color: #333; line-height: 1.6;">Vizyon Ulusal Forum 2026 için gerçekleştirdiğiniz başvuru değerlendirilmiş olup, <strong>${data.commission}</strong> Komisyonuna kabul edildiğinizi memnuniyetle bildiririz! 🎉</p>
+          <p style="color: #333; line-height: 1.6;">Sayın <strong>${escapeHtml(data.name)}</strong>,</p>
+          ${customMessage(data, `Vizyon Ulusal Forum 2026 için gerçekleştirdiğiniz başvuru değerlendirilmiş olup, ${data.commission || 'ilgili'} komisyonuna kabul edildiğinizi memnuniyetle bildiririz.`)}
           
           <p style="color: #333; line-height: 1.6;">Katılım sürecinizin kesinleşmesi için <strong>${data.fee} TL</strong> olan kayıt ücretinin 3 gün içerisinde aşağıdaki hesaba gönderilmesi gerekmektedir.</p>
           <p style="color: #333; line-height: 1.6;">Ödeme sonrası dekontunuzu "<strong>Ad Soyad - Komisyon ismi</strong>" açıklamasıyla birlikte alt kısımda belirttiğimiz mail adresine iletmenizi rica ederiz.</p>
@@ -102,8 +142,8 @@ const emailTemplates = {
           <p style="color: #fecaca; margin: 10px 0 0;">Başvuru Sonucu</p>
         </div>
         <div style="background: #fff; padding: 30px; border-radius: 0 0 10px 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-          <p style="color: #333; line-height: 1.6;">Sayın <strong>${data.name}</strong>,</p>
-          <p style="color: #333; line-height: 1.6;">Vizyon Ulusal Forum 2026 başvurunuz değerlendirilmiştir. Maalesef başvurunuz bu sefer onaylanmamıştır.</p>
+          <p style="color: #333; line-height: 1.6;">Sayın <strong>${escapeHtml(data.name)}</strong>,</p>
+          ${customMessage(data, 'Vizyon Ulusal Forum 2026 başvurunuz değerlendirilmiştir. Maalesef başvurunuz bu sefer onaylanmamıştır.')}
           
           <p style="color: #333; line-height: 1.6;">Başvurunuzun detaylı değerlendirilmesi yapılmış olup, gelecekteki etkinliklerimiz için tekrar başvuruda bulunabilirsiniz.</p>
           
@@ -146,6 +186,7 @@ app.post('/api/send-email', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Geçersiz veri formatı' });
     }
     
+    if (missingEnvVars.length > 0) return res.status(503).json({ success: false, error: 'E-posta servisi henüz yapılandırılmadı.' });
     const emailContent = template(data);
     
     const mailOptions = {

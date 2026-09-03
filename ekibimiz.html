@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
+<script src="data-sync.js"></script>
 <style>
   .ekip-hero {
     background: radial-gradient(ellipse 130% 100% at 60% 0%, #163567 0%, #0B1F3A 55%, #060f1e 100%);
@@ -258,13 +259,14 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   if (localStorage.getItem('vuf_team_roles_version') !== TEAM_VERSION) {
     ekip = DEF_EKIP.map((role, index) => {
       const existing = ekip[index] || {};
-      return {...role, name:existing.name||'', instagram:existing.instagram||'', photo:existing.photo||''};
+      return {...role, name:existing.name||'', instagram:existing.instagram||'', photo:existing.photo||'', message:existing.message||''};
     });
     localStorage.setItem('vuf_ekip', JSON.stringify(ekip));
     localStorage.setItem('vuf_team_roles_version', TEAM_VERSION);
   }
-  document.getElementById('ekipGrid').innerHTML = ekip.map(e => `
-    <div class="ekip-card fade-up" onclick="openEkipModal('${esc(e.role)}', '${esc(e.name||'')}', '${esc(e.desc)}')" style="cursor:pointer">
+  window.VUF_TEAM = ekip;
+  document.getElementById('ekipGrid').innerHTML = ekip.map((e, index) => `
+    <button type="button" class="ekip-card fade-up" onclick="openEkipModalByIndex(${index})" style="cursor:pointer;text-align:inherit;font:inherit;border:none;width:100%">
       <div class="ekip-avatar-wrap">
         ${e.photo ? `<img src="${e.photo}" class="ekip-avatar-img" alt="${esc(e.role)}">` : `<div class="ekip-avatar">${esc(e.initials)}</div>`}
         <div class="ekip-badge"><i class="fas fa-star"></i></div>
@@ -273,7 +275,7 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       <h4>${esc(e.role)}</h4>
       <p>${esc(e.desc)}</p>
       ${e.instagram ? `<a href="https://instagram.com/${esc(e.instagram.replace('@',''))}" target="_blank" rel="noopener" class="e-insta"><i class="fab fa-instagram"></i>@${esc(e.instagram.replace('@',''))}</a>` : ''}
-    </div>`).join('');
+    </button>`).join('');
 
   /* ── Scroll animations ── */
   const io = new IntersectionObserver((entries) => {
@@ -285,7 +287,12 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
 })();
 
 /* ── Ekip Modal (Global) ── */
-function openEkipModal(role, name, desc) {
+function openEkipModalByIndex(index) {
+  const member = (window.VUF_TEAM || [])[index];
+  if (!member) return;
+  const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const role = esc(member.role), name = esc(member.name), desc = esc(member.desc);
+  const message = esc(member.message || member.desc || 'Bu ekip üyesinin mesajı yakında paylaşılacaktır.');
   document.getElementById('ekipModalContent').innerHTML = `
     <div style="text-align:center;margin-bottom:1.5rem">
       <div style="width:64px;height:64px;background:linear-gradient(135deg,#0B1F3A,#1e4080);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
@@ -296,28 +303,9 @@ function openEkipModal(role, name, desc) {
       <p style="color:#64748b;font-size:.85rem;line-height:1.5">${desc}</p>
     </div>
     
-    <div style="background:#f8fafc;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem">
-      <h4 style="margin:0 0 1rem 0;font-size:.95rem;font-weight:700;color:#1e293b"><i class="fas fa-envelope" style="margin-right:.5rem;color:#3b82f6"></i>Mesaj Gönder</h4>
-      <textarea id="ekipMessage" placeholder="${role} için mesajınızı buraya yazın..." style="
-        width:100%;min-height:120px;padding:1rem;
-        border:1px solid #e2e8f0;border-radius:8px;
-        font-size:.9rem;font-family:inherit;
-        resize:vertical;
-        margin-bottom:1rem;
-      "></textarea>
-      <button onclick="sendEkipMessage('${role}')" style="
-        width:100%;
-        background:#3b82f6;color:#fff;
-        padding:.75rem 1.5rem;border-radius:8px;
-        border:none;font-size:.9rem;font-weight:600;
-        cursor:pointer;transition:all .2s;
-      " onmouseover="this.style.background='#2563EB'" onmouseout="this.style.background='#3b82f6'">
-        <i class="fas fa-paper-plane" style="margin-right:.5rem"></i>Mesaj Gönder
-      </button>
-    </div>
-    
-    <div style="background:#eff6ff;border-radius:12px;padding:1rem;border:1px solid #dbeafe">
-      <p style="margin:0;font-size:.8rem;color:#1e40af;line-height:1.5"><i class="fas fa-info-circle" style="margin-right:.5rem"></i>Mesajınız ilgili ekip üyesine iletilecektir.</p>
+    <div style="background:#eff6ff;border-radius:12px;padding:1.25rem;border:1px solid #dbeafe">
+      <h4 style="margin:0 0 .75rem;font-size:.95rem;font-weight:700;color:#1e40af"><i class="fas fa-quote-left" style="margin-right:.5rem"></i>Mesajı</h4>
+      <p style="margin:0;font-size:.9rem;color:#1e3a5f;line-height:1.7;white-space:pre-line">${message}</p>
     </div>
   `;
   
@@ -328,17 +316,6 @@ function closeEkipModal() {
   document.getElementById('ekipModal').classList.add('hidden');
 }
 
-function sendEkipMessage(role) {
-  const message = document.getElementById('ekipMessage').value.trim();
-  if (!message) {
-    alert('Lütfen bir mesaj yazın.');
-    return;
-  }
-  
-  // Gerçek uygulamada bu mesaj backend'e gönderilecek
-  alert(`${role} için mesajınız gönderildi!`);
-  closeEkipModal();
-}
 </script>
 </body>
 </html>
