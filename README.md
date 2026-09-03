@@ -125,6 +125,12 @@ npm start
 curl http://localhost:3000/api/health
 ```
 
+### Canlı yayın (Render)
+
+Bu projede bulunan `render.yaml`, başvuru ve panel verilerini kalıcı diskte tutacak şekilde hazırlanmıştır. Render hesabında GitHub deposunu bağlayın; hizmet yapılandırması otomatik okunur. Ardından yalnızca `EMAIL_USER` ve Google App Password olan `EMAIL_PASS` değerlerini Render'ın **Environment** bölümünden girin. Alan adınızı bu servise yönlendirin.
+
+> Önemli: Sadece GitHub Pages gibi statik barındırma çözümleri, panel verilerini cihazlar arasında eşitleyemez ve otomatik e-posta gönderemez. Bu nedenle site Node.js çalıştıran bir sunucuda yayımlanmalıdır.
+
 **Başarılı Yanıt:**
 ```json
 {
@@ -217,6 +223,8 @@ vizyon-ulusal-forum/
 ├── style.css               # Global stiller
 ├── basvuru.css             # Başvuru sayfası stilleri
 ├── server.js               # Backend sunucusu (Express)
+├── data-sync.js            # Cihazlar arası veri eşitleme katmanı
+├── render.yaml             # Canlı yayın yapılandırması
 ├── package.json            # Proje metaveri ve bağımlılıklar
 ├── .env.example            # Ortam değişkenleri şablonu
 ├── .env                    # Ortam değişkenleri (gitignore'da)
