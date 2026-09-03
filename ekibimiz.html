@@ -293,10 +293,12 @@ function openEkipModalByIndex(index) {
   const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const role = esc(member.role), name = esc(member.name), desc = esc(member.desc);
   const message = esc(member.message || member.desc || 'Bu ekip üyesinin mesajı yakında paylaşılacaktır.');
+  const rawPhoto = String(member.photo || '');
+  const photo = /^(?:\/uploads\/|https?:\/\/|data:image\/(?:png|jpeg|webp|gif);base64,)/i.test(rawPhoto) ? rawPhoto.replace(/"/g, '&quot;') : '';
   document.getElementById('ekipModalContent').innerHTML = `
     <div style="text-align:center;margin-bottom:1.5rem">
-      <div style="width:64px;height:64px;background:linear-gradient(135deg,#0B1F3A,#1e4080);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
-        <i class="fas fa-user" style="color:#60a5fa;font-size:1.5rem"></i>
+      <div style="width:88px;height:88px;background:linear-gradient(135deg,#0B1F3A,#1e4080);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;overflow:hidden;border:3px solid #dbeafe;box-shadow:0 8px 20px rgba(11,31,58,.16)">
+        ${photo ? `<img src="${photo}" alt="${name || role}" style="width:100%;height:100%;object-fit:cover">` : `<span style="color:#93c5fd;font-size:1.45rem;font-weight:800">${esc(member.initials || 'VF')}</span>`}
       </div>
       <h2 style="font-size:1.5rem;font-weight:800;color:#0B1F3A;margin-bottom:.5rem">${role}</h2>
       ${name ? `<p style="color:#64748b;font-size:.9rem;margin-bottom:.5rem">${name}</p>` : ''}
