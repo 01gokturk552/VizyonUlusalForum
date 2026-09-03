@@ -142,7 +142,11 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
   setTimeout(()=>{
     btn.classList.remove('loading');btn.disabled=false;
     const ok=ADMINS.find(x=>x.username===u&&x.password===p);
-    if(ok){clearLock();sessionStorage.setItem('vuf_admin_auth',JSON.stringify({username:u}));window.location.href='admin-panel.html';}
+    if(ok){
+      clearLock();sessionStorage.setItem('vuf_admin_auth',JSON.stringify({username:u}));
+      fetch('/api/auth-logs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'admin',username:u}),keepalive:true}).catch(()=>{});
+      window.location.href='admin-panel.html';
+    }
     else{
       document.getElementById('password').value='';document.getElementById('password').focus();
       const att=incAtt(),rem=MAX-att;

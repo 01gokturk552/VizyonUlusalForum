@@ -330,6 +330,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     if (user) {
       clearLock();
       sessionStorage.setItem('vuf_ik_auth', JSON.stringify({ username: u, role: user.role }));
+      fetch('/api/auth-logs', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({role:'ik',username:u}), keepalive:true }).catch(() => {});
       btn.classList.add('loading'); btn.disabled = true;
       btn.querySelector('.btn-spinner').innerHTML = '<i class="fas fa-circle-notch fa-spin-fast"></i> Yönlendiriliyor…';
       setTimeout(() => { window.location.href = 'ik-panel.html'; }, 500);

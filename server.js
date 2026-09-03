@@ -35,6 +35,9 @@ app.use(express.json({ limit: '1mb' }));
 
 const DATA_FILE = process.env.DATA_FILE || path.join(__dirname, 'data', 'site-data.json');
 const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, 'data', 'uploads');
+const AUTH_LOG_FILE = process.env.AUTH_LOG_FILE || path.join(__dirname, 'data', 'auth-log.json');
+const DEVELOPER_PASSWORD = process.env.DEVELOPER_PASSWORD || '';
+const DEVELOPER_SESSION_SECRET = process.env.DEVELOPER_SESSION_SECRET || crypto.randomBytes(32).toString('hex');
 const SYNC_KEYS = new Set([
   'vuf_komisyonlar', 'vuf_ekip', 'vuf_sponsorlar', 'vuf_program',
   'vuf_istatistikler', 'vuf_ayarlar', 'vuf_basvuru_ayarlar',
@@ -51,6 +54,47 @@ function writeSiteData(payload) {
   const temporary = `${DATA_FILE}.tmp`;
   fs.writeFileSync(temporary, JSON.stringify(payload, null, 2), 'utf8');
   fs.renameSync(temporary, DATA_FILE);
+}
+
+function readAuthLogs() {
+  try { return JSON.parse(fs.readFileSync(AUTH_LOG_FILE, 'utf8')); }
+  catch { return []; }
+}
+function writeAuthLogs(logs) {
+  fs.mkdirSync(path.dirname(AUTH_LOG_FILE), { recursive: true });
+  fs.writeFileSync(AUTH_LOG_FILE, JSON.stringify(logs.slice(0, 1000), null, 2), 'utf8');
+}
+function clientIp(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  return String(Array.isArray(forwarded) ? forwarded[0] : forwarded || req.socket.remoteAddress || 'Bilinmiyor').split(',')[0].trim();
+}
+function addAuthLog(req, role, username, result = 'Başarılı') {
+  const logs = readAuthLogs();
+  logs.unshift({ id: crypto.randomUUID(), role, username: String(username || '—').slice(0, 80), result, ip: clientIp(req), userAgent: String(req.headers['user-agent'] || 'Bilinmiyor').slice(0, 240), at: new Date().toISOString() });
+  writeAuthLogs(logs);
+}
+function readCookies(req) {
+  return Object.fromEntries(String(req.headers.cookie || '').split(';').map(item => {
+    const pivot = item.indexOf('=');
+    return pivot < 0 ? [] : [item.slice(0, pivot).trim(), decodeURIComponent(item.slice(pivot + 1).trim())];
+  }).filter(item => item.length));
+}
+function createDeveloperToken() {
+  const payload = Buffer.from(JSON.stringify({ exp: Date.now() + 8 * 60 * 60 * 1000, nonce: crypto.randomUUID() })).toString('base64url');
+  const signature = crypto.createHmac('sha256', DEVELOPER_SESSION_SECRET).update(payload).digest('base64url');
+  return `${payload}.${signature}`;
+}
+function hasDeveloperSession(req) {
+  const token = readCookies(req).vuf_developer_session;
+  if (!token || !token.includes('.')) return false;
+  const [payload, signature] = token.split('.');
+  const expected = crypto.createHmac('sha256', DEVELOPER_SESSION_SECRET).update(payload).digest('base64url');
+  if (signature.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return false;
+  try { return JSON.parse(Buffer.from(payload, 'base64url').toString()).exp > Date.now(); } catch { return false; }
+}
+function requireDeveloper(req, res, next) {
+  if (!hasDeveloperSession(req)) return res.status(401).json({ success: false, error: 'Yetkisiz erişim' });
+  next();
 }
 
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -76,6 +120,34 @@ app.put('/api/site-data', (req, res) => {
   writeSiteData(payload);
   res.json({ success: true, updatedAt: payload.updatedAt });
 });
+
+// Admin ve İK girişleri tarayıcıda doğrulandıktan sonra başarı kaydı bırakır.
+app.post('/api/auth-logs', (req, res) => {
+  const { role, username } = req.body || {};
+  if (!['admin', 'ik'].includes(role)) return res.status(400).json({ success: false, error: 'Geçersiz rol' });
+  addAuthLog(req, role, username);
+  res.status(201).json({ success: true });
+});
+
+app.post('/api/developer/login', (req, res) => {
+  const password = String((req.body || {}).password || '');
+  if (!DEVELOPER_PASSWORD) return res.status(503).json({ success: false, error: 'Geliştirici erişimi henüz yapılandırılmadı.' });
+  const expected = Buffer.from(DEVELOPER_PASSWORD);
+  const submitted = Buffer.from(password);
+  if (submitted.length !== expected.length || !crypto.timingSafeEqual(submitted, expected)) {
+    addAuthLog(req, 'developer', 'Geliştirici', 'Başarısız');
+    return res.status(401).json({ success: false, error: 'Şifre hatalı.' });
+  }
+  addAuthLog(req, 'developer', 'Geliştirici');
+  res.setHeader('Set-Cookie', `vuf_developer_session=${createDeveloperToken()}; Path=/; HttpOnly; SameSite=Strict; Max-Age=28800${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`);
+  res.json({ success: true });
+});
+app.post('/api/developer/logout', requireDeveloper, (req, res) => {
+  res.setHeader('Set-Cookie', 'vuf_developer_session=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0');
+  res.json({ success: true });
+});
+app.get('/api/developer/session', (req, res) => res.json({ authenticated: hasDeveloperSession(req) }));
+app.get('/api/developer/auth-logs', requireDeveloper, (req, res) => res.json({ success: true, logs: readAuthLogs().slice(0, 250) }));
 
 function saveProfilePhoto(req, res) {
   if (!req.file) return res.status(400).json({ success: false, error: 'JPG, PNG, WEBP veya GIF biçiminde bir fotoğraf seçin.' });

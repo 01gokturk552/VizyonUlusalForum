@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <title>Geliştirici Girişi – VUF 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 10% 10%,#1e4080 0,#0b1f3a 46%,#061222 100%);display:grid;place-items:center;padding:1.25rem;color:#17243b}.card{width:min(100%,440px);background:#fff;border-radius:24px;padding:2.4rem;box-shadow:0 24px 70px rgba(0,0,0,.3)}.brand{display:flex;justify-content:center;margin-bottom:1.8rem}.brand img{height:34px;width:auto;max-width:160px;object-fit:contain}.icon{width:58px;height:58px;border-radius:17px;background:linear-gradient(135deg,#0b1f3a,#2563eb);color:#fff;display:grid;place-items:center;margin:0 auto 1rem;font-size:1.35rem}.eyebrow{font-size:.7rem;text-align:center;text-transform:uppercase;letter-spacing:.12em;color:#2563eb;font-weight:800}.title{text-align:center;font-size:1.5rem;margin:.5rem 0;color:#0b1f3a}.lead{text-align:center;color:#6b7a99;font-size:.86rem;line-height:1.6;margin:0 0 1.6rem}.field label{display:block;font-weight:700;font-size:.8rem;color:#3d4f6e;margin-bottom:.5rem}.input{position:relative}.input i{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#2563eb}.input input{width:100%;border:1.5px solid #dce5f2;border-radius:11px;padding:.85rem 1rem .85rem 2.7rem;font:inherit;outline:0}.input input:focus{border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.11)}button{width:100%;margin-top:1.25rem;border:0;border-radius:11px;padding:.9rem;background:linear-gradient(135deg,#0b1f3a,#2563eb);color:#fff;font:700 .9rem Inter;cursor:pointer}.error{display:none;margin-top:1rem;background:#fef2f2;color:#b91c1c;padding:.75rem .9rem;border-radius:9px;font-size:.8rem}.error.show{display:block}.back{display:block;text-align:center;margin-top:1.2rem;color:#64748b;text-decoration:none;font-size:.8rem}@media(max-width:480px){.card{padding:1.75rem}}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand"><img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum"></div>
+    <div class="icon"><i class="fas fa-code"></i></div>
+    <div class="eyebrow">Yetkili erişim</div>
+    <h1 class="title">Geliştirici Paneli</h1>
+    <p class="lead">Sistem yönetimi ve giriş kayıtları için doğrulama gereklidir.</p>
+    <form id="loginForm">
+      <div class="field"><label for="password">Geliştirici Şifresi</label><div class="input"><i class="fas fa-key"></i><input id="password" type="password" autocomplete="current-password" required></div></div>
+      <button id="submitBtn" type="submit"><i class="fas fa-shield-halved"></i> Güvenli Giriş</button>
+      <div class="error" id="error"></div>
+    </form>
+    <a href="index.html" class="back"><i class="fas fa-arrow-left"></i> Ana sayfaya dön</a>
+  </main>
+  <script>
+    const errorBox=document.getElementById('error');
+    fetch('/api/developer/session').then(r=>r.json()).then(v=>{if(v.authenticated)location.href='developer-panel.html'}).catch(()=>{});
+    document.getElementById('loginForm').addEventListener('submit',async event=>{
+      event.preventDefault();errorBox.classList.remove('show');
+      const button=document.getElementById('submitBtn');button.disabled=true;button.innerHTML='<i class="fas fa-circle-notch fa-spin"></i> Doğrulanıyor…';
+      try{const response=await fetch('/api/developer/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:document.getElementById('password').value})});const result=await response.json();if(!response.ok)throw new Error(result.error||'Giriş yapılamadı');location.href='developer-panel.html'}catch(error){errorBox.textContent=error.message;errorBox.classList.add('show');document.getElementById('password').value='';document.getElementById('password').focus()}finally{button.disabled=false;button.innerHTML='<i class="fas fa-shield-halved"></i> Güvenli Giriş'}});
+  </script>
+</body>
+</html>
