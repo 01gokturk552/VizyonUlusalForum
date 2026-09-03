@@ -77,10 +77,12 @@ app.put('/api/site-data', (req, res) => {
   res.json({ success: true, updatedAt: payload.updatedAt });
 });
 
-app.post('/api/uploads/team-photo', imageUpload.single('photo'), (req, res) => {
+function saveProfilePhoto(req, res) {
   if (!req.file) return res.status(400).json({ success: false, error: 'JPG, PNG, WEBP veya GIF biçiminde bir fotoğraf seçin.' });
   res.status(201).json({ success: true, url: `/uploads/${req.file.filename}` });
-});
+}
+app.post('/api/uploads/profile-photo', imageUpload.single('photo'), saveProfilePhoto);
+app.post('/api/uploads/team-photo', imageUpload.single('photo'), saveProfilePhoto);
 
 app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '7d', immutable: true }));
 

@@ -304,7 +304,7 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
       </div>
       <div class="table-card">
         <div class="table-scroll">
-          <table><thead><tr><th>#</th><th>İkon</th><th>Komisyon Adı</th><th>Başkan</th><th>Açıklama</th><th>İşlemler</th></tr></thead>
+          <table><thead><tr><th>#</th><th>Görsel</th><th>Komisyon Adı</th><th>Yönetim</th><th>Açıklama</th><th>İşlemler</th></tr></thead>
           <tbody id="komisyonTable"></tbody></table>
         </div>
       </div>
@@ -761,9 +761,9 @@ function renderKomisyonlar(){
   if(!data.length){tbody.innerHTML='<tr><td colspan="6" class="empty-row"><i class="fas fa-inbox"></i> Henüz komisyon yok.</td></tr>';return}
   tbody.innerHTML=data.map(k=>`<tr>
     <td class="td-num">${esc(k.num)}</td>
-    <td><span class="icon-preview"><i class="${esc(k.icon)}"></i></span></td>
+    <td>${k.photo ? `<img src="${esc(k.photo)}" alt="${esc(k.name)}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid #dbeafe">` : `<span class="icon-preview"><i class="${esc(k.icon)}"></i></span>`}</td>
     <td class="td-name">${esc(k.name)}</td>
-    <td class="td-sub">${k.baskan?esc(k.baskan):'<span style="color:#ddd">—</span>'}</td>
+    <td class="td-sub">${k.baskan?`<strong>${esc(k.baskan)}</strong>`:'<span style="color:#ddd">—</span>'}${k.baskanYardimcisi?`<br><span style="font-size:.72rem">Bşk. Yrd.: ${esc(k.baskanYardimcisi)}</span>`:''}${k.asistan?`<br><span style="font-size:.72rem">Asistan: ${esc(k.asistan)}</span>`:''}</td>
     <td class="td-sub" style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(k.desc)}</td>
     <td><div class="tbl-actions">
       <button class="btn-edit" onclick="openModal('komisyon',${k.id})"><i class="fas fa-edit"></i> Düzenle</button>
@@ -1853,7 +1853,14 @@ function openModal(type,id=null){
       </div>
       <div class="mf-group"><label>Komisyon Adı</label><input id="mf-name" value="${esc(item.name||'')}"></div>
       <div class="mf-group"><label>Açıklama</label><textarea id="mf-desc">${esc(item.desc||'')}</textarea></div>
-      <div class="mf-group"><label>Başkan / Yönetici Adı</label><input id="mf-baskan" value="${esc(item.baskan||'')}" placeholder="İsim girmediyseniz boş bırakın"></div>
+      <div class="mf-group"><label>Komisyon Başkanı</label><input id="mf-baskan" value="${esc(item.baskan||'')}" placeholder="Ad Soyad"></div>
+      <div class="mf-group"><label>Başkan Yardımcısı</label><input id="mf-baskan-yardimcisi" value="${esc(item.baskanYardimcisi||'')}" placeholder="Ad Soyad"></div>
+      <div class="mf-group"><label>Komisyon Asistanı</label><input id="mf-asistan" value="${esc(item.asistan||'')}" placeholder="Ad Soyad"></div>
+      <div class="mf-group"><label>Komisyon Görseli</label>
+        <input type="file" id="mf-komisyon-photo" accept="image/jpeg,image/png,image/webp,image/gif">
+        ${item.photo?`<div style="margin-top:.5rem"><img src="${esc(item.photo)}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #DDE3F0"></div><label style="display:flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:600;color:#dc2626;margin-top:.3rem"><input type="checkbox" id="mf-remove-komisyon-photo" style="width:auto"> Mevcut görseli kaldır</label>`:''}
+        <div class="mf-hint">JPG, PNG, WEBP veya GIF · En fazla 5 MB. Görsel, ikonun yerine gösterilir.</div>
+      </div>
       <div class="mf-group"><label>Rehber Metni</label><textarea id="mf-rehber-metin" placeholder="Ziyaretçilerin komisyon kartına bastığında okuyacağı rehber metni">${esc(item.rehberMetni||'')}</textarea><div class="mf-hint">Boş bırakılırsa genel komisyon açıklaması gösterilir.</div></div>
       <div class="mf-group"><label>Rehber İndirme Linki</label><input id="mf-rehber-link" value="${esc(item.rehberLink||'')}" placeholder="PDF, DOC veya Google Drive bağlantısı"><div class="mf-hint">Bağlantı girilirse “Rehberi indir” düğmesi görünür.</div></div>`;
   }
@@ -1920,6 +1927,21 @@ document.getElementById('modalOverlay').addEventListener('click',function(e){if(
 async function saveModal(){
   if(modalType==='komisyon'){
     const data=get('vuf_komisyonlar',DEF_KOMISYON);
+    const existing=modalId?data.find(x=>x.id===modalId):null;
+    let photo=existing?.photo||'';
+    if(document.getElementById('mf-remove-komisyon-photo')?.checked) photo='';
+    const photoInput=document.getElementById('mf-komisyon-photo');
+    if(photoInput?.files?.[0]){
+      const button=document.getElementById('modalSaveBtn');
+      button.disabled=true;button.innerHTML='<i class="fas fa-circle-notch fa-spin"></i> Görsel yükleniyor…';
+      try{
+        const formData=new FormData();formData.append('photo',photoInput.files[0]);
+        const response=await fetch('/api/uploads/profile-photo',{method:'POST',body:formData});
+        const result=await response.json();
+        if(!response.ok || !result.url) throw new Error(result.error||'Görsel yüklenemedi');
+        photo=result.url;
+      }catch(error){button.disabled=false;button.innerHTML='<i class="fas fa-save"></i> Kaydet';toast(error.message||'Görsel yüklenemedi.','error');return;}
+    }
     const obj={
       id:modalId||nextId(data),
       num:document.getElementById('mf-num').value.trim(),
@@ -1927,12 +1949,18 @@ async function saveModal(){
       name:document.getElementById('mf-name').value.trim(),
       desc:document.getElementById('mf-desc').value.trim(),
       baskan:document.getElementById('mf-baskan').value.trim(),
+      baskanYardimcisi:document.getElementById('mf-baskan-yardimcisi').value.trim(),
+      asistan:document.getElementById('mf-asistan').value.trim(),
+      photo,
       rehberMetni:document.getElementById('mf-rehber-metin').value.trim(),
       rehberLink:document.getElementById('mf-rehber-link').value.trim(),
     };
     if(!obj.name){toast('Komisyon adı boş olamaz','error');return}
     if(modalId){const i=data.findIndex(x=>x.id===modalId);data[i]=obj;}else data.push(obj);
-    set('vuf_komisyonlar',data);renderKomisyonlar();renderDashboard();toast('Komisyon kaydedildi!','success');
+    set('vuf_komisyonlar',data);
+    try { if(window.VUF_SYNC_FLUSH) await window.VUF_SYNC_FLUSH(); }
+    catch { toast('Komisyon bilgileri sunucuya kaydedilemedi.','error');return; }
+    renderKomisyonlar();renderDashboard();toast('Komisyon kaydedildi!','success');
   }
   else if(modalType==='ekip'){
     const data=get('vuf_ekip',DEF_EKIP);
