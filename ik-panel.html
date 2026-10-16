@@ -322,6 +322,7 @@ tbody td { padding: 0.85rem 1rem; vertical-align: middle; }
           <option value="Komisyon Atandı">Komisyon Atandı</option>
         </select>
         <button class="modal-save-btn" onclick="saveStatus()"><i class="fas fa-save"></i> Kaydet</button>
+        <button class="modal-save-btn" id="resendDecisionEmailBtn" onclick="resendDecisionEmail()" style="display:none;margin-top:0.5rem;background:#475569"><i class="fas fa-envelope"></i> Karar E-postasını Tekrar Gönder</button>
       </div>
     </div>
   </div>
@@ -627,6 +628,8 @@ function openModal(id) {
   ).join('');
 
   document.getElementById('modalStatusSelect').value = row.durum;
+  document.getElementById('resendDecisionEmailBtn').style.display =
+    row.durum === 'Başvuru Onaylandı' || row.durum === 'Başvuru Reddedildi' ? 'inline-flex' : 'none';
   
   // Komisyon seçme alanını sadece delege başvurularında göster
   const komisyonRow = document.getElementById('komisyonRow');
@@ -648,6 +651,32 @@ function openModal(id) {
 function closeModal() {
   document.getElementById('detailModal').classList.add('hidden');
   currentModalId = null;
+}
+
+async function resendDecisionEmail() {
+  if (currentModalId === null) return;
+  const newStatus = document.getElementById('modalStatusSelect').value;
+  if (newStatus !== 'Başvuru Onaylandı' && newStatus !== 'Başvuru Reddedildi') {
+    showToast('Tekrar gönderim için onay veya red durumu seçin.', 'error');
+    return;
+  }
+  const data = getData();
+  const applicant = data.find(x => Number(x.id) === Number(currentModalId));
+  if (!applicant) { showToast('Kayıt bulunamadı, e-posta gönderilemedi.', 'error'); return; }
+
+  if (currentView === 'delege') {
+    const commission = document.getElementById('modalKomisyonSelect').value;
+    if (commission) applicant.komisyon = commission;
+  }
+  saveData(data);
+
+  try {
+    await sendDecisionEmail(applicant, newStatus, currentView);
+    showToast('Karar e-postası gönderildi!', 'success');
+  } catch (error) {
+    console.error('E-posta hatası:', error);
+    showToast('E-posta gönderilemedi: ' + error.message, 'error');
+  }
 }
 
 async function saveStatus() {

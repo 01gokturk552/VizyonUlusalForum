@@ -302,6 +302,37 @@ const emailTemplates = {
   })
 };
 
+function getEmailFailure(error) {
+  const code = String(error.code || '').toUpperCase();
+  const responseCode = Number(error.responseCode) || 0;
+
+  if (code === 'EAUTH' || [534, 535].includes(responseCode)) {
+    return {
+      code: 'SMTP_AUTH',
+      message: 'Gmail SMTP kimlik doğrulaması başarısız (SMTP_AUTH). Render Environment ayarlarında EMAIL_USER değerini gönderen Gmail hesabı, EMAIL_PASS değerini bu hesap için oluşturulmuş Google App Password olarak güncelleyin.'
+    };
+  }
+
+  if (['ECONNECTION', 'ETIMEDOUT', 'ESOCKET', 'ENOTFOUND', 'EDNS', 'ETLS'].includes(code)) {
+    return {
+      code: 'SMTP_CONNECTION',
+      message: `Gmail SMTP sunucusuna bağlanılamadı (${code}). Sunucu loglarını ve SMTP bağlantısını kontrol edin.`
+    };
+  }
+
+  if (code === 'EENVELOPE' || responseCode >= 500) {
+    return {
+      code: 'SMTP_REJECTED',
+      message: `Gmail e-postayı veya alıcı adresini reddetti (${responseCode || code || 'SMTP_REJECTED'}). Alıcı adresini ve Gmail SMTP yanıtını sunucu loglarından kontrol edin.`
+    };
+  }
+
+  return {
+    code: code || 'SMTP_UNKNOWN',
+    message: `E-posta gönderimi başarısız oldu (${code || 'SMTP_UNKNOWN'}). Render sunucu loglarındaki SMTP hata ayrıntısını kontrol edin.`
+  };
+}
+
 // E-posta gönderme endpoint
 app.post('/api/send-email', async (req, res) => {
   try {
@@ -344,8 +375,14 @@ app.post('/api/send-email', async (req, res) => {
     console.log(`✓ E-posta gönderildi: ${to} (Tür: ${type})`);
     res.json({ success: true, message: 'E-posta başarıyla gönderildi' });
   } catch (error) {
-    console.error('❌ E-posta gönderme hatası:', error.message);
-    res.status(500).json({ success: false, error: 'E-posta gönderilemedi. Lütfen daha sonra tekrar deneyin.' });
+    const failure = getEmailFailure(error);
+    console.error('❌ E-posta gönderme hatası:', {
+      code: error.code || null,
+      responseCode: error.responseCode || null,
+      command: error.command || null,
+      message: error.message
+    });
+    res.status(500).json({ success: false, error: failure.message, code: failure.code });
   }
 });
 
