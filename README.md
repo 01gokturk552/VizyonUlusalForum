@@ -96,6 +96,7 @@ nano .env
 **Gerekli Ortam Değişkenleri:**
 - `EMAIL_USER`: Gmail adresi (E-posta gönderimi için)
 - `EMAIL_PASS`: Google App Password
+- `CONTACT_EMAIL`: İletişim formu mesajlarının gönderileceği adres (varsayılan: `vizyonulusalforumik@gmail.com`)
 - `PORT`: Backend sunucusu portu (default: 3000)
 - `ALLOWED_ORIGINS`: CORS'a izin verilecek originler (optional)
 
@@ -127,7 +128,7 @@ curl http://localhost:3000/api/health
 
 ### Canlı yayın (Render)
 
-Bu projede bulunan `render.yaml`, başvuru ve panel verilerini kalıcı diskte tutacak şekilde hazırlanmıştır. Render hesabında GitHub deposunu bağlayın; hizmet yapılandırması otomatik okunur. Ardından yalnızca `EMAIL_USER` ve Google App Password olan `EMAIL_PASS` değerlerini Render'ın **Environment** bölümünden girin. Alan adınızı bu servise yönlendirin.
+Bu projede bulunan `render.yaml`, başvuru ve panel verilerini kalıcı diskte tutacak şekilde hazırlanmıştır. Render hesabında GitHub deposunu bağlayın; hizmet yapılandırması otomatik okunur. `EMAIL_USER` ve Google App Password olan `EMAIL_PASS` değerlerini Render'ın **Environment** bölümüne girin. İletişim formu için alıcı adresi `CONTACT_EMAIL` ile ayarlanır; varsayılan adres Render yapılandırmasında tanımlıdır. Alan adınızı bu servise yönlendirin.
 
 > Önemli: Sadece GitHub Pages gibi statik barındırma çözümleri, panel verilerini cihazlar arasında eşitleyemez ve otomatik e-posta gönderemez. Bu nedenle site Node.js çalıştıran bir sunucuda yayımlanmalıdır.
 
@@ -165,6 +166,13 @@ Sunucu sağlık durumunu kontrol et.
 ```http
 POST /api/send-email
 ```
+
+### İletişim Formu
+```http
+POST /api/contact
+```
+
+İletişim formu mesajları `CONTACT_EMAIL` adresine iletilir; yanıtlama adresi formu gönderen kişinin e-posta adresidir. Form kötüye kullanımını sınırlamak için IP başına 15 dakikada en fazla 5 istek kabul edilir.
 
 **Request Body:**
 ```json

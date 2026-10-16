@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Vizyon Ulusal Forum ekibine ulaşın; etkinlik konumunu görüntüleyin veya iletişim formunu kullanın.">
+<link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260903">
+<title>İletişim – Vizyon Ulusal Forum 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<script src="data-sync.js"></script>
+<style>
+  .contact-hero {
+    position: relative; overflow: hidden; padding: 9rem 1.5rem 5rem; text-align: center;
+    background: radial-gradient(ellipse 130% 100% at 60% 0%, #163567 0%, #0B1F3A 55%, #060f1e 100%);
+  }
+  .contact-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(59,130,246,.07) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(59,130,246,.07) 1px, transparent 1px);
+    background-size: 52px 52px; mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black, transparent);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black, transparent);
+  }
+  .contact-hero-content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+  .contact-eyebrow {
+    display: inline-flex; align-items: center; gap: .45rem; margin-bottom: 1.1rem;
+    padding: .35rem 1rem; border: 1px solid rgba(59,130,246,.4); border-radius: 100px;
+    background: rgba(37,99,235,.18); color: #60a5fa; font-size: .72rem;
+    font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .contact-hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.1; }
+  .contact-hero h1 span { color: #60a5fa; }
+  .contact-hero p { max-width: 540px; margin: .9rem auto 0; color: rgba(255,255,255,.62); }
+  .contact-section { padding: 4.5rem 0 6rem; background: var(--off-white); }
+  .contact-layout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 2rem; align-items: start; }
+  .contact-info, .contact-form-card {
+    background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+  }
+  .contact-info { padding: 2rem; }
+  .contact-info h2, .contact-form-card h2 { color: var(--text); font-size: 1.35rem; font-weight: 800; }
+  .contact-info-intro, .contact-form-intro { margin-top: .5rem; color: var(--text-muted); font-size: .92rem; }
+  .contact-card-list { display: grid; gap: 1.2rem; margin-top: 1.8rem; }
+  .contact-card { display: grid; grid-template-columns: 44px 1fr; gap: .85rem; align-items: start; }
+  .contact-icon {
+    width: 44px; height: 44px; display: grid; place-items: center; border-radius: 13px;
+    background: var(--accent-faint); color: var(--accent); font-size: 1rem;
+  }
+  .contact-card-label { color: var(--text-muted); font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .contact-card-value { margin-top: .18rem; color: var(--text); font-size: .92rem; font-weight: 600; overflow-wrap: anywhere; }
+  .contact-card-value a { color: var(--accent-hover); }
+  .contact-card-value a:hover { text-decoration: underline; }
+  .contact-map-link { display: inline-flex; align-items: center; gap: .4rem; margin-top: .5rem; font-size: .82rem; font-weight: 700; }
+  .contact-map-frame {
+    display: block; width: 100%; height: 280px; margin-top: 1.25rem;
+    border: 0; border-radius: 14px; background: var(--gray-100);
+  }
+  .contact-map-caption { margin-top: .55rem; color: var(--text-muted); font-size: .78rem; }
+  .contact-form-card { padding: 2rem; }
+  .contact-form { display: grid; gap: 1rem; margin-top: 1.5rem; }
+  .contact-form label { display: grid; gap: .4rem; color: var(--text); font-size: .84rem; font-weight: 700; }
+  .contact-form input, .contact-form textarea {
+    width: 100%; padding: .8rem .9rem; border: 1px solid var(--border); border-radius: 10px;
+    background: #fff; color: var(--text); font: inherit; font-size: .92rem; outline: none;
+    transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,.13); }
+  .contact-form textarea { min-height: 150px; resize: vertical; }
+  .contact-form button {
+    justify-content: center; border: 0; cursor: pointer; font: inherit; font-weight: 700;
+  }
+  .contact-form button:disabled { cursor: wait; opacity: .7; transform: none; }
+  .contact-form-status { min-height: 1.5rem; color: var(--text-muted); font-size: .88rem; }
+  .contact-form-status.success { color: #15803d; }
+  .contact-form-status.error { color: #dc2626; }
+  .contact-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  @media (max-width: 768px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .contact-hero { padding-top: 8rem; }
+  }
+  @media (max-width: 600px) {
+    .contact-section { padding: 3rem 0 4rem; }
+    .contact-info, .contact-form-card { padding: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo" aria-label="Vizyon Ulusal Forum ana sayfa">
+      <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" class="nav-logo-img">
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+      <li><a href="index.html#hakkimizda" class="nav-link">Hakkımızda</a></li>
+      <li><a href="index.html#akis" class="nav-link">Program</a></li>
+      <li><a href="index.html#komisyonlar" class="nav-link">Komisyonlar</a></li>
+      <li><a href="ekibimiz.html" class="nav-link">Ekibimiz</a></li>
+      <li><a href="index.html#sponsorlar" class="nav-link">Sponsorlar</a></li>
+      <li><a href="contact.html" class="nav-link active" aria-current="page">İletişim</a></li>
+      <li><a href="basvuru.html" class="nav-cta"><i class="fas fa-pen-nib"></i> Başvur</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menüyü aç/kapat" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="contact-hero">
+  <div class="contact-hero-content">
+    <div class="contact-eyebrow"><i class="fas fa-comments"></i> Bize Ulaşın</div>
+    <h1>Sorularınız mı var?<br><span>Buradayız.</span></h1>
+    <p>Etkinlik, başvuru veya iş birlikleri hakkında bize yazın. Ekibimiz en kısa sürede size dönüş yapsın.</p>
+  </div>
+</header>
+
+<main class="contact-section">
+  <div class="container contact-layout">
+    <section class="contact-info" aria-labelledby="contactInfoTitle">
+      <h2 id="contactInfoTitle">İletişim Bilgileri</h2>
+      <p class="contact-info-intro">Bize doğrudan ulaşabilir veya etkinlik konumunu haritada görüntüleyebilirsiniz.</p>
+      <div class="contact-card-list">
+        <div class="contact-card">
+          <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+          <div>
+            <div class="contact-card-label">E-posta</div>
+            <div class="contact-card-value"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=vizyonulusalforumik%40gmail.com" target="_blank" rel="noopener noreferrer">vizyonulusalforumik@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <span class="contact-icon"><i class="fas fa-phone"></i></span>
+          <div>
+            <div class="contact-card-label">Telefon</div>
+            <div class="contact-card-value">Telefon bilgisi yakında paylaşılacak.</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <span class="contact-icon"><i class="fas fa-location-dot"></i></span>
+          <div>
+            <div class="contact-card-label">Etkinlik Konumu</div>
+            <div class="contact-card-value" id="contactVenue">Etkinlik konumu yükleniyor...</div>
+            <a class="contact-map-link" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x14cab7ade6455895:0x8162d5a16546b5e2?sa=X&amp;ved=1t:8290&amp;ictx=111" target="_blank" rel="noopener noreferrer">
+              Haritada görüntüle <i class="fas fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <iframe
+        class="contact-map-frame"
+        src="https://maps.google.com/maps?cid=9323249067775931874&amp;output=embed"
+        title="Vizyon Ulusal Forum etkinlik konumu haritası"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+      <p class="contact-map-caption">Haritayı yakınlaştırabilir, sürükleyebilir veya yol tarifi almak için Google Haritalar'da açabilirsiniz.</p>
+    </section>
+
+    <section class="contact-form-card" aria-labelledby="contactFormTitle">
+      <h2 id="contactFormTitle">Bize Mesaj Gönderin</h2>
+      <p class="contact-form-intro">Formu doldurun, mesajınız doğrudan organizasyon ekibine iletilsin.</p>
+      <form class="contact-form" id="contactForm">
+        <label>Ad Soyad
+          <input name="name" type="text" autocomplete="name" maxlength="100" required>
+        </label>
+        <label>E-posta Adresi
+          <input name="email" type="email" autocomplete="email" maxlength="254" required>
+        </label>
+        <label>Konu
+          <input name="subject" type="text" maxlength="120" required>
+        </label>
+        <label>Mesajınız
+          <textarea name="message" maxlength="5000" required></textarea>
+        </label>
+        <label class="contact-honeypot" aria-hidden="true">Web sitesi
+          <input name="website" type="text" tabindex="-1" autocomplete="off">
+        </label>
+        <button class="btn-primary" id="contactSubmit" type="submit"><i class="fas fa-paper-plane"></i> Mesajı Gönder</button>
+        <p class="contact-form-status" id="contactFormStatus" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="vizyonulusalforum.png" alt="Vizyon Ulusal Forum" class="footer-logo-img">
+        <p>Türkiye'nin en büyük bağımsız ulusal forum etkinliği. Gençlerin sesi, Türkiye'nin geleceği.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Hızlı Bağlantılar</h5>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i>Ana Sayfa</a></li>
+          <li><a href="ekibimiz.html"><i class="fas fa-chevron-right"></i>Ekibimiz</a></li>
+          <li><a href="basvuru.html"><i class="fas fa-chevron-right"></i>Başvuru Yap</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>İletişim</h5>
+        <ul>
+          <li class="meta"><i class="fas fa-envelope"></i><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=vizyonulusalforumik%40gmail.com" target="_blank" rel="noopener noreferrer">vizyonulusalforumik@gmail.com</a></li>
+          <li class="meta"><i class="fas fa-phone"></i>Telefon bilgisi yakında paylaşılacak</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Vizyon Ulusal Forum. Tüm hakları saklıdır.</p>
+      <div class="footer-links"><a href="index.html">Ana Sayfa</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+hamburger.addEventListener('click', () => {
+  const open = hamburger.classList.toggle('open');
+  navMenu.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', String(open));
+});
+navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  navMenu.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+}));
+
+try {
+  const settings = JSON.parse(localStorage.getItem('vuf_ayarlar') || '{}');
+  const venue = ['İÜ Beyazıt Kampüsü, İstanbul', 'İstanbul Üniversitesi'].includes(settings.mekan) ? '' : settings.mekan;
+  document.getElementById('contactVenue').textContent = venue || 'Etkinlik konumu yakında açıklanacak.';
+} catch {
+  document.getElementById('contactVenue').textContent = 'Etkinlik konumu yakında açıklanacak.';
+}
+
+document.getElementById('contactForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const submit = document.getElementById('contactSubmit');
+  const status = document.getElementById('contactFormStatus');
+  const payload = Object.fromEntries(new FormData(form).entries());
+  submit.disabled = true;
+  status.className = 'contact-form-status';
+  status.textContent = 'Mesajınız gönderiliyor...';
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || 'Mesaj gönderilemedi. Lütfen tekrar deneyin.');
+    form.reset();
+    status.classList.add('success');
+    status.textContent = result.message || 'Mesajınız iletildi. Teşekkür ederiz!';
+  } catch (error) {
+    status.classList.add('error');
+    status.textContent = error.message || 'Mesaj gönderilemedi. Lütfen e-posta ile bize ulaşın.';
+  } finally {
+    submit.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

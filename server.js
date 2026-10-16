@@ -39,6 +39,8 @@ const AUTH_LOG_FILE = process.env.AUTH_LOG_FILE || path.join(__dirname, 'data', 
 const ACCESS_BAN_FILE = process.env.ACCESS_BAN_FILE || path.join(__dirname, 'data', 'access-bans.json');
 const DEVELOPER_PASSWORD = process.env.DEVELOPER_PASSWORD || '';
 const DEVELOPER_SESSION_SECRET = process.env.DEVELOPER_SESSION_SECRET || crypto.randomBytes(32).toString('hex');
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL || 'vizyonulusalforumik@gmail.com';
+const contactRequests = new Map();
 const SYNC_KEYS = new Set([
   'vuf_komisyonlar', 'vuf_ekip', 'vuf_sponsorlar', 'vuf_program',
   'vuf_istatistikler', 'vuf_ayarlar', 'vuf_basvuru_ayarlar',
@@ -301,6 +303,68 @@ const emailTemplates = {
     `
   })
 };
+
+function allowContactRequest(ip) {
+  const now = Date.now();
+  for (const [key, entry] of contactRequests) {
+    if (now >= entry.resetAt) contactRequests.delete(key);
+  }
+  const entry = contactRequests.get(ip);
+  if (entry && now < entry.resetAt && entry.count >= 5) return false;
+  if (!entry || now >= entry.resetAt) contactRequests.set(ip, { count: 1, resetAt: now + 15 * 60 * 1000 });
+  else entry.count += 1;
+  return true;
+}
+
+app.post('/api/contact', async (req, res) => {
+  const { name, email, subject, message, website } = req.body || {};
+  if (typeof website === 'string' && website.trim()) {
+    return res.status(200).json({ success: true, message: 'Mesajınız iletildi. Teşekkür ederiz!' });
+  }
+
+  if (!allowContactRequest(clientIp(req))) {
+    return res.status(429).json({ success: false, error: 'Çok sık mesaj gönderildi. Lütfen 15 dakika sonra tekrar deneyin.' });
+  }
+  if ([name, email, subject, message].some(value => typeof value !== 'string' || !value.trim())) {
+    return res.status(400).json({ success: false, error: 'Lütfen tüm alanları doldurun.' });
+  }
+  if (name.length > 100 || subject.length > 120 || message.length > 5000 || !validateEmail(email)) {
+    return res.status(400).json({ success: false, error: 'Bilgileri kontrol edin; ad en fazla 100, konu 120, mesaj 5000 karakter olabilir.' });
+  }
+  if (missingEnvVars.length > 0) {
+    return res.status(503).json({ success: false, error: 'Mesaj servisi şu anda kullanılamıyor. Lütfen e-posta ile bize ulaşın.' });
+  }
+
+  try {
+    const senderName = name.trim();
+    const senderEmail = email.trim();
+    const emailSubject = subject.trim();
+    const emailMessage = message.trim();
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: CONTACT_EMAIL,
+      replyTo: { name: senderName, address: senderEmail },
+      subject: `Web sitesi iletişim formu: ${emailSubject}`,
+      text: `Ad Soyad: ${senderName}\nE-posta: ${senderEmail}\nKonu: ${emailSubject}\n\n${emailMessage}`,
+      html: `<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;padding:24px;color:#172033"><h2>Web sitesi iletişim formu</h2><p><strong>Ad Soyad:</strong> ${escapeHtml(senderName)}</p><p><strong>E-posta:</strong> ${escapeHtml(senderEmail)}</p><p><strong>Konu:</strong> ${escapeHtml(emailSubject)}</p><hr><p style="white-space:pre-wrap;line-height:1.7">${escapeHtml(emailMessage)}</p></div>`
+    });
+    console.log(`✓ İletişim mesajı gönderildi: ${senderEmail}`);
+    return res.json({ success: true, message: 'Mesajınız iletildi. Teşekkür ederiz!' });
+  } catch (error) {
+    const failure = getEmailFailure(error);
+    console.error('❌ İletişim formu e-posta hatası:', {
+      code: error.code || null,
+      responseCode: error.responseCode || null,
+      command: error.command || null,
+      message: error.message
+    });
+    return res.status(500).json({
+      success: false,
+      error: 'Mesajınız şu anda gönderilemedi. Lütfen e-posta ile bize ulaşın.',
+      code: failure.code
+    });
+  }
+});
 
 function getEmailFailure(error) {
   const code = String(error.code || '').toUpperCase();
