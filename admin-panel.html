@@ -378,7 +378,7 @@ tbody td{padding:.85rem 1rem;vertical-align:middle}
         <div style="background:#F0F3F9;border-radius:12px;padding:1.5rem;margin-bottom:2rem;border:1px solid #DDE3F0">
           <h3 style="font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem"><i class="fas fa-calendar-alt" style="color:#2563EB"></i> Etkinlik Bilgileri</h3>
           <div class="stat-field"><label><i class="fas fa-map"></i> Mekan</label>
-            <input type="text" id="ay-mekan" placeholder="Mekan bilgisini girin">
+            <input type="text" id="ay-mekan" placeholder="Haliç Üniversitesi 5. Levent Yerleşkesi">
             <small>Boş bırakırsanız sitede “Mekan yakında açıklanacak” yazısı görünür.</small>
           </div>
           <div class="stat-field"><label><i class="fas fa-calendar-alt"></i> Etkinlik Tarihi</label>
@@ -674,7 +674,9 @@ function renderSection(sec){
 
 function renderAyarlar(){
   const ayarlar=get('vuf_ayarlar',{});
-  document.getElementById('ay-mekan').value=['İÜ Beyazıt Kampüsü, İstanbul','İstanbul Üniversitesi'].includes(ayarlar.mekan)?'':(ayarlar.mekan||'');
+  const eskiMekanlar=['İÜ Beyazıt Kampüsü, İstanbul','İstanbul Üniversitesi'];
+  const mekanVarsayilan='Haliç Üniversitesi 5. Levent Yerleşkesi';
+  document.getElementById('ay-mekan').value=ayarlar.mekan==='5. Levent, 15 Temmuz Şehitler Cd No: 14/12, 34060 Eyüpsultan/İstanbul'?mekanVarsayilan:(eskiMekanlar.includes(ayarlar.mekan)?'':(ayarlar.mekan||mekanVarsayilan));
   document.getElementById('ay-event-date').value=ayarlar.eventDate||'2026-09-19T09:00';
   document.getElementById('ay-date-visible').value=ayarlar.dateVisible!==undefined ? String(ayarlar.dateVisible) : 'true';
   document.getElementById('ay-countdown').value=ayarlar.countdown!==undefined ? String(ayarlar.countdown) : 'true';
@@ -854,7 +856,9 @@ function saveStats(){
 ════════════════════════════════════ */
 function loadAyarlar(){
   const ayarlar=get('vuf_ayarlar',{});
-  document.getElementById('ay-mekan').value=['İÜ Beyazıt Kampüsü, İstanbul','İstanbul Üniversitesi'].includes(ayarlar.mekan)?'':(ayarlar.mekan||'');
+  const eskiMekanlar=['İÜ Beyazıt Kampüsü, İstanbul','İstanbul Üniversitesi'];
+  const mekanVarsayilan='Haliç Üniversitesi 5. Levent Yerleşkesi';
+  document.getElementById('ay-mekan').value=ayarlar.mekan==='5. Levent, 15 Temmuz Şehitler Cd No: 14/12, 34060 Eyüpsultan/İstanbul'?mekanVarsayilan:(eskiMekanlar.includes(ayarlar.mekan)?'':(ayarlar.mekan||mekanVarsayilan));
   document.getElementById('ay-event-date').value=ayarlar.eventDate||'2026-09-19T09:00';
   document.getElementById('ay-date-visible').value=ayarlar.dateVisible!==undefined?String(ayarlar.dateVisible):'true';
   document.getElementById('ay-countdown').value=ayarlar.countdown!==undefined?ayarlar.countdown:true;

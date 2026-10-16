@@ -49,12 +49,13 @@
     background: var(--accent-faint); color: var(--accent); font-size: 1rem;
   }
   .contact-card-label { color: var(--text-muted); font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .contact-address { margin-top: .35rem; color: var(--text-muted); font-size: .82rem; line-height: 1.5; }
   .contact-card-value { margin-top: .18rem; color: var(--text); font-size: .92rem; font-weight: 600; overflow-wrap: anywhere; }
   .contact-card-value a { color: var(--accent-hover); }
   .contact-card-value a:hover { text-decoration: underline; }
   .contact-map-link { display: inline-flex; align-items: center; gap: .4rem; margin-top: .5rem; font-size: .82rem; font-weight: 700; }
   .contact-map-frame {
-    display: block; width: 100%; height: 280px; margin-top: 1.25rem;
+    display: block; width: 100%; height: 340px; margin-top: 1.25rem;
     border: 0; border-radius: 14px; background: var(--gray-100);
   }
   .contact-map-caption { margin-top: .55rem; color: var(--text-muted); font-size: .78rem; }
@@ -132,16 +133,17 @@
         <div class="contact-card">
           <span class="contact-icon"><i class="fas fa-phone"></i></span>
           <div>
-            <div class="contact-card-label">Telefon</div>
-            <div class="contact-card-value">Telefon bilgisi yakında paylaşılacak.</div>
+            <div class="contact-card-label">Genel Koordinatör</div>
+            <div class="contact-card-value">Hayrican · <a href="tel:+905525906752">+90 552 590 67 52</a></div>
           </div>
         </div>
         <div class="contact-card">
           <span class="contact-icon"><i class="fas fa-location-dot"></i></span>
           <div>
             <div class="contact-card-label">Etkinlik Konumu</div>
-            <div class="contact-card-value" id="contactVenue">Etkinlik konumu yükleniyor...</div>
-            <a class="contact-map-link" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x14cab7ade6455895:0x8162d5a16546b5e2?sa=X&amp;ved=1t:8290&amp;ictx=111" target="_blank" rel="noopener noreferrer">
+            <div class="contact-card-value" id="contactVenue">Haliç Üniversitesi 5. Levent Yerleşkesi</div>
+            <div class="contact-address">5. Levent, 15 Temmuz Şehitler Cd No: 14/12, 34060 Eyüpsultan/İstanbul</div>
+            <a class="contact-map-link" id="contactMapLink" href="https://www.google.com/maps?cid=9323249067775931874" target="_blank" rel="noopener noreferrer">
               Haritada görüntüle <i class="fas fa-arrow-up-right-from-square"></i>
             </a>
           </div>
@@ -149,8 +151,9 @@
       </div>
       <iframe
         class="contact-map-frame"
+        id="contactMap"
         src="https://maps.google.com/maps?cid=9323249067775931874&amp;output=embed"
-        title="Vizyon Ulusal Forum etkinlik konumu haritası"
+        title="Haliç Üniversitesi 5. Levent Yerleşkesi haritası"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         allowfullscreen>
@@ -203,7 +206,7 @@
         <h5>İletişim</h5>
         <ul>
           <li class="meta"><i class="fas fa-envelope"></i><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=vizyonulusalforumik%40gmail.com" target="_blank" rel="noopener noreferrer">vizyonulusalforumik@gmail.com</a></li>
-          <li class="meta"><i class="fas fa-phone"></i>Telefon bilgisi yakında paylaşılacak</li>
+          <li class="meta"><i class="fas fa-phone"></i><a href="tel:+905525906752">Hayrican: +90 552 590 67 52</a></li>
         </ul>
       </div>
     </div>
@@ -232,10 +235,19 @@ navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () 
 
 try {
   const settings = JSON.parse(localStorage.getItem('vuf_ayarlar') || '{}');
-  const venue = ['İÜ Beyazıt Kampüsü, İstanbul', 'İstanbul Üniversitesi'].includes(settings.mekan) ? '' : settings.mekan;
-  document.getElementById('contactVenue').textContent = venue || 'Etkinlik konumu yakında açıklanacak.';
+  const defaultVenue = 'Haliç Üniversitesi 5. Levent Yerleşkesi';
+  const legacyVenues = [
+    'İÜ Beyazıt Kampüsü, İstanbul',
+    'İstanbul Üniversitesi',
+    '5. Levent, 15 Temmuz Şehitler Cd No: 14/12, 34060 Eyüpsultan/İstanbul'
+  ];
+  const configuredVenue = legacyVenues.includes(settings.mekan) ? '' : settings.mekan;
+  const venue = configuredVenue || defaultVenue;
+  document.getElementById('contactVenue').textContent = venue;
+  document.getElementById('contactMap').src = 'https://maps.google.com/maps?cid=9323249067775931874&output=embed';
+  document.getElementById('contactMapLink').href = 'https://www.google.com/maps?cid=9323249067775931874';
 } catch {
-  document.getElementById('contactVenue').textContent = 'Etkinlik konumu yakında açıklanacak.';
+  document.getElementById('contactVenue').textContent = 'Haliç Üniversitesi 5. Levent Yerleşkesi';
 }
 
 document.getElementById('contactForm').addEventListener('submit', async event => {

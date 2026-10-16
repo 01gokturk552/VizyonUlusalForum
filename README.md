@@ -305,10 +305,9 @@ Proje geliştirmesine katkı sağlamak isterseniz:
 ## 📞 İletişim
 
 **Genel Koordinatör:**
-- Yiğit Efe SEVİR: [0546 926 2010](tel:+905469262010)
+- Hayrican: [+90 552 590 67 52](tel:+905525906752)
 
-**Genel Koordinatör:**
-- Ada Nehir ŞAHİN: [0501 012 58 60](tel:+905010125860)
+**Etkinlik Konumu:** Haliç Üniversitesi 5. Levent Yerleşkesi — 5. Levent, 15 Temmuz Şehitler Cd No: 14/12, 34060 Eyüpsultan/İstanbul
 
 **Email:** vizyonulusalforumik@gmail.com
 

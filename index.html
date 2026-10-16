@@ -305,7 +305,7 @@
         <h5>Etkinlik</h5>
         <ul>
           <li class="meta"><i class="fas fa-calendar-alt"></i> <span id="footerTarih">Tarih yakında açıklanacak</span></li>
-          <li class="meta"><i class="fas fa-map-pin"></i> <span id="footerMekan">Mekan yakında açıklanacak</span></li>
+          <li class="meta"><i class="fas fa-map-pin"></i> <span id="footerMekan">Haliç Üniversitesi 5. Levent Yerleşkesi</span></li>
           <li class="meta"><i class="fas fa-layer-group"></i> <span id="footerKomisyon">9 Komisyon</span></li>
         </ul>
       </div>
@@ -314,8 +314,8 @@
         <h5>İletişim</h5>
         <ul>
           <li class="meta"><i class="fas fa-envelope"></i> <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=vizyonulusalforumik%40gmail.com" target="_blank" rel="noopener noreferrer">vizyonulusalforumik@gmail.com</a></li>
-          <li class="meta"><i class="fas fa-map-pin"></i> <span id="footerIletisimMekan">Mekan yakında açıklanacak</span></li>
-          <li class="meta"><i class="fas fa-phone"></i> <a href="contact.html">İletişim sayfası</a></li>
+          <li class="meta"><i class="fas fa-map-pin"></i> <span id="footerIletisimMekan">Haliç Üniversitesi 5. Levent Yerleşkesi</span></li>
+          <li class="meta"><i class="fas fa-phone"></i> <a href="tel:+905525906752">Hayrican: +90 552 590 67 52</a></li>
         </ul>
         <div style="margin-top:1.5rem">
           <a href="basvuru.html" class="btn-gold-solid" style="font-size:.82rem;padding:.55rem 1.25rem;border-radius:8px">
@@ -512,6 +512,7 @@ navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { h
       const v = localStorage.getItem('vuf_ayarlar');
       const ayarlar = v ? JSON.parse(v) : {};
       if (ayarlar.mekan === 'İÜ Beyazıt Kampüsü, İstanbul' || ayarlar.mekan === 'İstanbul Üniversitesi') ayarlar.mekan = '';
+      if (ayarlar.mekan === '5. Levent, 15 Temmuz Şehitler Cd No: 14/12, 34060 Eyüpsultan/İstanbul') ayarlar.mekan = '';
       if (ayarlar.dateVisible !== false && (!ayarlar.eventDate || ayarlar.eventDate === '2026-02-13T13:30')) ayarlar.eventDate = '2026-09-19T09:00';
       return { countdown: true, instagram: 'vizyonulusalforum', mekan: '', ...ayarlar };
     } catch { return { countdown: true, instagram: 'vizyonulusalforum', eventDate: '2026-09-19T09:00', mekan: '' }; }
@@ -767,6 +768,7 @@ function animateCounter(el) {
   let ayarlar = {};
   try { ayarlar = JSON.parse(localStorage.getItem('vuf_ayarlar') || '{}'); } catch {}
   if (ayarlar.mekan === 'İÜ Beyazıt Kampüsü, İstanbul' || ayarlar.mekan === 'İstanbul Üniversitesi') ayarlar.mekan = '';
+  if (ayarlar.mekan === '5. Levent, 15 Temmuz Şehitler Cd No: 14/12, 34060 Eyüpsultan/İstanbul') ayarlar.mekan = '';
   if (ayarlar.dateVisible !== false && (!ayarlar.eventDate || ayarlar.eventDate === '2026-02-13T13:30')) ayarlar.eventDate = '2026-09-19T09:00';
   const heroPillTarih = document.getElementById('heroPillTarih');
   const heroPillMekan = document.getElementById('heroPillMekan');
@@ -789,7 +791,7 @@ function animateCounter(el) {
     footerTarih.textContent = 'Tarih yakında açıklanacak';
   }
   
-  const mekanMetni = ayarlar.mekan || 'Mekan yakında açıklanacak';
+  const mekanMetni = ayarlar.mekan || 'Haliç Üniversitesi 5. Levent Yerleşkesi';
   heroPillMekan.textContent = mekanMetni;
   footerMekan.textContent = mekanMetni;
   footerIletisimMekan.textContent = mekanMetni;
